@@ -1,2 +1,2 @@
 # project-kalapeli
-Repo metropolian portfolio-kurssi 3
+Repo metropolian portfolio-3-kurssille
