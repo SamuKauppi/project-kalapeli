@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Floor
+  - Block
+  - Piece
   layers:
   - Default
   - TransparentFX
@@ -11,6 +14,7 @@ TagManager:
   - 
   - Water
   - UI
+  - DrawBack
   - 
   - 
   - 
@@ -35,9 +39,11 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - DrawFront
   m_SortingLayers:
+  - name: DrawCut
+    uniqueID: 2732104847
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
