@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkBoxSize: {x: 10, y: 0.01, z: 10}
-  cameraRotationTime: 0.5
+  cameraRotationTime: 0.25
   lineDist: 7
 --- !u!120 &8212333322856277160
 LineRenderer:

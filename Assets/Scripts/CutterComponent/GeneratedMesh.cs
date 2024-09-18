@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class GeneratedMesh 
 {
-    List<Vector3> vertices          = new List<Vector3>();
-    List<Vector3> normals           = new List<Vector3>();
-    List<Vector2> uvs               = new List<Vector2>();
-    List<List<int>> submeshIndices  = new List<List<int>>();
+    List<Vector3> vertices          = new();
+    List<Vector3> normals           = new();
+    List<Vector2> uvs               = new();
+    List<List<int>> submeshIndices  = new();
 
     public List<Vector3> Vertices           { get { return vertices; }          set { vertices = value; } }
     public List<Vector3> Normals            { get { return normals; }           set { normals = value; } }
@@ -59,7 +59,7 @@ public class GeneratedMesh
 
     public Mesh GetGeneratedMesh()
     {
-        Mesh mesh = new Mesh();
+        Mesh mesh = new();
         mesh.SetVertices(vertices);
         mesh.SetNormals(normals);
         mesh.SetUVs(0, uvs);
@@ -72,5 +72,4 @@ public class GeneratedMesh
         }
             return mesh;
     }
-    
 }

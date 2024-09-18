@@ -6,6 +6,12 @@ public class Cutter : MonoBehaviour
     private static bool isBusy;
     private static Mesh originalMesh;
 
+    /// <summary>
+    /// Cuts mesh into two
+    /// </summary>
+    /// <param name="originalGameObject">Object to be cut</param>
+    /// <param name="contactPoint">Middle of the cut point</param>
+    /// <param name="cutNormal">normal of the cutting plane</param>
     public static void Cut(GameObject originalGameObject, Vector3 contactPoint, Vector3 cutNormal)
     {
         if (isBusy)
@@ -13,9 +19,11 @@ public class Cutter : MonoBehaviour
 
         isBusy = true;
 
+        // Create cut plane used to separate meshes
         Plane cutPlane = new(originalGameObject.transform.InverseTransformDirection(-cutNormal), originalGameObject.transform.InverseTransformPoint(contactPoint));
         originalMesh = originalGameObject.GetComponent<MeshFilter>().mesh;
 
+        // Confirm there is a mesh
         if (originalMesh == null)
         {
             Debug.LogError("Need mesh to cut");
@@ -23,17 +31,17 @@ public class Cutter : MonoBehaviour
         }
 
         List<Vector3> addedVertices = new();
+
+        // Generate left and right mesh
         GeneratedMesh leftMesh = new();
         GeneratedMesh rightMesh = new();
 
+        // Separate meshes and fill the cut
         SeparateMeshes(leftMesh, rightMesh, cutPlane, addedVertices);
         FillCut(addedVertices, cutPlane, leftMesh, rightMesh);
 
-        Mesh finishedLeftMesh = leftMesh.GetGeneratedMesh();
-        Mesh finishedRightMesh = rightMesh.GetGeneratedMesh();
-
-        //Getting and destroying all original colliders to prevent having multiple colliders
-        //of different kinds on one object
+        // Getting and destroying all original colliders to prevent having multiple colliders
+        // of different kinds on one object
         var originalCols = originalGameObject.GetComponents<Collider>();
         var physicsMat = originalGameObject.GetComponent<Collider>().material;
         foreach (var col in originalCols)
@@ -41,25 +49,25 @@ public class Cutter : MonoBehaviour
             Destroy(col);
         }
 
-        Mesh biggerMesh;
-        Mesh smallerMesh;
-        if (finishedLeftMesh.bounds.size.magnitude > finishedRightMesh.bounds.size.magnitude)
-        {
-            biggerMesh = finishedLeftMesh;
-            smallerMesh = finishedRightMesh;
-        }
-        else
-        {
-            biggerMesh = finishedRightMesh;
-            smallerMesh = finishedLeftMesh;
-        }
+        // Create final meshes
+        Mesh finishedLeftMesh = leftMesh.GetGeneratedMesh();
+        Mesh finishedRightMesh = rightMesh.GetGeneratedMesh();
+
+        // Determine bigger and smaller mesh
+        Mesh biggerMesh = (finishedLeftMesh.bounds.size.magnitude > finishedRightMesh.bounds.size.magnitude) ? finishedLeftMesh : finishedRightMesh;
+        Mesh smallerMesh = (biggerMesh == finishedLeftMesh) ? finishedRightMesh : finishedLeftMesh;
+
+        // Assign the bigger mesh to the MeshFilter
         originalGameObject.GetComponent<MeshFilter>().mesh = biggerMesh;
 
+        // Original object
+        // Set the collider 
         var collider = originalGameObject.AddComponent<MeshCollider>();
         collider.sharedMesh = biggerMesh;
         collider.convex = true;
         collider.material = physicsMat;
 
+        // Set materials equal to the submeshes
         Material[] mats = new Material[biggerMesh.subMeshCount];
         for (int i = 0; i < biggerMesh.subMeshCount; i++)
         {
@@ -67,35 +75,43 @@ public class Cutter : MonoBehaviour
         }
         originalGameObject.GetComponent<MeshRenderer>().materials = mats;
 
-        GameObject right = new()
+
+        // New Object separated from original
+        GameObject otherObj = new()
         {
             tag = "Piece"
         };
-        right.transform.SetPositionAndRotation(originalGameObject.transform.position + (Vector3.up * .05f),
+        // Set transforms
+        otherObj.transform.SetPositionAndRotation(originalGameObject.transform.position + (Vector3.up * .05f),
                                                originalGameObject.transform.rotation);
-        right.transform.localScale = originalGameObject.transform.localScale;
-        right.AddComponent<MeshRenderer>();
+        otherObj.transform.localScale = originalGameObject.transform.localScale;
+        // Set renderer
+        otherObj.AddComponent<MeshRenderer>();
 
+        // Set materials equal to the submeshes
         mats = new Material[smallerMesh.subMeshCount];
         for (int i = 0; i < smallerMesh.subMeshCount; i++)
         {
             mats[i] = originalGameObject.GetComponent<MeshRenderer>().material;
         }
-        right.GetComponent<MeshRenderer>().materials = mats;
-        right.AddComponent<MeshFilter>().mesh = smallerMesh;
+        otherObj.GetComponent<MeshRenderer>().materials = mats;
+        otherObj.AddComponent<MeshFilter>().mesh = smallerMesh;
 
-        right.AddComponent<MeshCollider>().sharedMesh = smallerMesh;
-        var cols = right.GetComponents<MeshCollider>();
+        // Set collider
+        otherObj.AddComponent<MeshCollider>().sharedMesh = smallerMesh;
+        var cols = otherObj.GetComponents<MeshCollider>();
         foreach (var col in cols)
         {
             col.convex = true;
             col.material = physicsMat;
         }
 
-        var rightRigidbody = right.AddComponent<Rigidbody>();
+        // Set rigidbody
+        var rightRigidbody = otherObj.AddComponent<Rigidbody>();
         float direction = biggerMesh == finishedLeftMesh ? -1f : 1f;
         rightRigidbody.AddRelativeForce(1000f * direction * cutPlane.normal);
 
+        // Free cutter
         isBusy = false;
     }
 
