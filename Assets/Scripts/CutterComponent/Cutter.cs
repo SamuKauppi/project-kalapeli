@@ -7,7 +7,7 @@ public class Cutter : MonoBehaviour
     private static Mesh originalMesh;
 
     /// <summary>
-    /// Cuts mesh into two
+    /// Cuts Gameobject into two sperate objects
     /// </summary>
     /// <param name="originalGameObject">Object to be cut</param>
     /// <param name="contactPoint">Middle of the cut point</param>
@@ -49,16 +49,20 @@ public class Cutter : MonoBehaviour
             Destroy(col);
         }
 
-        // Create final meshes
-        Mesh finishedLeftMesh = leftMesh.GetGeneratedMesh();
-        Mesh finishedRightMesh = rightMesh.GetGeneratedMesh();
+        // Calculate the volume of the generated mesh
+        float leftVol = leftMesh.GetVolume();
+        float rightVol = rightMesh.GetVolume();
 
-        // Determine bigger and smaller mesh
-        Mesh biggerMesh = (finishedLeftMesh.bounds.size.magnitude > finishedRightMesh.bounds.size.magnitude) ? finishedLeftMesh : finishedRightMesh;
-        Mesh smallerMesh = (biggerMesh == finishedLeftMesh) ? finishedRightMesh : finishedLeftMesh;
+        // Determine bigger and smaller mesh and create the final meshes based on them
+        Mesh biggerMesh = leftVol >= rightVol ? leftMesh.GetGeneratedMesh() : rightMesh.GetGeneratedMesh();
+        Mesh smallerMesh = leftVol < rightVol ? leftMesh.GetGeneratedMesh() : rightMesh.GetGeneratedMesh();
 
-        // Assign the bigger mesh to the MeshFilter
-        originalGameObject.GetComponent<MeshFilter>().mesh = biggerMesh;
+        // Assgin the bigger mesh to original object and clean up empty submeshes
+        Material mat = originalGameObject.GetComponent<MeshRenderer>().material;
+        CleanupSubmeshes(biggerMesh, 
+            originalGameObject.GetComponent<MeshRenderer>(), 
+            originalGameObject.GetComponent<MeshFilter>(),
+            mat);
 
         // Original object
         // Set the collider 
@@ -66,15 +70,6 @@ public class Cutter : MonoBehaviour
         collider.sharedMesh = biggerMesh;
         collider.convex = true;
         collider.material = physicsMat;
-
-        // Set materials equal to the submeshes
-        Material[] mats = new Material[biggerMesh.subMeshCount];
-        for (int i = 0; i < biggerMesh.subMeshCount; i++)
-        {
-            mats[i] = originalGameObject.GetComponent<MeshRenderer>().material;
-        }
-        originalGameObject.GetComponent<MeshRenderer>().materials = mats;
-
 
         // New Object separated from original
         GameObject otherObj = new()
@@ -85,17 +80,12 @@ public class Cutter : MonoBehaviour
         otherObj.transform.SetPositionAndRotation(originalGameObject.transform.position + (Vector3.up * .05f),
                                                originalGameObject.transform.rotation);
         otherObj.transform.localScale = originalGameObject.transform.localScale;
-        // Set renderer
-        otherObj.AddComponent<MeshRenderer>();
 
-        // Set materials equal to the submeshes
-        mats = new Material[smallerMesh.subMeshCount];
-        for (int i = 0; i < smallerMesh.subMeshCount; i++)
-        {
-            mats[i] = originalGameObject.GetComponent<MeshRenderer>().material;
-        }
-        otherObj.GetComponent<MeshRenderer>().materials = mats;
-        otherObj.AddComponent<MeshFilter>().mesh = smallerMesh;
+        // Assgin the smaller mesh to the new object and clean up empty submeshes
+        CleanupSubmeshes(smallerMesh, 
+            otherObj.AddComponent<MeshRenderer>(), 
+            otherObj.AddComponent<MeshFilter>(),
+            mat);
 
         // Set collider
         otherObj.AddComponent<MeshCollider>().sharedMesh = smallerMesh;
@@ -108,7 +98,7 @@ public class Cutter : MonoBehaviour
 
         // Set rigidbody
         var rightRigidbody = otherObj.AddComponent<Rigidbody>();
-        float direction = biggerMesh == finishedLeftMesh ? -1f : 1f;
+        float direction = leftVol > rightVol ? -1f : 1f;
         rightRigidbody.AddRelativeForce(1000f * direction * cutPlane.normal);
 
         // Free cutter
@@ -209,8 +199,14 @@ public class Cutter : MonoBehaviour
     /// <param name="leftMesh"></param>
     /// <param name="rightMesh"></param>
     /// <param name="addedVertices"></param>
-    private static void CutTriangle(Plane plane, MeshTriangle triangle, bool triangleALeftSide, bool triangleBLeftSide, bool triangleCLeftSide,
-    GeneratedMesh leftMesh, GeneratedMesh rightMesh, List<Vector3> addedVertices)
+    private static void CutTriangle(Plane plane,
+                                    MeshTriangle triangle,
+                                    bool triangleALeftSide,
+                                    bool triangleBLeftSide,
+                                    bool triangleCLeftSide,
+                                    GeneratedMesh leftMesh,
+                                    GeneratedMesh rightMesh,
+                                    List<Vector3> addedVertices)
     {
         List<bool> leftSide = new()
         {
@@ -467,7 +463,7 @@ public class Cutter : MonoBehaviour
             Vector3[] normals = { -_plane.normal, -_plane.normal, -_plane.normal };
             Vector2[] uvs = { uv1, uv2, new(0.5f, 0.5f) };
 
-            MeshTriangle currentTriangle = new MeshTriangle(vertices, normals, uvs, originalMesh.subMeshCount + 1);
+            MeshTriangle currentTriangle = new(vertices, normals, uvs, originalMesh.subMeshCount + 1);
 
             if (Vector3.Dot(Vector3.Cross(vertices[1] - vertices[0], vertices[2] - vertices[0]), normals[0]) < 0)
             {
@@ -485,6 +481,53 @@ public class Cutter : MonoBehaviour
             _rightMesh.AddTriangle(currentTriangle);
 
         }
+    }
+
+    private static void CleanupSubmeshes(Mesh mesh, MeshRenderer meshRenderer, MeshFilter meshFilter, Material materialApllied)
+    {
+        // List to store valid submesh triangles and materials
+        List<int[]> validSubmeshTriangles = new();
+
+        // Loop through each submesh
+        for (int i = 0; i < mesh.subMeshCount; i++)
+        {
+            // Get triangle indices for the submesh
+            int[] submeshTriangles = mesh.GetTriangles(i);
+
+            // Check if the submesh has at least one valid triangle (3 or more vertices)
+            if (submeshTriangles.Length >= 3)
+            {
+                // Add this submesh's triangles to the valid list
+                validSubmeshTriangles.Add(submeshTriangles);
+            }
+        }
+
+        // If no submeshes are valid, log a warning and exit
+        if (validSubmeshTriangles.Count == 0)
+        {
+            Debug.LogWarning("No valid submeshes found. The mesh may be completely empty.");
+            return;
+        }
+
+        // Update the mesh with the valid submeshes
+        mesh.subMeshCount = validSubmeshTriangles.Count;
+
+        // Reassign the valid triangles to the mesh
+        for (int i = 0; i < validSubmeshTriangles.Count; i++)
+        {
+            mesh.SetTriangles(validSubmeshTriangles[i], i);
+        }
+
+        // Get number of materials equal to submesh count
+        Material[] mats = new Material[mesh.subMeshCount];
+        for (int i = 0;i < mats.Length; i++)
+        {
+            mats[i] = materialApllied;
+        }
+
+        // Assign the valid materials back to the MeshRenderer  
+        meshRenderer.materials = mats;
+        meshFilter.mesh = mesh;
     }
 }
 

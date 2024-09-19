@@ -13,7 +13,6 @@ public class MeshTriangle
     public MeshTriangle(Vector3[] _vertices, Vector3[] _normals, Vector2[] _uvs, int _submeshIndex) 
     {
         Clear();
-
         Vertices.AddRange(_vertices);
         Normals.AddRange(_normals);
         UVs.AddRange(_uvs);
