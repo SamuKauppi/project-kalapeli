@@ -8,8 +8,11 @@ using UnityEngine;
 public class BlockRotation : MonoBehaviour
 {
 
-    // Is block rotating (disable cutting while true)
-    public bool IsRotating {  get; private set; }
+    // Is block rotating (disable cutting and attaching while true)
+    public bool IsRotating { get; private set; }
+
+    // Stops the ability to rotate
+    public bool StopRotating { get; set; } = false;
 
     // Rotations
     [SerializeField] private float cameraRotationTime = 0.5f;                   // How fast the block rotates
@@ -25,10 +28,12 @@ public class BlockRotation : MonoBehaviour
         sideRot = transform.rotation;
         frontRot = transform.rotation * Quaternion.Euler(0f, 0f, 90f);
         backRot = transform.rotation * Quaternion.Euler(0f, 0f, -90f);
-        otherSideRot = transform.rotation * Quaternion.Euler(0f, 0f, 180f);      
+        otherSideRot = transform.rotation * Quaternion.Euler(0f, 0f, 180f);
     }
     private void Update()
     {
+        if (StopRotating) { return; }
+
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (IsRotating) StopAllCoroutines();

@@ -1,13 +1,10 @@
-#if UNITY_EDITOR
-using System.Collections;
-using UnityEditor;
 using UnityEngine;
-
 public class DrawCut : MonoBehaviour
 {
+    public bool IsCutting {  get; set; } = false;
+
     // References
     [SerializeField] private BlockRotation blockRotation;   // Script that rotates the block that will be cut
-    GameObject cutted;                                      // Game object that will be cut (is used fro saving)
 
     // SerializeFields
     [SerializeField] private Vector3 checkBoxSize = new(1000f, 0.01f, 1000f);   // Size of the cut check
@@ -38,25 +35,30 @@ public class DrawCut : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && cutted) { DrawCut.SaveGameObjectAsPrefab(cutted); }
+        // Stop the ability to cut when the block is rotatig
+        if (blockRotation.IsRotating || !IsCutting) { return; }
 
-        if (blockRotation.IsRotating) { return; }
-
+        // Find mouse pos
         mouse = Input.mousePosition;
         mouse.z = lineDist;
 
+        // When left mouse is pressed set pointA to the position of mouse
         if (Input.GetMouseButtonDown(0))
         {
             pointA = cam.ScreenToWorldPoint(mouse);
             cancelCut = false;
+            blockRotation.StopRotating = true;
         }
 
+        // When right mouse is pressed, cancel cutting process
         if (Input.GetMouseButtonDown(1))
         {
+            blockRotation.StopRotating = false;
             cancelCut = true;
             ResetLineRender();
         }
 
+        // When left mouse is held, set the positions of line renderer
         if (Input.GetMouseButton(0) && !cancelCut)
         {
             animateCut = false;
@@ -64,8 +66,11 @@ public class DrawCut : MonoBehaviour
             cutRender.SetPosition(1, cam.ScreenToWorldPoint(mouse));
         }
 
+        // When left mouse is released and not canceling:
+        // Make the cut
         if (Input.GetMouseButtonUp(0))
         {
+            blockRotation.StopRotating = false;
             if (cancelCut)
             {
                 cancelCut = false;
@@ -80,14 +85,21 @@ public class DrawCut : MonoBehaviour
             animateCut = true;
         }
 
+        // Animate line renderer
         if (animateCut)
         {
             cutRender.SetPosition(0, Vector3.Lerp(pointA, pointB, 1f));
         }
     }
 
+    /// <summary>
+    /// Creates a check for where the cut will be made 
+    /// and when hit, cuts hit mesh
+    /// </summary>
     private void CreateSlicePlane()
     {
+        checkBoxSize.x = Vector3.Distance(pointA, pointB);
+
         Vector3 pointInPlane = (pointA + pointB) / 2;
 
         Vector3 cutPlaneNormal = Vector3.Cross(pointA - pointB, cam.transform.forward).normalized;
@@ -108,7 +120,6 @@ public class DrawCut : MonoBehaviour
             {
                 Cutter.Cut(hit.gameObject, pointInPlane, cutPlaneNormal);
                 cutCounter++;
-                cutted = hit.gameObject;
             }
         }
     }
@@ -120,19 +131,6 @@ public class DrawCut : MonoBehaviour
         cutRender.SetPosition(0, pointA);
         cutRender.SetPosition(1, pointB);
     }
-    public static void SaveGameObjectAsPrefab(GameObject obj)
-    {
-        if (obj != null)
-        {
-            var savePath = "Assets/savedPrefab.prefab";
-            // Save the GameObject as a prefab
-            PrefabUtility.SaveAsPrefabAsset(obj, savePath);
-            Debug.Log("Saved GameObject to: " + savePath);
-        }
-        else
-        {
-            Debug.LogError("GameObject is null, cannot save.");
-        }
-    }
+
+
 }
-#endif

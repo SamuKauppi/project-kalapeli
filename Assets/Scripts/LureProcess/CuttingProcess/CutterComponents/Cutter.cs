@@ -479,7 +479,6 @@ public class Cutter : MonoBehaviour
                 FlipTriangel(currentTriangle);
             }
             _rightMesh.AddTriangle(currentTriangle);
-
         }
     }
 
