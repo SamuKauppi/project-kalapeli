@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 
-
 /// <summary>
 /// Rotates the object it is attached to
 /// </summary>

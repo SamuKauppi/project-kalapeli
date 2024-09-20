@@ -35,7 +35,7 @@ public class AttachingProcess : MonoBehaviour
 
     // Positioning
     private Vector3 mousePos;           // Mouse vector
-    private bool mouseHeld;
+    private bool mouseHeld;             // Mouse input detection for fixed update
     private bool isValidPos = false;    // Is the attached object at a valid position
 
     /// <summary>
@@ -80,7 +80,7 @@ public class AttachingProcess : MonoBehaviour
         else
             mouseHeld = false;
 
-        // When let go either place it or destroy it
+        // When mouse is released either place it or destroy it
         if (Input.GetMouseButtonUp(0))
         {
             if (!isValidPos)
@@ -108,44 +108,57 @@ public class AttachingProcess : MonoBehaviour
             MoveObjectToAttachPosition();
     }
 
+    /// <summary>
+    /// Check which attach position will be used
+    /// </summary>
     private void MoveObjectToAttachPosition()
     {
         switch (attachPos)
         {
             case AttachPosition.Side:
-                AttachObj(attachedObj, Vector3.back, attachBothSides);
+                MoveObject(attachedObj, Vector3.back, attachBothSides);
                 break;
             case AttachPosition.Bottom:
-                AttachObj(attachedObj, Vector3.down, attachBothSides);
+                MoveObject(attachedObj, Vector3.down, attachBothSides);
                 break;
             case AttachPosition.Top:
-                AttachObj(attachedObj, Vector3.up, attachBothSides);
+                MoveObject(attachedObj, Vector3.up, attachBothSides);
                 break;
             case AttachPosition.Front:
-                AttachObj(attachedObj, Vector3.right, attachBothSides);
+                MoveObject(attachedObj, Vector3.right, attachBothSides);
                 break;
             default:
                 break;
         }
     }
 
-    private void AttachObj(GameObject attachObject, Vector3 directionAway, bool attachBothSides)
+    /// <summary>
+    /// Move object to position based on mouse position
+    /// </summary>
+    /// <param name="attachObject">Which object will be move</param>
+    /// <param name="directionAway">Direction away from the lure</param>
+    /// <param name="attachBothSides">If the attaching process will be mirrored</param>
+    private void MoveObject(GameObject attachObject, Vector3 directionAway, bool attachBothSides)
     {
+        // Get mouse position away from lure
         Vector3 posAwayFromLure = cam.ScreenToWorldPoint(mousePos);
         posAwayFromLure += 0.5f * attachDistance * directionAway;
 
         if (Physics.Raycast(posAwayFromLure, -directionAway, out RaycastHit hit, attachDistance, blockLayer))
         {
+            // Move the object to hit position when hits
             attachObject.transform.position = hit.point;
             isValidPos = true;
 
+            // Move the possible mirror object but don't continue the mirroring
             if (attachBothSides)
             {
-                AttachObj(mirrorObj, -directionAway, false);
+                MoveObject(mirrorObj, -directionAway, false);
             }
         }
         else
         {
+            // If no hit, move to mouse pos
             attachObject.transform.position = cam.ScreenToWorldPoint(mousePos);
             isValidPos = false;
         }
@@ -158,15 +171,19 @@ public class AttachingProcess : MonoBehaviour
     /// <param name="type">Type of object being set</param>
     public void StartAttachingObject(AttachingType type)
     {
+        // Check that attaching not disabled
         if (!IsAttaching) { return; }
 
+        // Check if the object is determined
         if (!attachDict.ContainsKey(type)) { Debug.LogWarning("key " + type + " was not found."); return; }
 
+        // Set the attached object
         attachedObj = Instantiate(attachDict[type].attachedPrefab);
         attachPos = attachDict[type].attachPosition;
         attachBothSides = attachDict[type].attachBothSides;
 
-        if(attachBothSides)
+        // Set the possible mirrored object
+        if (attachBothSides)
         {
             mirrorObj = Instantiate(attachDict[type].attachedPrefab);
             mirrorObj.transform.localScale *= -1f;
