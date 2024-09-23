@@ -792,7 +792,7 @@ PrefabInstance:
     - target: {fileID: 6136691472805021134, guid: bc2d9d5b7a4a8b04c88d395a53ca89dd, type: 3}
       propertyPath: objectTypes.Array.data[1].attachedPrefab
       value: 
-      objectReference: {fileID: 919132149155446097, guid: 74e8171610162674bb6ad7419aeb3597, type: 3}
+      objectReference: {fileID: 4382374926160566561, guid: a84ce176a6af5bf43b0d90aa6b56a086, type: 3}
     - target: {fileID: 6136691472805021134, guid: bc2d9d5b7a4a8b04c88d395a53ca89dd, type: 3}
       propertyPath: objectTypes.Array.data[2].attachPosition
       value: 3
@@ -824,6 +824,10 @@ PrefabInstance:
     - target: {fileID: 6136691472805021134, guid: bc2d9d5b7a4a8b04c88d395a53ca89dd, type: 3}
       propertyPath: objectTypes.Array.data[3].attachBothSides
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136691472805021134, guid: bc2d9d5b7a4a8b04c88d395a53ca89dd, type: 3}
+      propertyPath: objectTypes.Array.data[1].matchRotationToNormal
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -914,6 +918,10 @@ PrefabInstance:
       propertyPath: blockRotation
       value: 
       objectReference: {fileID: 7754228314473891719}
+    - target: {fileID: 5490196267510789210, guid: 58480e583e450d5479808a9f5ac96479, type: 3}
+      propertyPath: blockLayer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

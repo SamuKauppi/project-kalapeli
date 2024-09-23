@@ -9,6 +9,7 @@ public class DrawCut : MonoBehaviour
 
     // References
     [SerializeField] private BlockRotation blockRotation;   // Script that rotates the block that will be cut
+    [SerializeField] private LayerMask blockLayer;
 
     // SerializeFields
     [SerializeField] private Vector3 checkBoxSize = new(1000f, 0.01f, 1000f);   // Size of the cut check
@@ -24,7 +25,6 @@ public class DrawCut : MonoBehaviour
     private LineRenderer cutRender;
     private bool animateCut;
     private bool cancelCut;
-    private int cutCounter = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -110,20 +110,20 @@ public class DrawCut : MonoBehaviour
 
         Quaternion orientation = Quaternion.FromToRotation(Vector3.up, cutPlaneNormal);
 
-        Collider[] results = new Collider[cutCounter];
+        Collider[] results = new Collider[5];
         int numColliders = Physics.OverlapBoxNonAlloc(pointInPlane,
                                                       checkBoxSize / 2,
                                                       results,
-                                                      orientation);
+                                                      orientation,
+                                                      blockLayer);
 
         if (numColliders <= 0) { return; }
 
         foreach (Collider hit in results)
         {
-            if (hit && !hit.gameObject.CompareTag("Floor") && hit.gameObject.TryGetComponent(out MeshFilter _))
+            if (hit && hit.gameObject.TryGetComponent(out MeshFilter _))
             {
                 Cutter.Cut(hit.gameObject, pointInPlane, cutPlaneNormal);
-                cutCounter++;
             }
         }
     }

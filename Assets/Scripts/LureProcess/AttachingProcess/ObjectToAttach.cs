@@ -14,4 +14,5 @@ public class ObjectToAttach
     // How the object will be attached
     public AttachPosition attachPosition = AttachPosition.Side;
     public bool attachBothSides = false;     // Attach will be mirrored to the other side
+    public bool matchRotationToNormal = false;
 }

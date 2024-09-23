@@ -29,9 +29,10 @@ public class AttachingProcess : MonoBehaviour
     [SerializeField] private float attachDistance;
     private GameObject lureObj;         // Lure object the objects will be attached to
     private GameObject attachedObj;     // Object being currently attached
-    private GameObject mirrorObj;
+    private GameObject mirrorObj;       // Mirrored object
     private AttachPosition attachPos;   // Where the object being currently attached can be placed
-    private bool attachBothSides;
+    private bool attachBothSides;       // Will the object be attached to both sides
+    private bool matchRotation;         // Will the rotation of attached object be matched to face normal
 
     // Positioning
     private Vector3 mousePos;           // Mouse vector
@@ -148,6 +149,11 @@ public class AttachingProcess : MonoBehaviour
         {
             // Move the object to hit position when hits
             attachObject.transform.position = hit.point;
+
+            // Rotate object to match hit plane normal if it's active
+            //if (matchRotation)
+            //    attachObject.transform.rotation = Quaternion.FromToRotation(directionAway, hit.normal);
+
             isValidPos = true;
         }
         else
@@ -185,6 +191,7 @@ public class AttachingProcess : MonoBehaviour
                                   attachDict[type].attachedPrefab.transform.rotation);
         attachPos = attachDict[type].attachPosition;
         attachBothSides = attachDict[type].attachBothSides;
+        matchRotation = attachDict[type].matchRotationToNormal;
 
         // Set the possible mirrored object
         if (attachBothSides)
@@ -192,9 +199,38 @@ public class AttachingProcess : MonoBehaviour
             mirrorObj = Instantiate(attachDict[type].attachedPrefab,
                                     nullPos,
                                     attachDict[type].attachedPrefab.transform.rotation);
-            mirrorObj.transform.localScale *= -1f;
+
+            mirrorObj.name = "mirror";
+            Vector3 flipScale = GetFlippedScale();
+
+            mirrorObj.transform.localScale = flipScale;
         }
 
         blockRotation.ResetRotation();
+    }
+
+    private Vector3 GetFlippedScale()
+    {
+        Vector3 flipScale = new(-1f, -1f, -1f);
+        switch (attachPos)
+        {
+            case AttachPosition.Side:
+                flipScale.x = 1f;
+                flipScale.y = 1f;
+                break;
+            case AttachPosition.Bottom:
+            case AttachPosition.Top:
+                flipScale.x = 1f;
+                flipScale.z = 1f;
+                break;
+            case AttachPosition.Front:
+                flipScale.y = 1f;
+                flipScale.z = 1f;
+                break;
+            default:
+                break;
+        }
+
+        return flipScale;
     }
 }
