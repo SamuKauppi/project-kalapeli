@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Cutter : MonoBehaviour
 {
@@ -59,10 +60,11 @@ public class Cutter : MonoBehaviour
 
         // Assgin the bigger mesh to original object and clean up empty submeshes
         Material mat = originalGameObject.GetComponent<MeshRenderer>().material;
-        CleanupSubmeshes(biggerMesh, 
-            originalGameObject.GetComponent<MeshRenderer>(), 
+        CleanupSubmeshes(biggerMesh,
+            originalGameObject.GetComponent<MeshRenderer>(),
             originalGameObject.GetComponent<MeshFilter>(),
             mat);
+        RecalculateUvs(biggerMesh, originalGameObject);
 
         // Original object
         // Set the collider 
@@ -76,14 +78,17 @@ public class Cutter : MonoBehaviour
         {
             tag = "Piece"
         };
+
+        otherObj.AddComponent<DestroyPiece>();
+
         // Set transforms
         otherObj.transform.SetPositionAndRotation(originalGameObject.transform.position + (Vector3.up * .05f),
                                                originalGameObject.transform.rotation);
         otherObj.transform.localScale = originalGameObject.transform.localScale;
 
         // Assgin the smaller mesh to the new object and clean up empty submeshes
-        CleanupSubmeshes(smallerMesh, 
-            otherObj.AddComponent<MeshRenderer>(), 
+        CleanupSubmeshes(smallerMesh,
+            otherObj.AddComponent<MeshRenderer>(),
             otherObj.AddComponent<MeshFilter>(),
             mat);
 
@@ -272,7 +277,7 @@ public class Cutter : MonoBehaviour
 
         float normalizedDistance;
         plane.Raycast(
-            new Ray(leftMeshTriangle.Vertices[0], 
+            new Ray(leftMeshTriangle.Vertices[0],
             (rightMeshTriangle.Vertices[0] - leftMeshTriangle.Vertices[0]).normalized),
             out float distance);
 
@@ -305,7 +310,7 @@ public class Cutter : MonoBehaviour
         {
             if (Vector3.Dot(Vector3.Cross(updatedVertices[1] - updatedVertices[0], updatedVertices[2] - updatedVertices[0]), updatedNormals[0]) < 0)
             {
-                FlipTriangel(currentTriangle);
+                FlipTriangle(currentTriangle);
             }
             leftMesh.AddTriangle(currentTriangle);
         }
@@ -322,7 +327,7 @@ public class Cutter : MonoBehaviour
         {
             if (Vector3.Dot(Vector3.Cross(updatedVertices[1] - updatedVertices[0], updatedVertices[2] - updatedVertices[0]), updatedNormals[0]) < 0)
             {
-                FlipTriangel(currentTriangle);
+                FlipTriangle(currentTriangle);
             }
             leftMesh.AddTriangle(currentTriangle);
         }
@@ -338,7 +343,7 @@ public class Cutter : MonoBehaviour
         {
             if (Vector3.Dot(Vector3.Cross(updatedVertices[1] - updatedVertices[0], updatedVertices[2] - updatedVertices[0]), updatedNormals[0]) < 0)
             {
-                FlipTriangel(currentTriangle);
+                FlipTriangle(currentTriangle);
             }
             rightMesh.AddTriangle(currentTriangle);
         }
@@ -354,13 +359,13 @@ public class Cutter : MonoBehaviour
         {
             if (Vector3.Dot(Vector3.Cross(updatedVertices[1] - updatedVertices[0], updatedVertices[2] - updatedVertices[0]), updatedNormals[0]) < 0)
             {
-                FlipTriangel(currentTriangle);
+                FlipTriangle(currentTriangle);
             }
             rightMesh.AddTriangle(currentTriangle);
         }
     }
 
-    private static void FlipTriangel(MeshTriangle _triangle)
+    private static void FlipTriangle(MeshTriangle _triangle)
     {
         Vector3 temp = _triangle.Vertices[2];
         _triangle.Vertices[2] = _triangle.Vertices[0];
@@ -395,7 +400,7 @@ public class Cutter : MonoBehaviour
         }
     }
 
-    public static void EvaluatePairs(List<Vector3> _addedVertices, List<Vector3> _vertices, List<Vector3> _polygone)
+    public static void EvaluatePairs(List<Vector3> _addedVertices, List<Vector3> _vertices, List<Vector3> _polygons)
     {
         bool isDone = false;
         while (!isDone)
@@ -403,16 +408,16 @@ public class Cutter : MonoBehaviour
             isDone = true;
             for (int i = 0; i < _addedVertices.Count; i += 2)
             {
-                if (_addedVertices[i] == _polygone[^1] && !_vertices.Contains(_addedVertices[i + 1]))
+                if (_addedVertices[i] == _polygons[^1] && !_vertices.Contains(_addedVertices[i + 1]))
                 {
                     isDone = false;
-                    _polygone.Add(_addedVertices[i + 1]);
+                    _polygons.Add(_addedVertices[i + 1]);
                     _vertices.Add(_addedVertices[i + 1]);
                 }
-                else if (_addedVertices[i + 1] == _polygone[^1] && !_vertices.Contains(_addedVertices[i]))
+                else if (_addedVertices[i + 1] == _polygons[^1] && !_vertices.Contains(_addedVertices[i]))
                 {
                     isDone = false;
-                    _polygone.Add(_addedVertices[i]);
+                    _polygons.Add(_addedVertices[i]);
                     _vertices.Add(_addedVertices[i]);
                 }
             }
@@ -421,63 +426,77 @@ public class Cutter : MonoBehaviour
 
     private static void Fill(List<Vector3> _vertices, Plane _plane, GeneratedMesh _leftMesh, GeneratedMesh _rightMesh)
     {
-        //Firstly we need the center we do this by adding up all the vertices and then calculating the average
+        // Initialize a center position (vector) to zero. This will later hold the average position of all vertices.
         Vector3 centerPosition = Vector3.zero;
+
+        // Sum up all the vertex positions. Iterate through all vertices in the _vertices list.
         for (int i = 0; i < _vertices.Count; i++)
         {
-            centerPosition += _vertices[i];
+            centerPosition += _vertices[i];  // Add each vertex to centerPosition.
         }
+
+        // Calculate the average position of the vertices by dividing the total sum by the number of vertices.
         centerPosition /= _vertices.Count;
 
-        //We now need an Upward Axis we use the plane we cut the mesh with for that 
-        Vector3 up = new()
-        {
-            x = _plane.normal.x,
-            y = _plane.normal.y,
-            z = _plane.normal.z
-        };
-
-        Vector3 left = Vector3.Cross(_plane.normal, up);
-
-        Vector3 displacement;
+        // Declare variables that will store displacement vectors and UV coordinates for the texture mapping.
         Vector2 uv1;
         Vector2 uv2;
+        Vector2 centerUV = new(0.5f, 0.5f);
 
+        Vector3[] leftNormals = { -_plane.normal, -_plane.normal, -_plane.normal };
+        Vector3[] rightNormals = { _plane.normal, _plane.normal, _plane.normal };
+
+        // Iterate through all vertices to create triangles. For each vertex, calculate the UVs and create two triangles.
         for (int i = 0; i < _vertices.Count; i++)
         {
-            displacement = _vertices[i] - centerPosition;
-            uv1 = new Vector2()
-            {
-                x = .5f + Vector3.Dot(displacement, left),
-                y = .5f + Vector3.Dot(displacement, up)
-            };
+            // Calculate the UV coordinates for the current vertex based on its displacement relative to the 'left' and 'up' axes.
+            uv1 = new Vector2(
+                0f,
+                0f
+            );
 
-            displacement = _vertices[(i + 1) % _vertices.Count] - centerPosition;
-            uv2 = new Vector2()
-            {
-                x = .5f + Vector3.Dot(displacement, left),
-                y = .5f + Vector3.Dot(displacement, up)
-            };
+            uv2 = new Vector2(
+                0f,
+                0f
+            );
 
+            // Define the three vertices of the triangle: current vertex, next vertex, and the center position.
             Vector3[] vertices = { _vertices[i], _vertices[(i + 1) % _vertices.Count], centerPosition };
-            Vector3[] normals = { -_plane.normal, -_plane.normal, -_plane.normal };
-            Vector2[] uvs = { uv1, uv2, new(0.5f, 0.5f) };
 
-            MeshTriangle currentTriangle = new(vertices, normals, uvs, originalMesh.subMeshCount + 1);
-
-            if (Vector3.Dot(Vector3.Cross(vertices[1] - vertices[0], vertices[2] - vertices[0]), normals[0]) < 0)
+            if (Vector3.Cross(vertices[1] - vertices[0], vertices[2] - vertices[0]).magnitude < Mathf.Epsilon)
             {
-                FlipTriangel(currentTriangle);
+                continue;  // Skip degenerate triangles.
             }
+
+            // Define the UVs for the triangle, with the third vertex (center) getting the UV coordinate (0.5, 0.5).
+            Vector2[] uvs = { uv1, uv2, centerUV };
+
+            // Create a new MeshTriangle using the vertices, normals, and UVs, and assign it to the 'left' mesh.
+            // The subMeshCount + 1 ensures this triangle belongs to a new submesh.
+            MeshTriangle currentTriangle = new(vertices, leftNormals, uvs, originalMesh.subMeshCount + 1);
+
+            bool shouldFlipLeft = Vector3.Dot(Vector3.Cross(vertices[1] - vertices[0], vertices[2] - vertices[0]), leftNormals[0]) < 0;
+
+            // Check the orientation of the triangle using the cross product and the normal.
+            // If the triangle is oriented incorrectly, flip it.
+            if (shouldFlipLeft)
+            {
+                FlipTriangle(currentTriangle);  // Flip the triangle if it's facing the wrong way.
+            }
+
+            // Add the triangle to the _leftMesh.
             _leftMesh.AddTriangle(currentTriangle);
 
-            normals = new[] { _plane.normal, _plane.normal, _plane.normal };
-            currentTriangle = new MeshTriangle(vertices, normals, uvs, originalMesh.subMeshCount + 1);
+            // Create a new MeshTriangle with the outward-facing normals for the 'right' mesh.
+            currentTriangle = new MeshTriangle(vertices, rightNormals, uvs, originalMesh.subMeshCount + 1);
 
-            if (Vector3.Dot(Vector3.Cross(vertices[1] - vertices[0], vertices[2] - vertices[0]), normals[0]) < 0)
+            // Check the orientation of the triangle and flip if necessary for the 'right' mesh.
+            if (!shouldFlipLeft)
             {
-                FlipTriangel(currentTriangle);
+                FlipTriangle(currentTriangle);  // Flip if necessary.
             }
+
+            // Add the triangle to the _rightMesh.
             _rightMesh.AddTriangle(currentTriangle);
         }
     }
@@ -519,7 +538,7 @@ public class Cutter : MonoBehaviour
 
         // Get number of materials equal to submesh count
         Material[] mats = new Material[mesh.subMeshCount];
-        for (int i = 0;i < mats.Length; i++)
+        for (int i = 0; i < mats.Length; i++)
         {
             mats[i] = materialApllied;
         }
@@ -528,5 +547,44 @@ public class Cutter : MonoBehaviour
         meshRenderer.materials = mats;
         meshFilter.mesh = mesh;
     }
+
+    private static void RecalculateUvs(Mesh mesh, GameObject obj)
+    {
+        // Get vertices and uvs
+        Vector3[] _vertices = mesh.vertices;
+        Vector2[] _uvs = new Vector2[_vertices.Length];
+
+        // Get the bounds
+        float minX = float.MaxValue;
+        float minY = float.MaxValue;
+        float maxX = float.MinValue;
+        float maxY = float.MinValue;
+        for (int i = 0; i < _vertices.Length; i++)
+        {
+            if (minX > _vertices[i].x)
+                minX = _vertices[i].x;
+            if (minY > _vertices[i].y)
+                minY = _vertices[i].y;
+            if (maxX < _vertices[i].x)
+                maxX = _vertices[i].x;
+            if (maxY < _vertices[i].y)
+                maxY = _vertices[i].y;
+        }
+
+        // Generate uvs
+        for (int i = 0; i < _vertices.Length; i++)
+        {
+            Vector3 vertex = _vertices[i];
+
+            _uvs[i] = new Vector2(Mathf.InverseLerp(minX, maxX, vertex.z),
+                                  Mathf.InverseLerp(minY, maxY, vertex.y));
+
+            _uvs[i].x = Mathf.Clamp(_uvs[i].x, 0.1f, 0.9f);
+            _uvs[i].y = Mathf.Clamp(_uvs[i].y, 0.1f, 0.9f);
+        }
+
+        mesh.uv = _uvs;
+    }
+
 }
 

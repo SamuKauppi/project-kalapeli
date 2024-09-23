@@ -120,13 +120,16 @@ public class AttachingProcess : MonoBehaviour
                 MoveObject(attachedObj, lureObj.transform.right.normalized, attachBothSides);
                 break;
             case AttachPosition.Bottom:
-                MoveObject(attachedObj, -lureObj.transform.forward.normalized, attachBothSides);
+                MoveObject(attachedObj, -lureObj.transform.up.normalized, attachBothSides);
                 break;
             case AttachPosition.Top:
-                MoveObject(attachedObj, lureObj.transform.forward.normalized, attachBothSides);
+                MoveObject(attachedObj, lureObj.transform.up.normalized, attachBothSides);
                 break;
             case AttachPosition.Front:
-                MoveObject(attachedObj, -lureObj.transform.up.normalized, attachBothSides);
+                MoveObject(attachedObj, lureObj.transform.forward.normalized, attachBothSides);
+                break;
+            case AttachPosition.Behind:
+                MoveObject(attachedObj, -lureObj.transform.forward.normalized, attachBothSides);
                 break;
             default:
                 break;

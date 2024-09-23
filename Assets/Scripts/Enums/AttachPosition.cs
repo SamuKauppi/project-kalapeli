@@ -4,5 +4,6 @@
     Bottom,
     Top,
     Front,
+    Behind,
     None
 }

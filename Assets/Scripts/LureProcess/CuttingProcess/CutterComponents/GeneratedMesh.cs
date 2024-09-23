@@ -8,6 +8,9 @@ public class GeneratedMesh
     List<Vector2> uvs = new();
     List<List<int>> submeshIndices = new();
 
+    private readonly float[] uvXBounds = new float[] { float.MaxValue, float.MinValue };
+    private readonly float[] uvYBounds = new float[] { float.MaxValue, float.MinValue };
+
     public List<Vector3> Vertices { get { return vertices; } set { vertices = value; } }
     public List<Vector3> Normals { get { return normals; } set { normals = value; } }
     public List<Vector2> UVs { get { return uvs; } set { uvs = value; } }
@@ -35,28 +38,6 @@ public class GeneratedMesh
         }
     }
 
-    public void AddTriangle(Vector3[] _vertices, Vector3[] _normals, Vector2[] _uvs, int _submeshIndex)
-    {
-        int currentVerticeCount = vertices.Count;
-
-        vertices.AddRange(_vertices);
-        normals.AddRange(_normals);
-        uvs.AddRange(_uvs);
-
-        if (submeshIndices.Count < _submeshIndex + 1)
-        {
-            for (int i = submeshIndices.Count; i < _submeshIndex + 1; i++)
-            {
-                submeshIndices.Add(new List<int>());
-            }
-        }
-
-        for (int i = 0; i < 3; i++)
-        {
-            submeshIndices[_submeshIndex].Add(currentVerticeCount + i);
-        }
-    }
-
     public Mesh GetGeneratedMesh()
     {
         Mesh mesh = new();
@@ -72,8 +53,6 @@ public class GeneratedMesh
         }
         return mesh;
     }
-
-
     public float GetVolume()
     {
         return VolumeOfMesh();

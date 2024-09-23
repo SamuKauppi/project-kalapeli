@@ -25,9 +25,9 @@ public class BlockRotation : MonoBehaviour
     private void Start()
     {
         sideRot = transform.rotation;
-        frontRot = transform.rotation * Quaternion.Euler(0f, 0f, 90f);
-        backRot = transform.rotation * Quaternion.Euler(0f, 0f, -90f);
-        otherSideRot = transform.rotation * Quaternion.Euler(0f, 0f, 180f);
+        frontRot = transform.rotation * Quaternion.Euler(0f, 90f, 0);
+        backRot = transform.rotation * Quaternion.Euler(0f, -90f, 0f);
+        otherSideRot = transform.rotation * Quaternion.Euler(0f, 180f, 0f);
     }
     private void Update()
     {
