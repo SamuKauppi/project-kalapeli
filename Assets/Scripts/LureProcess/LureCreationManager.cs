@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Handles switching from cutting to attaching process
+/// </summary>
 public class LureCreationManager : MonoBehaviour
 {
     // References

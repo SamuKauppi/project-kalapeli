@@ -6,7 +6,6 @@ using UnityEngine;
 /// </summary>
 public class BlockRotation : MonoBehaviour
 {
-
     // Is block rotating (disable cutting and attaching while true)
     public bool IsRotating { get; private set; }
 
@@ -20,7 +19,8 @@ public class BlockRotation : MonoBehaviour
     private Quaternion backRot;
     private Quaternion otherSideRot;
 
-    private int rotIndex = 0;   // Which rotation angle is being used now
+    private int sideRotIndex = 0;   // Which rotation angle is being used now
+    private int upRotIndex = 0;
 
     private void Start()
     {
@@ -36,36 +36,44 @@ public class BlockRotation : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (IsRotating) StopAllCoroutines();
-            StartCoroutine(RotateCamera(1, 0));
+            StartCoroutine(RotateTransform(1, 0, cameraRotationTime));
         }
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
             if (IsRotating) StopAllCoroutines();
-            StartCoroutine(RotateCamera(-1, 0));
+            StartCoroutine(RotateTransform(-1, 0, cameraRotationTime));
         }
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if (IsRotating) StopAllCoroutines();
-            StartCoroutine(RotateCamera(0, -1));
+            StartCoroutine(RotateTransform(upRotIndex, -1, cameraRotationTime));
         }
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (IsRotating) StopAllCoroutines();
-            StartCoroutine(RotateCamera(0, 1));
+            StartCoroutine(RotateTransform(upRotIndex, 1, cameraRotationTime));
         }
     }
 
-    private IEnumerator RotateCamera(int upRotDir, int sideRotDir)
+    /// <summary>
+    /// Rotate object based on index
+    /// </summary>
+    /// <param name="upRotDir">Direction it rotates so that it shows top</param>
+    /// <param name="sideRotDir">Direction it rotates side axis</param>
+    /// <param name="rotTime">How long it takes to rotate</param>
+    /// <returns></returns>
+    private IEnumerator RotateTransform(int upRotDir, int sideRotDir, float rotTime)
     {
         IsRotating = true;
         Quaternion currentRot = transform.rotation;
-        Quaternion targetRot;
+        Quaternion targetRot = transform.rotation;
 
         if (upRotDir != 0)
         {
+            upRotIndex = upRotDir;
             targetRot = upRotDir < 0 ? GetSideRotation(sideRotDir) : Quaternion.Euler(-90f, 0, 0) * GetSideRotation(sideRotDir);
         }
-        else
+        else if (sideRotDir != 0)
         {
             targetRot = GetSideRotation(sideRotDir);
         }
@@ -74,10 +82,10 @@ public class BlockRotation : MonoBehaviour
         {
             float time = 0.0f;
 
-            while (time < cameraRotationTime)
+            while (time < rotTime)
             {
                 time += Time.deltaTime;
-                float t = Mathf.SmoothStep(0f, 1f, time / cameraRotationTime);
+                float t = Mathf.SmoothStep(0f, 1f, time / rotTime);
                 transform.rotation = Quaternion.Lerp(currentRot, targetRot, t);
                 yield return null;
             }
@@ -87,11 +95,15 @@ public class BlockRotation : MonoBehaviour
         IsRotating = false;
     }
 
-
-    private Quaternion GetSideRotation(int xRot)
+    /// <summary>
+    /// Get side rotation
+    /// </summary>
+    /// <param name="rotDir">index increase</param>
+    /// <returns></returns>
+    private Quaternion GetSideRotation(int rotDir)
     {
-        rotIndex = (rotIndex + xRot + 4) % 4;
-        return rotIndex switch
+        sideRotIndex = (sideRotIndex + rotDir + 4) % 4;
+        return sideRotIndex switch
         {
             0 => sideRot,
             1 => frontRot,
@@ -99,5 +111,14 @@ public class BlockRotation : MonoBehaviour
             3 => backRot,
             _ => sideRot,
         };
+    }
+
+    /// <summary>
+    /// Reset rotation
+    /// </summary>
+    public void ResetRotation()
+    {
+        sideRotIndex = 0;
+        StartCoroutine(RotateTransform(-1, 0, 0.1f));
     }
 }

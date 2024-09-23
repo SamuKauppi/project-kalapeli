@@ -116,16 +116,16 @@ public class AttachingProcess : MonoBehaviour
         switch (attachPos)
         {
             case AttachPosition.Side:
-                MoveObject(attachedObj, Vector3.back, attachBothSides);
+                MoveObject(attachedObj, lureObj.transform.right.normalized, attachBothSides);
                 break;
             case AttachPosition.Bottom:
-                MoveObject(attachedObj, Vector3.down, attachBothSides);
+                MoveObject(attachedObj, -lureObj.transform.forward.normalized, attachBothSides);
                 break;
             case AttachPosition.Top:
-                MoveObject(attachedObj, Vector3.up, attachBothSides);
+                MoveObject(attachedObj, lureObj.transform.forward.normalized, attachBothSides);
                 break;
             case AttachPosition.Front:
-                MoveObject(attachedObj, Vector3.right, attachBothSides);
+                MoveObject(attachedObj, -lureObj.transform.up.normalized, attachBothSides);
                 break;
             default:
                 break;
@@ -149,18 +149,18 @@ public class AttachingProcess : MonoBehaviour
             // Move the object to hit position when hits
             attachObject.transform.position = hit.point;
             isValidPos = true;
-
-            // Move the possible mirror object but don't continue the mirroring
-            if (attachBothSides)
-            {
-                MoveObject(mirrorObj, -directionAway, false);
-            }
         }
         else
         {
             // If no hit, move to mouse pos
             attachObject.transform.position = cam.ScreenToWorldPoint(mousePos);
             isValidPos = false;
+        }
+
+        // Move the possible mirror object but don't continue the mirroring
+        if (attachBothSides)
+        {
+            MoveObject(mirrorObj, -directionAway, false);
         }
     }
 
@@ -177,16 +177,24 @@ public class AttachingProcess : MonoBehaviour
         // Check if the object is determined
         if (!attachDict.ContainsKey(type)) { Debug.LogWarning("key " + type + " was not found."); return; }
 
+        Vector3 nullPos = new(0f, -1000f, 0f);
+
         // Set the attached object
-        attachedObj = Instantiate(attachDict[type].attachedPrefab);
+        attachedObj = Instantiate(attachDict[type].attachedPrefab,
+                                  nullPos,
+                                  attachDict[type].attachedPrefab.transform.rotation);
         attachPos = attachDict[type].attachPosition;
         attachBothSides = attachDict[type].attachBothSides;
 
         // Set the possible mirrored object
         if (attachBothSides)
         {
-            mirrorObj = Instantiate(attachDict[type].attachedPrefab);
+            mirrorObj = Instantiate(attachDict[type].attachedPrefab,
+                                    nullPos,
+                                    attachDict[type].attachedPrefab.transform.rotation);
             mirrorObj.transform.localScale *= -1f;
         }
+
+        blockRotation.ResetRotation();
     }
 }

@@ -1,4 +1,8 @@
 using UnityEngine;
+
+/// <summary>
+/// Handles the cutting process of the block
+/// </summary>
 public class DrawCut : MonoBehaviour
 {
     public bool IsCutting {  get; set; } = false;
@@ -123,6 +127,10 @@ public class DrawCut : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Resets line renderer
+    /// </summary>
     private void ResetLineRender()
     {
         pointA = Vector3.zero;
@@ -131,6 +139,4 @@ public class DrawCut : MonoBehaviour
         cutRender.SetPosition(0, pointA);
         cutRender.SetPosition(1, pointB);
     }
-
-
 }
