@@ -25,7 +25,6 @@ public class LureCreationManager : MonoBehaviour
         }
     }
 
-
     public void EndCutting()
     {
         cutProcess.IsCutting = false;

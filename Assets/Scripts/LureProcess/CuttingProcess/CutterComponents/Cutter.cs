@@ -64,7 +64,7 @@ public class Cutter : MonoBehaviour
             originalGameObject.GetComponent<MeshRenderer>(),
             originalGameObject.GetComponent<MeshFilter>(),
             mat);
-        RecalculateUvs(biggerMesh, originalGameObject);
+        RecalculateUvs(biggerMesh);
 
         // Original object
         // Set the collider 
@@ -548,28 +548,24 @@ public class Cutter : MonoBehaviour
         meshFilter.mesh = mesh;
     }
 
-    private static void RecalculateUvs(Mesh mesh, GameObject obj)
+    private static void RecalculateUvs(Mesh mesh)
     {
         // Get vertices and uvs
         Vector3[] _vertices = mesh.vertices;
         Vector2[] _uvs = new Vector2[_vertices.Length];
 
         // Get the bounds
-        float minX = float.MaxValue;
-        float minY = float.MaxValue;
-        float maxX = float.MinValue;
-        float maxY = float.MinValue;
-        for (int i = 0; i < _vertices.Length; i++)
+        float minX = float.MaxValue, minY = float.MaxValue; // Min x & y
+        float maxX = float.MinValue, maxY = float.MinValue; // Max x & y
+
+        foreach (var vertex in _vertices)
         {
-            if (minX > _vertices[i].x)
-                minX = _vertices[i].x;
-            if (minY > _vertices[i].y)
-                minY = _vertices[i].y;
-            if (maxX < _vertices[i].x)
-                maxX = _vertices[i].x;
-            if (maxY < _vertices[i].y)
-                maxY = _vertices[i].y;
+            minX = Mathf.Min(minX, vertex.x);
+            minY = Mathf.Min(minY, vertex.y);
+            maxX = Mathf.Max(maxX, vertex.x);
+            maxY = Mathf.Max(maxY, vertex.y);
         }
+
 
         // Generate uvs
         for (int i = 0; i < _vertices.Length; i++)
@@ -579,8 +575,8 @@ public class Cutter : MonoBehaviour
             _uvs[i] = new Vector2(Mathf.InverseLerp(minX, maxX, vertex.z),
                                   Mathf.InverseLerp(minY, maxY, vertex.y));
 
-            _uvs[i].x = Mathf.Clamp(_uvs[i].x, 0.1f, 0.9f);
-            _uvs[i].y = Mathf.Clamp(_uvs[i].y, 0.1f, 0.9f);
+            _uvs[i].x = Mathf.Clamp(_uvs[i].x, 0.05f, 0.95f);
+            _uvs[i].y = Mathf.Clamp(_uvs[i].y, 0.05f, 0.95f);
         }
 
         mesh.uv = _uvs;

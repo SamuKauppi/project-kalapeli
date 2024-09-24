@@ -8,9 +8,6 @@ public class GeneratedMesh
     List<Vector2> uvs = new();
     List<List<int>> submeshIndices = new();
 
-    private readonly float[] uvXBounds = new float[] { float.MaxValue, float.MinValue };
-    private readonly float[] uvYBounds = new float[] { float.MaxValue, float.MinValue };
-
     public List<Vector3> Vertices { get { return vertices; } set { vertices = value; } }
     public List<Vector3> Normals { get { return normals; } set { normals = value; } }
     public List<Vector2> UVs { get { return uvs; } set { uvs = value; } }
