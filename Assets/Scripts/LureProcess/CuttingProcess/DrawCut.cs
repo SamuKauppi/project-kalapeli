@@ -5,11 +5,11 @@ using UnityEngine;
 /// </summary>
 public class DrawCut : MonoBehaviour
 {
-    public bool IsCutting {  get; set; } = false;
+    public bool IsCutting { get; set; } = false;
 
     // References
-    [SerializeField] private BlockRotation blockRotation;   // Script that rotates the block that will be cut
     [SerializeField] private LayerMask blockLayer;
+    private BlockRotation blockRotation;   // Script that rotates the block that will be cut
 
     // SerializeFields
     [SerializeField] private Vector3 checkBoxSize = new(1000f, 0.01f, 1000f);   // Size of the cut check
@@ -25,10 +25,12 @@ public class DrawCut : MonoBehaviour
     private LineRenderer cutRender;
     private bool animateCut;
     private bool cancelCut;
+    private bool wasRotating;
 
     // Start is called before the first frame update
     void Start()
     {
+        blockRotation = BlockRotation.Instance;
         cam = Camera.main;
         cutRender = GetComponent<LineRenderer>();
         cutRender.startWidth = .05f;
@@ -40,7 +42,14 @@ public class DrawCut : MonoBehaviour
     void Update()
     {
         // Stop the ability to cut when the block is rotatig
-        if (blockRotation.IsRotating || !IsCutting) { return; }
+        if (blockRotation.IsRotating || !IsCutting) { wasRotating = true; return; }
+
+        // Once this script is enabled, update line distance
+        if (wasRotating)
+        {
+            UpdateLineDistance();
+            wasRotating = false;
+        }
 
         // Find mouse pos
         mouse = Input.mousePosition;
@@ -138,5 +147,13 @@ public class DrawCut : MonoBehaviour
         cutRender.positionCount = 2;
         cutRender.SetPosition(0, pointA);
         cutRender.SetPosition(1, pointB);
+    }
+
+
+    private void UpdateLineDistance()
+    {
+        Collider blockColl = blockRotation.GetComponent<Collider>();
+        Vector3 camPos = cam.transform.position;
+        lineDist = Vector3.Distance(camPos, blockColl.ClosestPoint(camPos));
     }
 }

@@ -20,15 +20,15 @@ public class AttachingProcess : MonoBehaviour
 
     // Attaching refs
     [SerializeField] private LayerMask blockLayer;
-    [SerializeField] private BlockRotation blockRotation;                           // Script that rotates the block
     [SerializeField] private ObjectToAttach[] objectTypes;                          // Types of object that will be attached
     private readonly Dictionary<AttachingType, ObjectToAttach> attachDict = new();  // Dictionary set in runtime for faster searches
     private Camera cam;
+    private BlockRotation blockRotation;                                            // Script that rotates the block
 
     // Attachable object currently being attached
     [SerializeField] private float attachDistance;
     private GameObject lureObj;         // Lure object the objects will be attached to
-    private GameObject attachedObj;     // Object being currently attached
+    private GameObject attachedObject;  // Object being currently attached
     private GameObject mirrorObj;       // Mirrored object
     private AttachPosition attachPos;   // Where the object being currently attached can be placed
     private bool attachBothSides;       // Will the object be attached to both sides
@@ -55,6 +55,7 @@ public class AttachingProcess : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        blockRotation = BlockRotation.Instance;
         foreach (ObjectToAttach obj in objectTypes)
         {
             attachDict.Add(obj.type, obj);
@@ -66,7 +67,7 @@ public class AttachingProcess : MonoBehaviour
 
     private void Update()
     {
-        if (!IsAttaching || !attachedObj || blockRotation.IsRotating) { return; }
+        if (!IsAttaching || !attachedObject || blockRotation.IsRotating) { return; }
 
         // Get mouse pos
         mousePos = Input.mousePosition;
@@ -86,25 +87,25 @@ public class AttachingProcess : MonoBehaviour
         {
             if (!isValidPos)
             {
-                Destroy(attachedObj);
+                Destroy(attachedObject);
                 if (attachBothSides)
                     Destroy(mirrorObj);
             }
             else
             {
-                attachedObj.transform.parent = lureObj.transform;
+                attachedObject.transform.parent = lureObj.transform;
                 if (attachBothSides)
                     mirrorObj.transform.parent = lureObj.transform;
             }
 
-            attachedObj = null;
+            attachedObject = null;
             blockRotation.StopRotating = false;
         }
     }
 
     private void FixedUpdate()
     {
-        if (!IsAttaching || !attachedObj || blockRotation.IsRotating) { return; }
+        if (!IsAttaching || !attachedObject || blockRotation.IsRotating) { return; }
         if (mouseHeld)
             MoveObjectToAttachPosition();
     }
@@ -117,19 +118,19 @@ public class AttachingProcess : MonoBehaviour
         switch (attachPos)
         {
             case AttachPosition.Side:
-                MoveObject(attachedObj, lureObj.transform.right.normalized, attachBothSides);
+                MoveObject(attachedObject, lureObj.transform.right.normalized, attachBothSides);
                 break;
             case AttachPosition.Bottom:
-                MoveObject(attachedObj, -lureObj.transform.up.normalized, attachBothSides);
+                MoveObject(attachedObject, -lureObj.transform.up.normalized, attachBothSides);
                 break;
             case AttachPosition.Top:
-                MoveObject(attachedObj, lureObj.transform.up.normalized, attachBothSides);
+                MoveObject(attachedObject, lureObj.transform.up.normalized, attachBothSides);
                 break;
             case AttachPosition.Front:
-                MoveObject(attachedObj, lureObj.transform.forward.normalized, attachBothSides);
+                MoveObject(attachedObject, lureObj.transform.forward.normalized, attachBothSides);
                 break;
             case AttachPosition.Behind:
-                MoveObject(attachedObj, -lureObj.transform.forward.normalized, attachBothSides);
+                MoveObject(attachedObject, -lureObj.transform.forward.normalized, attachBothSides);
                 break;
             default:
                 break;
@@ -154,8 +155,8 @@ public class AttachingProcess : MonoBehaviour
             attachObject.transform.position = hit.point;
 
             // Rotate object to match hit plane normal if it's active
-            //if (matchRotation)
-            //    attachObject.transform.rotation = Quaternion.FromToRotation(directionAway, hit.normal);
+            if (matchRotation)
+                attachObject.transform.rotation = Quaternion.FromToRotation(directionAway, hit.normal);
 
             isValidPos = true;
         }
@@ -171,6 +172,17 @@ public class AttachingProcess : MonoBehaviour
         {
             MoveObject(mirrorObj, -directionAway, false);
         }
+    }
+
+    private Vector3 GetFlippedScale()
+    {
+        return attachPos switch
+        {
+            AttachPosition.Side => new Vector3(1f, 1f, -1f),
+            AttachPosition.Front => new Vector3(-1f, 1f, 1f),
+            AttachPosition.Bottom or AttachPosition.Top => new Vector3(1f, -1f, 1f),
+            _ => new Vector3(-1f, -1f, -1f)
+        };
     }
 
 
@@ -189,12 +201,17 @@ public class AttachingProcess : MonoBehaviour
         Vector3 nullPos = new(0f, -1000f, 0f);
 
         // Set the attached object
-        attachedObj = Instantiate(attachDict[type].attachedPrefab,
+        attachedObject = Instantiate(attachDict[type].attachedPrefab,
                                   nullPos,
                                   attachDict[type].attachedPrefab.transform.rotation);
         attachPos = attachDict[type].attachPosition;
         attachBothSides = attachDict[type].attachBothSides;
         matchRotation = attachDict[type].matchRotationToNormal;
+
+        // Save data to the object incase it's moved later
+        MoveAttach ma1 = attachedObject.GetComponent<MoveAttach>();
+        ma1.AttachPosition = attachPos;
+        ma1.MatchRotation = matchRotation;
 
         // Set the possible mirrored object
         if (attachBothSides)
@@ -202,38 +219,38 @@ public class AttachingProcess : MonoBehaviour
             mirrorObj = Instantiate(attachDict[type].attachedPrefab,
                                     nullPos,
                                     attachDict[type].attachedPrefab.transform.rotation);
-
-            mirrorObj.name = "mirror";
             Vector3 flipScale = GetFlippedScale();
 
             mirrorObj.transform.localScale = flipScale;
+
+            // Save data to objects incase both need to be moved
+            ma1.MirroredObj = mirrorObj;
+            MoveAttach ma2 = mirrorObj.GetComponent<MoveAttach>();
+            ma2.IsMirrored = true;  // Tell the new object that it's a mirror that cannot be moved
         }
 
         blockRotation.ResetRotation();
     }
 
-    private Vector3 GetFlippedScale()
+    /// <summary>
+    /// Object wants to be moved
+    /// </summary>
+    /// <param name="obj">Object that will be moved</param>
+    /// <param name="pos">What was it's attach position type</param>
+    /// <param name="matchRot">Was the rotation matched</param>
+    /// <param name="mirror">Was there a mirrored object</param>
+    public void MoveAttached(GameObject obj, AttachPosition pos, bool matchRot, GameObject mirror)
     {
-        Vector3 flipScale = new(-1f, -1f, -1f);
-        switch (attachPos)
-        {
-            case AttachPosition.Side:
-                flipScale.x = 1f;
-                flipScale.y = 1f;
-                break;
-            case AttachPosition.Bottom:
-            case AttachPosition.Top:
-                flipScale.x = 1f;
-                flipScale.z = 1f;
-                break;
-            case AttachPosition.Front:
-                flipScale.y = 1f;
-                flipScale.z = 1f;
-                break;
-            default:
-                break;
-        }
+        if (attachedObject)
+            return;
 
-        return flipScale;
+        blockRotation.ResetRotation();
+        attachedObject = obj;
+        attachPos = pos;
+        matchRotation = matchRot;
+        mirrorObj = mirror;
+
+        if (mirrorObj != null)
+            attachBothSides = true;
     }
 }

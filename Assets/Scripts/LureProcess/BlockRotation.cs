@@ -6,21 +6,34 @@ using UnityEngine;
 /// </summary>
 public class BlockRotation : MonoBehaviour
 {
+    public static BlockRotation Instance { get; private set; }
+
     // Is block rotating (disable cutting and attaching while true)
     public bool IsRotating { get; private set; }
 
     // Stops the ability to rotate
     public bool StopRotating { get; set; } = false;
 
+    public delegate void Rotate(int sideRot, int upRot);
+    public static event Rotate OnRotation;
+
     // Rotations
-    [SerializeField] private float cameraRotationTime = 0.5f;                   // How fast the block rotates
+    [SerializeField] private float cameraRotationTime = 0.5f; // How fast the block rotates
     private Quaternion sideRot;
     private Quaternion frontRot;
     private Quaternion backRot;
     private Quaternion otherSideRot;
 
-    private int sideRotIndex = 0;   // Which rotation angle is being used now
-    private int upRotIndex = 0;
+    private int sideRotIndex = 0;   // Which side rotation angle is being used now
+    private int upRotIndex = -1;    // Which up rotation is used (< 0 = side and > 0 = up)
+
+    private void Awake()
+    {
+        if(Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
 
     private void Start()
     {
@@ -78,6 +91,7 @@ public class BlockRotation : MonoBehaviour
             targetRot = GetSideRotation(sideRotDir);
         }
 
+        OnRotation?.Invoke(sideRotIndex, upRotIndex);
         if (currentRot != targetRot)
         {
             float time = 0.0f;

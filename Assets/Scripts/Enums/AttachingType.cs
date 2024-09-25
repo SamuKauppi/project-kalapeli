@@ -4,5 +4,6 @@
     Hook,
     Eye,
     Chub,
-    Fin
+    Fin,
+    Tail
 }

@@ -555,14 +555,14 @@ public class Cutter : MonoBehaviour
         Vector2[] _uvs = new Vector2[_vertices.Length];
 
         // Get the bounds
-        float minX = float.MaxValue, minY = float.MaxValue; // Min x & y
-        float maxX = float.MinValue, maxY = float.MinValue; // Max x & y
+        float minZ = float.MaxValue, minY = float.MaxValue; // Min z & y
+        float maxZ = float.MinValue, maxY = float.MinValue; // Max z & y
 
         foreach (var vertex in _vertices)
         {
-            minX = Mathf.Min(minX, vertex.x);
+            minZ = Mathf.Min(minZ, vertex.z);
             minY = Mathf.Min(minY, vertex.y);
-            maxX = Mathf.Max(maxX, vertex.x);
+            maxZ = Mathf.Max(maxZ, vertex.z);
             maxY = Mathf.Max(maxY, vertex.y);
         }
 
@@ -572,11 +572,12 @@ public class Cutter : MonoBehaviour
         {
             Vector3 vertex = _vertices[i];
 
-            _uvs[i] = new Vector2(Mathf.InverseLerp(minX, maxX, vertex.z),
+            _uvs[i] = new Vector2(1f - Mathf.InverseLerp(minZ, maxZ, vertex.z),
                                   Mathf.InverseLerp(minY, maxY, vertex.y));
 
-            _uvs[i].x = Mathf.Clamp(_uvs[i].x, 0.05f, 0.95f);
-            _uvs[i].y = Mathf.Clamp(_uvs[i].y, 0.05f, 0.95f);
+            // Clamp the value so that it does not stay to avoid texture bug
+            _uvs[i].x = Mathf.Clamp(_uvs[i].x, 0.001f, 0.999f);
+            _uvs[i].y = Mathf.Clamp(_uvs[i].y, 0.001f, 0.999f);
         }
 
         mesh.uv = _uvs;

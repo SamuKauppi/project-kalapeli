@@ -6,13 +6,22 @@ using UnityEngine;
 public class LureCreationManager : MonoBehaviour
 {
     // References
-    [SerializeField] private DrawCut cutProcess;                // Cutprocess
+    [SerializeField] private DrawCut cutProcess;                // Cut process
+    [SerializeField] private BlockPainter paintProcess;         // Painting process
     [SerializeField] private AttachingProcess attachProcess;    // Attach process
     [SerializeField] private GameObject lureObject;             // Ref to lure object
+
+    // Buttons
+    [SerializeField] private GameObject cuttingButtons;
+    [SerializeField] private GameObject paintingButtons;
+    [SerializeField] private GameObject attachButtons;
 
     private void Start()
     {
         cutProcess.IsCutting = true;
+        cuttingButtons.SetActive(true);
+        paintingButtons.SetActive(false);
+        attachButtons.SetActive(false);
     }
 
     private void Update()
@@ -28,6 +37,22 @@ public class LureCreationManager : MonoBehaviour
     public void EndCutting()
     {
         cutProcess.IsCutting = false;
+        cutProcess.gameObject.SetActive(false);
+
+        cuttingButtons.SetActive(false);
+        paintProcess.Activate();
+        paintingButtons.SetActive(true);
+
+        // Ensure that the block can be rotated after cutting ends
+        lureObject.GetComponent<BlockRotation>().StopRotating = false;
+    }
+
+    public void EndPainting()
+    {
+        paintingButtons.SetActive(false);
+        paintProcess.gameObject.SetActive(false);
+        attachButtons.SetActive(true);
+
         attachProcess.IsAttaching = true;
 
         // Ensure that the block can be rotated after cutting ends
