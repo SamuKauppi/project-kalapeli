@@ -252,5 +252,7 @@ public class AttachingProcess : MonoBehaviour
 
         if (mirrorObj != null)
             attachBothSides = true;
+        else
+            attachBothSides = false;
     }
 }

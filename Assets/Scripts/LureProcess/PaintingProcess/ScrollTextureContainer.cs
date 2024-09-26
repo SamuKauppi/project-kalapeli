@@ -8,7 +8,6 @@ public class ScrollTextureContainer : MonoBehaviour
     [SerializeField] private RectTransform contentParent;
 
     private ScrollTextureObject[] contentImages = null;
-
     public void CreateContent(Texture2D[] textures)
     {
         if (contentImages != null)
