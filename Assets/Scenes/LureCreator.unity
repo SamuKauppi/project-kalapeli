@@ -361,10 +361,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LureCreator
       objectReference: {fileID: 0}
-    - target: {fileID: 7202436847551421984, guid: 37a6d9d02369693409e08866a0504735, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 1723407e93abffe41b3cf6492645fe23, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

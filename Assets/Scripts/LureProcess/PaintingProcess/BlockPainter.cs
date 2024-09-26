@@ -35,7 +35,7 @@ public class BlockPainter : MonoBehaviour
 
     private void Start()
     {
-        scrollContainer.CreateContent(lureTextures);
+        scrollContainer.CreateTextureContentToSprite(lureTextures);
     }
 
     private void UpdateColoring(Color baseC, Color textC, int selectedId)

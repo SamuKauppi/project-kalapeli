@@ -14,7 +14,7 @@ public class AttachingProcess : MonoBehaviour
     /// <summary>
     /// Is the script active
     /// </summary>
-    public bool IsAttaching { get; set; } = false;
+    public bool IsAttaching { get; private set; } = false;
     // Distance set from camera to lure
     [SerializeField] private float distanceToLure;
 
@@ -28,6 +28,7 @@ public class AttachingProcess : MonoBehaviour
     // Attachable object currently being attached
     [SerializeField] private float attachDistance;
     private GameObject lureObj;         // Lure object the objects will be attached to
+    private Collider lureCollider;      // Lure objects meshfilter that is used to create offset to attach object properly
     private GameObject attachedObject;  // Object being currently attached
     private GameObject mirrorObj;       // Mirrored object
     private AttachPosition attachPos;   // Where the object being currently attached can be placed
@@ -36,6 +37,7 @@ public class AttachingProcess : MonoBehaviour
 
     // Positioning
     private Vector3 mousePos;           // Mouse vector
+    private Vector3 meshOffset;         // Distance from gameobject center to mesh position
     private bool mouseHeld;             // Mouse input detection for fixed update
     private bool isValidPos = false;    // Is the attached object at a valid position
 
@@ -94,11 +96,16 @@ public class AttachingProcess : MonoBehaviour
             else
             {
                 attachedObject.transform.parent = lureObj.transform;
+                attachedObject.GetComponent<MoveAttach>().EnableOutline(false);
                 if (attachBothSides)
+                {
                     mirrorObj.transform.parent = lureObj.transform;
+                    mirrorObj.GetComponent<MoveAttach>().EnableOutline(false);
+                }
             }
 
             attachedObject = null;
+            mirrorObj = null;
             blockRotation.StopRotating = false;
         }
     }
@@ -147,6 +154,7 @@ public class AttachingProcess : MonoBehaviour
     {
         // Get mouse position away from lure
         Vector3 posAwayFromLure = cam.ScreenToWorldPoint(mousePos);
+        posAwayFromLure.z += meshOffset.z;
         posAwayFromLure += 0.5f * attachDistance * directionAway;
 
         if (Physics.Raycast(posAwayFromLure, -directionAway, out RaycastHit hit, attachDistance, blockLayer))
@@ -185,6 +193,14 @@ public class AttachingProcess : MonoBehaviour
         };
     }
 
+    public void StartAttaching()
+    {
+        IsAttaching = true;
+        lureCollider = lureObj.GetComponent<Collider>();
+        Vector3 meshLocalCenter = lureCollider.bounds.center;
+        meshOffset = transform.TransformPoint(meshLocalCenter) - transform.position;
+    }
+
 
     /// <summary>
     /// Set new attaching object
@@ -210,6 +226,7 @@ public class AttachingProcess : MonoBehaviour
 
         // Save data to the object incase it's moved later
         MoveAttach ma1 = attachedObject.GetComponent<MoveAttach>();
+        ma1.EnableOutline(true);
         ma1.AttachPosition = attachPos;
         ma1.MatchRotation = matchRotation;
 
@@ -226,6 +243,7 @@ public class AttachingProcess : MonoBehaviour
             // Save data to objects incase both need to be moved
             ma1.MirroredObj = mirrorObj;
             MoveAttach ma2 = mirrorObj.GetComponent<MoveAttach>();
+            ma2.EnableOutline(true);
             ma2.IsMirrored = true;  // Tell the new object that it's a mirror that cannot be moved
         }
 
@@ -246,13 +264,20 @@ public class AttachingProcess : MonoBehaviour
 
         blockRotation.ResetRotation();
         attachedObject = obj;
+        attachedObject.GetComponent<MoveAttach>().EnableOutline(true);
+
         attachPos = pos;
         matchRotation = matchRot;
         mirrorObj = mirror;
 
         if (mirrorObj != null)
+        {
             attachBothSides = true;
+            mirrorObj.GetComponent<MoveAttach>().EnableOutline(true);
+        }
         else
+        {
             attachBothSides = false;
+        }
     }
 }
