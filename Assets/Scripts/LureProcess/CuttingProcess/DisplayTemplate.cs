@@ -22,11 +22,11 @@ public class DisplayTemplate : MonoBehaviour
 
     private void OnEnable()
     {
-        BlockRotation.OnRotation += ChangeTemplate;
+        BlockRotation.OnRotationStart += ChangeTemplate;
     }
     private void OnDisable()
     {
-        BlockRotation.OnRotation -= ChangeTemplate;
+        BlockRotation.OnRotationStart -= ChangeTemplate;
     }
 
     private void Start()

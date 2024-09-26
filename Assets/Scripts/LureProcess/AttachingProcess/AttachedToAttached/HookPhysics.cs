@@ -2,45 +2,54 @@ using UnityEngine;
 
 public class HookPhysics : MonoBehaviour
 {
-    [SerializeField] private float rotationSpeed = 35.0f; // Deg/sec
-
+    [SerializeField] private float rotationSpeed = 5.0f;
+    private Transform parent;
+    private bool isParentRotating;
     private bool shouldRotate;
-    private Vector3 currentEuler;
-    private Vector3 targetEuler;
+
+    Quaternion targetRotation;
+    Quaternion worldDownAlignment;
 
     private void OnEnable()
     {
-        BlockRotation.OnRotation += StartRotate;
+        BlockRotation.OnRotationStart += StartRotate;
+        BlockRotation.OnRotationEnd += StopRotate;
     }
     private void OnDisable()
     {
-        BlockRotation.OnRotation -= StartRotate;
-    }
-
-    private void Start()
-    {
-        targetEuler = transform.eulerAngles;
+        BlockRotation.OnRotationStart -= StartRotate;
+        BlockRotation.OnRotationEnd -= StopRotate;
     }
 
     private void StartRotate(int sideId, int upId)
     {
+        isParentRotating = true;
         shouldRotate = true;
+    }
+
+    private void StopRotate(int sideId, int upId)
+    {
+        isParentRotating = false;
     }
 
     private void Update()
     {
         if (!shouldRotate) { return; }
 
-        currentEuler = transform.localEulerAngles;
-
-        if (currentEuler == targetEuler)
+        if (parent)
         {
-            shouldRotate = false;
-            return;
+            targetRotation = parent.rotation;
+            worldDownAlignment = Quaternion.FromToRotation(transform.up, Vector3.up) * targetRotation;
+            transform.rotation = Quaternion.Slerp(transform.rotation, worldDownAlignment, Time.deltaTime * rotationSpeed);
+
+            if (!isParentRotating && Quaternion.Angle(transform.rotation, worldDownAlignment) < 0.01f)
+            {
+                shouldRotate = false;
+            }
         }
-
-        var step = rotationSpeed * Time.deltaTime;
-
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(Vector3.down), step);
+        else
+        {
+            parent = transform.parent;
+        }
     }
 }

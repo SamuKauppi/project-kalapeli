@@ -15,7 +15,8 @@ public class BlockRotation : MonoBehaviour
     public bool StopRotating { get; set; } = false;
 
     public delegate void Rotate(int sideRot, int upRot);
-    public static event Rotate OnRotation;
+    public static event Rotate OnRotationStart;
+    public static event Rotate OnRotationEnd;
 
     // Rotations
     [SerializeField] private float cameraRotationTime = 0.5f; // How fast the block rotates
@@ -91,7 +92,7 @@ public class BlockRotation : MonoBehaviour
             targetRot = GetSideRotation(sideRotDir);
         }
 
-        OnRotation?.Invoke(sideRotIndex, upRotIndex);
+        OnRotationStart?.Invoke(sideRotIndex, upRotIndex);
         if (currentRot != targetRot)
         {
             float time = 0.0f;
@@ -107,6 +108,7 @@ public class BlockRotation : MonoBehaviour
         }
 
         IsRotating = false;
+        OnRotationEnd?.Invoke(sideRotIndex, upRotIndex);
     }
 
     /// <summary>
