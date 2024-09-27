@@ -362,7 +362,8 @@ PrefabInstance:
       value: LureCreator
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1768171756084376816, guid: 37a6d9d02369693409e08866a0504735, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37a6d9d02369693409e08866a0504735, type: 3}

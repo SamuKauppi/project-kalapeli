@@ -5,6 +5,5 @@
     Eye,
     Chub,
     Fin,
-    Tail,
-    NewHook
+    Tail
 }

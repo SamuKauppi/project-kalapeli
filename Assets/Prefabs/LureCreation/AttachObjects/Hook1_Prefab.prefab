@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3529462695091046773, guid: 616be6d96ec06024a980c5734af23526, type: 3}
       propertyPath: m_Name
-      value: Hook_Prefab Variant
+      value: Hook1_Prefab
       objectReference: {fileID: 0}
     - target: {fileID: 6849644635279859731, guid: 616be6d96ec06024a980c5734af23526, type: 3}
       propertyPath: m_Mesh

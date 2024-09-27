@@ -288,7 +288,7 @@ MonoBehaviour:
     m_Bits: 128
   objectTypes:
   - type: 1
-    attachedPrefab: {fileID: 3529462695091046773, guid: 616be6d96ec06024a980c5734af23526, type: 3}
+    attachedPrefab: {fileID: 6065737130116171019, guid: 4d92b80be0bb6214290e747c869ad9eb, type: 3}
     attachPosition: 1
     attachBothSides: 0
     matchRotationToNormal: 0
@@ -309,11 +309,6 @@ MonoBehaviour:
     matchRotationToNormal: 0
   - type: 5
     attachedPrefab: {fileID: 4017152633848480788, guid: c356ebfaf1719bd4fa2c78b6d17a8d9a, type: 3}
-    attachPosition: 4
-    attachBothSides: 0
-    matchRotationToNormal: 0
-  - type: 6
-    attachedPrefab: {fileID: 4230513857444643445, guid: a05db43d1da4f544faa0e1e5e4b35948, type: 3}
     attachPosition: 4
     attachBothSides: 0
     matchRotationToNormal: 0
