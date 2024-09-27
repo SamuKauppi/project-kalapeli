@@ -10,6 +10,7 @@ public class DrawCut : MonoBehaviour
     // References
     [SerializeField] private LayerMask blockLayer;
     private BlockRotation blockRotation;   // Script that rotates the block that will be cut
+    private LureProperties lureProperties;
 
     // SerializeFields
     [SerializeField] private Vector3 checkBoxSize = new(1000f, 0.01f, 1000f);   // Size of the cut check
@@ -31,6 +32,8 @@ public class DrawCut : MonoBehaviour
     void Start()
     {
         blockRotation = BlockRotation.Instance;
+        lureProperties = blockRotation.GetComponent<LureProperties>();
+
         cam = Camera.main;
         cutRender = GetComponent<LineRenderer>();
         cutRender.startWidth = .05f;
@@ -135,6 +138,8 @@ public class DrawCut : MonoBehaviour
                 Cutter.Cut(hit.gameObject, pointInPlane, cutPlaneNormal);
             }
         }
+
+        lureProperties.UpdateStreamLineRatio();
     }
 
     /// <summary>
