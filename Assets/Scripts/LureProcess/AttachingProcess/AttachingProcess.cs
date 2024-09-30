@@ -16,7 +16,7 @@ public class AttachingProcess : MonoBehaviour
     /// </summary>
     public bool IsAttaching { get; private set; } = false;
     // Distance set from camera to lure
-    [SerializeField] private float distanceToLure;
+    private float distanceToLure;
 
     // Attaching refs
     [SerializeField] private LayerMask blockLayer;

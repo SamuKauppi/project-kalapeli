@@ -1,9 +1,23 @@
 ﻿public enum AttachingType
 {
     NULL,
-    Hook,
-    Eye,
-    Chub,
-    Fin,
-    Tail
+    Hook1,
+    Hook2,
+    Eye1,
+    Eye2,
+    Eye3,
+    Eye4,
+    Eye5,
+    Chub1,
+    Chub2,
+    Chub3,
+    Chub4,
+    Fin1,
+    Fin2,
+    Fin3,
+    Fin4,
+    Tail1,
+    Tail2,
+    Tail3,
+    Propeller
 }
