@@ -42,7 +42,24 @@ public class DisplayTemplate : MonoBehaviour
 
     private void ChangeTemplate(int sideRot, int upRot)
     {
-        int id = upRot > 0 ? sideRot + (4 * upRot) : sideRot;
+        int id;
+        if (upRot == 0)
+        {
+            // If looking from side, use side templates
+            id = sideRot;
+        }
+        else if (upRot < 0)
+        {
+            // If looking from above, use templates from above
+            id = sideRot + 4;
+        }
+        else
+        {
+            // If looking from below, use templated from above but swap 1 and 3
+            sideRot = sideRot == 3 ? 1 : sideRot == 1 ? 3 : sideRot;
+            id = sideRot + 4;
+        }
+
         templateImage.sprite = templateSprites[templateIndex].sprites[id];
         spriteIndex = id;
     }

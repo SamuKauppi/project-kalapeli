@@ -20,28 +20,16 @@ public class BlockRotation : MonoBehaviour
 
     // Rotations
     [SerializeField] private float cameraRotationTime = 0.5f; // How fast the block rotates
-    private Quaternion sideRot;
-    private Quaternion frontRot;
-    private Quaternion backRot;
-    private Quaternion otherSideRot;
 
     private int sideRotIndex = 0;   // Which side rotation angle is being used now
-    private int upRotIndex = -1;    // Which up rotation is used (< 0 = side and > 0 = up)
+    private int upRotIndex = 0;     // Which up rotation is used (< 0 = side and > 0 = up)
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
             Instance = this;
         else
             Destroy(gameObject);
-    }
-
-    private void Start()
-    {
-        sideRot = transform.rotation;
-        frontRot = transform.rotation * Quaternion.Euler(0f, 90f, 0);
-        backRot = transform.rotation * Quaternion.Euler(0f, -90f, 0f);
-        otherSideRot = transform.rotation * Quaternion.Euler(0f, 180f, 0f);
     }
     private void Update()
     {
@@ -50,47 +38,45 @@ public class BlockRotation : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (IsRotating) StopAllCoroutines();
-            StartCoroutine(RotateTransform(1, 0, cameraRotationTime));
+            StartCoroutine(RotateTransform(0, -1, cameraRotationTime));
         }
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
             if (IsRotating) StopAllCoroutines();
-            StartCoroutine(RotateTransform(-1, 0, cameraRotationTime));
+            StartCoroutine(RotateTransform(0, 1, cameraRotationTime));
         }
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if (IsRotating) StopAllCoroutines();
-            StartCoroutine(RotateTransform(upRotIndex, -1, cameraRotationTime));
+            StartCoroutine(RotateTransform(-1, 0, cameraRotationTime));
         }
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (IsRotating) StopAllCoroutines();
-            StartCoroutine(RotateTransform(upRotIndex, 1, cameraRotationTime));
+            StartCoroutine(RotateTransform(1, 0, cameraRotationTime));
         }
     }
 
     /// <summary>
     /// Rotate object based on index
     /// </summary>
-    /// <param name="upRotDir">Direction it rotates so that it shows top</param>
-    /// <param name="sideRotDir">Direction it rotates side axis</param>
+    /// <param name="sideRotDir">Direction it rotates up axis</param>
+    /// <param name="upRotDir">Direction it rotates side axis</param>
     /// <param name="rotTime">How long it takes to rotate</param>
     /// <returns></returns>
-    private IEnumerator RotateTransform(int upRotDir, int sideRotDir, float rotTime)
+    private IEnumerator RotateTransform(int sideRotDir, int upRotDir, float rotTime)
     {
         IsRotating = true;
+        // Initialize rotations
         Quaternion currentRot = transform.rotation;
-        Quaternion targetRot = transform.rotation;
+        Quaternion targetRot = Quaternion.identity;
 
-        if (upRotDir != 0)
-        {
-            upRotIndex = upRotDir;
-            targetRot = upRotDir < 0 ? GetSideRotation(sideRotDir) : Quaternion.Euler(-90f, 0, 0) * GetSideRotation(sideRotDir);
-        }
-        else if (sideRotDir != 0)
-        {
-            targetRot = GetSideRotation(sideRotDir);
-        }
+        // Get next index
+        sideRotIndex = (sideRotIndex + sideRotDir + 4) % 4;
+        upRotIndex = Mathf.Clamp(upRotIndex + upRotDir, -1 , 1);
+
+        targetRot *= Quaternion.Euler(90f * upRotIndex * Vector3.right);
+        targetRot *= Quaternion.Euler(0f, 90f * sideRotIndex, 0f);
 
         OnRotationStart?.Invoke(sideRotIndex, upRotIndex);
         if (currentRot != targetRot)
@@ -109,24 +95,6 @@ public class BlockRotation : MonoBehaviour
 
         IsRotating = false;
         OnRotationEnd?.Invoke(sideRotIndex, upRotIndex);
-    }
-
-    /// <summary>
-    /// Get side rotation
-    /// </summary>
-    /// <param name="rotDir">index increase</param>
-    /// <returns></returns>
-    private Quaternion GetSideRotation(int rotDir)
-    {
-        sideRotIndex = (sideRotIndex + rotDir + 4) % 4;
-        return sideRotIndex switch
-        {
-            0 => sideRot,
-            1 => frontRot,
-            2 => otherSideRot,
-            3 => backRot,
-            _ => sideRot,
-        };
     }
 
     /// <summary>
