@@ -26,7 +26,7 @@ public class AttachingProcess : MonoBehaviour
     private BlockRotation blockRotation;                                            // Script that rotates the block
 
     // Attachable object currently being attached
-    [SerializeField] private float attachDistance;
+    private readonly float attachDistance = 20f;    // Used to raycast while attaching
     private GameObject lureObj;         // Lure object the objects will be attached to
     private Collider lureCollider;      // Lure objects meshfilter that is used to create offset to attach object properly
     private GameObject attachedObject;  // Object being currently attached
@@ -125,7 +125,7 @@ public class AttachingProcess : MonoBehaviour
         switch (attachPos)
         {
             case AttachPosition.Side:
-                MoveObject(attachedObject, lureObj.transform.right.normalized, attachBothSides);
+                MoveObject(attachedObject, -lureObj.transform.forward.normalized, attachBothSides);
                 break;
             case AttachPosition.Bottom:
                 MoveObject(attachedObject, -lureObj.transform.up.normalized, attachBothSides);
@@ -134,10 +134,10 @@ public class AttachingProcess : MonoBehaviour
                 MoveObject(attachedObject, lureObj.transform.up.normalized, attachBothSides);
                 break;
             case AttachPosition.Front:
-                MoveObject(attachedObject, lureObj.transform.forward.normalized, attachBothSides);
+                MoveObject(attachedObject, lureObj.transform.right.normalized, attachBothSides);
                 break;
             case AttachPosition.Behind:
-                MoveObject(attachedObject, -lureObj.transform.forward.normalized, attachBothSides);
+                MoveObject(attachedObject, -lureObj.transform.right.normalized, attachBothSides);
                 break;
             default:
                 break;
@@ -164,7 +164,10 @@ public class AttachingProcess : MonoBehaviour
 
             // Rotate object to match hit plane normal if it's active
             if (matchRotation)
-                attachObject.transform.rotation = Quaternion.FromToRotation(directionAway, hit.normal);
+            {
+                attachObject.transform.rotation = Quaternion.Euler(lureObj.transform.eulerAngles);
+                attachObject.transform.rotation *= Quaternion.FromToRotation(directionAway, hit.normal);
+            }
 
             isValidPos = true;
         }
@@ -219,7 +222,7 @@ public class AttachingProcess : MonoBehaviour
         // Set the attached object
         attachedObject = Instantiate(attachDict[type].attachedPrefab,
                                   nullPos,
-                                  attachDict[type].attachedPrefab.transform.rotation);
+                                  Quaternion.Euler(lureObj.transform.eulerAngles));
         attachPos = attachDict[type].attachPosition;
         attachBothSides = attachDict[type].attachBothSides;
         matchRotation = attachDict[type].matchRotationToNormal;
@@ -235,7 +238,7 @@ public class AttachingProcess : MonoBehaviour
         {
             mirrorObj = Instantiate(attachDict[type].attachedPrefab,
                                     nullPos,
-                                    attachDict[type].attachedPrefab.transform.rotation);
+                                    Quaternion.Euler(lureObj.transform.eulerAngles));
             Vector3 flipScale = GetFlippedScale();
 
             mirrorObj.transform.localScale = flipScale;

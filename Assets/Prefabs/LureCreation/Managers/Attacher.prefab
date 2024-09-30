@@ -673,4 +673,3 @@ MonoBehaviour:
     attachPosition: 4
     attachBothSides: 0
     matchRotationToNormal: 0
-  attachDistance: 20

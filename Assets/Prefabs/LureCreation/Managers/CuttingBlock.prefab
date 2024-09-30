@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 5663000148207114756}
   - component: {fileID: 1259862936879279991}
   m_Layer: 7
-  m_Name: LureBlock
+  m_Name: CuttingBlock
   m_TagString: Block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
