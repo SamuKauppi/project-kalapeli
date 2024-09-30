@@ -53,7 +53,7 @@ public class LureCreationManager : MonoBehaviour
         paintProcess.gameObject.SetActive(false);
         attachButtons.SetActive(true);
 
-        attachProcess.StartAttaching();
+        attachProcess.ActivateAttaching();
 
         // Ensure that the block can be rotated after cutting ends
         lureObject.GetComponent<BlockRotation>().StopRotating = false;

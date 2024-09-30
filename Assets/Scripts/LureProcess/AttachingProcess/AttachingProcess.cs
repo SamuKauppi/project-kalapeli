@@ -196,7 +196,7 @@ public class AttachingProcess : MonoBehaviour
         };
     }
 
-    public void StartAttaching()
+    public void ActivateAttaching()
     {
         IsAttaching = true;
         lureCollider = lureObj.GetComponent<Collider>();
@@ -249,8 +249,6 @@ public class AttachingProcess : MonoBehaviour
             ma2.EnableOutline(true);
             ma2.IsMirrored = true;  // Tell the new object that it's a mirror that cannot be moved
         }
-
-        blockRotation.ResetRotation();
     }
 
     /// <summary>
@@ -265,9 +263,7 @@ public class AttachingProcess : MonoBehaviour
         if (attachedObject)
             return;
 
-        blockRotation.ResetRotation();
         attachedObject = obj;
-        attachedObject.GetComponent<MoveAttach>().EnableOutline(true);
 
         attachPos = pos;
         matchRotation = matchRot;
@@ -276,7 +272,6 @@ public class AttachingProcess : MonoBehaviour
         if (mirrorObj != null)
         {
             attachBothSides = true;
-            mirrorObj.GetComponent<MoveAttach>().EnableOutline(true);
         }
         else
         {
