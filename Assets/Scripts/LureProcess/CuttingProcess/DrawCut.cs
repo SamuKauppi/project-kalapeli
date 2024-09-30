@@ -14,7 +14,7 @@ public class DrawCut : MonoBehaviour
 
     // SerializeFields
     [SerializeField] private Vector3 checkBoxSize = new(1000f, 0.01f, 1000f);   // Size of the cut check
-    [SerializeField] private float lineDist = 8f;                               // How far from camera is the line used for cutting
+    private float lineDist = 8f;                                                // How far from camera is the line used for cutting
 
     // Cut detection
     private Camera cam;     // Main camera
@@ -39,6 +39,7 @@ public class DrawCut : MonoBehaviour
         cutRender.startWidth = .05f;
         cutRender.endWidth = .05f;
         ResetLineRender();
+        UpdateLineDistance();
     }
 
     // Update is called once per frame
