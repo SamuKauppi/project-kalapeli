@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7090887547642658852}
   - component: {fileID: 6858129887650427233}
   - component: {fileID: 1660729858650980912}
+  - component: {fileID: 5764822535924133430}
   - component: {fileID: -3612186551285969589}
   m_Layer: 0
   m_Name: Fin_prefab
@@ -70,6 +71,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: -3612186551285969589}
+--- !u!114 &5764822535924133430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4823234238868544674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 913efcf95d2e2a3489d42690f298361f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 0.5
 --- !u!114 &-3612186551285969589
 MonoBehaviour:
   m_ObjectHideFlags: 0

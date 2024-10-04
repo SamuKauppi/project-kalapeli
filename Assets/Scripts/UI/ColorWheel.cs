@@ -32,8 +32,6 @@ public class ColorWheel : MonoBehaviour
             newColor = new(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
             SetColor();
         }
-        if (Time.time <= 0)
-            gameObject.SetActive(false);
     }
     private void Update()
     {

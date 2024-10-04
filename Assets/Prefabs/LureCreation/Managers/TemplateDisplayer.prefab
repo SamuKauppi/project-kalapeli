@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2812524720023092389
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7055168667792533392}
+  - component: {fileID: 6794295485530530137}
+  - component: {fileID: 6936073206823553141}
+  m_Layer: 0
+  m_Name: TemplateDisplayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7055168667792533392
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2812524720023092389}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6794295485530530137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2812524720023092389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 916a49120993ff14dbb0657b9f2951aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  templateImage: {fileID: 0}
+  templateSprites:
+  - sprites:
+    - {fileID: -253759077, guid: dc467036d25927f4da00b235428db9cb, type: 3}
+    - {fileID: 176863899, guid: dc467036d25927f4da00b235428db9cb, type: 3}
+    - {fileID: 2129746594, guid: dc467036d25927f4da00b235428db9cb, type: 3}
+    - {fileID: -1708706886, guid: dc467036d25927f4da00b235428db9cb, type: 3}
+    - {fileID: 1540315207, guid: dc467036d25927f4da00b235428db9cb, type: 3}
+    - {fileID: -304988997, guid: dc467036d25927f4da00b235428db9cb, type: 3}
+    - {fileID: -1183597589, guid: dc467036d25927f4da00b235428db9cb, type: 3}
+    - {fileID: -739327006, guid: dc467036d25927f4da00b235428db9cb, type: 3}
+  - sprites:
+    - {fileID: 409811041, guid: 484d8462511eb7e48a311d184f5f5723, type: 3}
+    - {fileID: -760901663, guid: 484d8462511eb7e48a311d184f5f5723, type: 3}
+    - {fileID: -1911706378, guid: 484d8462511eb7e48a311d184f5f5723, type: 3}
+    - {fileID: 619238406, guid: 484d8462511eb7e48a311d184f5f5723, type: 3}
+    - {fileID: 57461602, guid: 484d8462511eb7e48a311d184f5f5723, type: 3}
+    - {fileID: -2087912726, guid: 484d8462511eb7e48a311d184f5f5723, type: 3}
+    - {fileID: 1473725947, guid: 484d8462511eb7e48a311d184f5f5723, type: 3}
+    - {fileID: -42536405, guid: 484d8462511eb7e48a311d184f5f5723, type: 3}
+  scrollContainer: {fileID: 6936073206823553141}
+--- !u!114 &6936073206823553141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2812524720023092389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6dc70224fe012746977b40d68d68f8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showScroll: {fileID: 0}
+  contentPrefab: {fileID: 929806946195224762, guid: b4405975853230046bfd9e6c624afec7, type: 3}
+  contentParent: {fileID: 0}
+  padding: 40

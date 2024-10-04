@@ -143,9 +143,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5752246358138718710, guid: 37a6d9d02369693409e08866a0504735, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5752246358138718710, guid: 37a6d9d02369693409e08866a0504735, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6893337277739500867, guid: 37a6d9d02369693409e08866a0504735, type: 3}
       propertyPath: m_Name
       value: LureCreator
+      objectReference: {fileID: 0}
+    - target: {fileID: 7524240627521045099, guid: 37a6d9d02369693409e08866a0504735, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7524240627521045099, guid: 37a6d9d02369693409e08866a0504735, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828017668066747975, guid: 37a6d9d02369693409e08866a0504735, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828017668066747975, guid: 37a6d9d02369693409e08866a0504735, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

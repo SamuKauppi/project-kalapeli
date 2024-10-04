@@ -21,8 +21,14 @@ public class BlockRotation : MonoBehaviour
     // Rotations
     [SerializeField] private float cameraRotationTime = 0.5f; // How fast the block rotates
 
-    private int sideRotIndex = 0;   // Which side rotation angle is being used now
-    private int upRotIndex = 0;     // Which up rotation is used (< 0 = side and > 0 = up)
+    public Quaternion DefaultRotation { get { return defaultRot; } }
+
+    private Quaternion defaultRot;  // Starting rotation
+    private int sideRotIndex = 0;   // Which side rotation is used
+    private int upRotIndex = 0;     // Which up rotation is used
+
+    // Used to avoid restart same up rotation corountine
+    private UpRotation currentRotDir = UpRotation.None;
 
     private void Awake()
     {
@@ -31,30 +37,46 @@ public class BlockRotation : MonoBehaviour
         else
             Destroy(gameObject);
     }
+
+    private void Start()
+    {
+        defaultRot = transform.rotation;
+    }
+
     private void Update()
     {
         if (StopRotating) { return; }
 
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) &&
+            currentRotDir != UpRotation.Up)
         {
             if (IsRotating) StopAllCoroutines();
+            if (upRotIndex == 0)
+                currentRotDir = UpRotation.Up;
             StartCoroutine(RotateTransform(0, -1, cameraRotationTime));
         }
-        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+
+        if ((Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) &&
+            currentRotDir != UpRotation.Down)
         {
             if (IsRotating) StopAllCoroutines();
+            if (upRotIndex == 0)
+                currentRotDir = UpRotation.Down;
             StartCoroutine(RotateTransform(0, 1, cameraRotationTime));
         }
+
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if (IsRotating) StopAllCoroutines();
-            StartCoroutine(RotateTransform(-1, 0, cameraRotationTime));
+            StartCoroutine(RotateTransform(-1 * (upRotIndex == 0 ? 1 : upRotIndex), 0, cameraRotationTime));
         }
+
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (IsRotating) StopAllCoroutines();
-            StartCoroutine(RotateTransform(1, 0, cameraRotationTime));
+            StartCoroutine(RotateTransform(1 * (upRotIndex == 0 ? 1 : upRotIndex), 0, cameraRotationTime));
         }
+
     }
 
     /// <summary>
@@ -69,7 +91,7 @@ public class BlockRotation : MonoBehaviour
         IsRotating = true;
         // Initialize rotations
         Quaternion currentRot = transform.rotation;
-        Quaternion targetRot = Quaternion.identity;
+        Quaternion targetRot = defaultRot;
 
         // Get next index
         sideRotIndex = (sideRotIndex + sideRotDir + 4) % 4;
@@ -95,6 +117,7 @@ public class BlockRotation : MonoBehaviour
 
         IsRotating = false;
         OnRotationEnd?.Invoke(sideRotIndex, upRotIndex);
+        currentRotDir = upRotIndex < 0 ? UpRotation.Up : upRotIndex > 0 ? UpRotation.Down : UpRotation.None;
     }
 
     /// <summary>
@@ -103,6 +126,14 @@ public class BlockRotation : MonoBehaviour
     public void ResetRotation()
     {
         sideRotIndex = 0;
-        StartCoroutine(RotateTransform(-1, 0, 0.1f));
+        upRotIndex = 0;
+        StartCoroutine(RotateTransform(0, 0, 0.1f));
     }
+}
+
+public enum UpRotation
+{
+    None,
+    Up,
+    Down
 }

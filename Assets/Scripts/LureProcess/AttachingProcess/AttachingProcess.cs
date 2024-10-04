@@ -15,6 +15,11 @@ public class AttachingProcess : MonoBehaviour
     /// Is the script active
     /// </summary>
     public bool IsAttaching { get; private set; } = false;
+
+    // Event for when object is attached, moved or removed
+    public delegate void AttachEvent();
+    public static event AttachEvent OnAttach;
+
     // Distance set from camera to lure
     private float distanceToLure;
 
@@ -107,6 +112,7 @@ public class AttachingProcess : MonoBehaviour
             attachedObject = null;
             mirrorObj = null;
             blockRotation.StopRotating = false;
+            OnAttach?.Invoke();
         }
     }
 
@@ -165,8 +171,7 @@ public class AttachingProcess : MonoBehaviour
             // Rotate object to match hit plane normal if it's active
             if (matchRotation)
             {
-                attachObject.transform.rotation = Quaternion.Euler(lureObj.transform.eulerAngles);
-                attachObject.transform.rotation *= Quaternion.FromToRotation(directionAway, hit.normal);
+                attachObject.transform.rotation = Quaternion.FromToRotation(directionAway, hit.normal) * Quaternion.Euler(lureObj.transform.eulerAngles);
             }
 
             isValidPos = true;
@@ -222,7 +227,7 @@ public class AttachingProcess : MonoBehaviour
         // Set the attached object
         attachedObject = Instantiate(attachDict[type].attachedPrefab,
                                   nullPos,
-                                  Quaternion.Euler(lureObj.transform.eulerAngles));
+                                  blockRotation.DefaultRotation);
         attachPos = attachDict[type].attachPosition;
         attachBothSides = attachDict[type].attachBothSides;
         matchRotation = attachDict[type].matchRotationToNormal;
@@ -232,13 +237,14 @@ public class AttachingProcess : MonoBehaviour
         ma1.EnableOutline(true);
         ma1.AttachPosition = attachPos;
         ma1.MatchRotation = matchRotation;
+        attachedObject.GetComponent<AttachProperties>().AttachingType = type;
 
         // Set the possible mirrored object
         if (attachBothSides)
         {
             mirrorObj = Instantiate(attachDict[type].attachedPrefab,
                                     nullPos,
-                                    Quaternion.Euler(lureObj.transform.eulerAngles));
+                                    blockRotation.DefaultRotation);
             Vector3 flipScale = GetFlippedScale();
 
             mirrorObj.transform.localScale = flipScale;
@@ -248,7 +254,10 @@ public class AttachingProcess : MonoBehaviour
             MoveAttach ma2 = mirrorObj.GetComponent<MoveAttach>();
             ma2.EnableOutline(true);
             ma2.IsMirrored = true;  // Tell the new object that it's a mirror that cannot be moved
+            mirrorObj.GetComponent<AttachProperties>().AttachingType = type;
         }
+
+        blockRotation.ResetRotation();
     }
 
     /// <summary>
@@ -272,10 +281,13 @@ public class AttachingProcess : MonoBehaviour
         if (mirrorObj != null)
         {
             attachBothSides = true;
+            mirrorObj.GetComponent<MoveAttach>().EnableOutline(true);
         }
         else
         {
             attachBothSides = false;
         }
+
+        blockRotation.ResetRotation();
     }
 }

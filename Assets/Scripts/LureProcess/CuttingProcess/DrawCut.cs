@@ -140,7 +140,7 @@ public class DrawCut : MonoBehaviour
             }
         }
 
-        lureProperties.UpdateStreamLineRatio();
+        lureProperties.CalculateStats();
     }
 
     /// <summary>

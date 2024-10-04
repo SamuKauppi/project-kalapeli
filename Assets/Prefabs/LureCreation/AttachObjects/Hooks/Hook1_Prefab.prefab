@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2235056509866098242, guid: 616be6d96ec06024a980c5734af23526, type: 3}
+      propertyPath: weight
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3529462695091046773, guid: 616be6d96ec06024a980c5734af23526, type: 3}
       propertyPath: m_Name
       value: Hook1_Prefab

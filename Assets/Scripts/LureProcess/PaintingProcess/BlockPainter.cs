@@ -1,9 +1,19 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class that handles changing color of a shader
+/// </summary>
 public class BlockPainter : MonoBehaviour
 {
+    /// <summary>
+    /// Singleton
+    /// </summary>
     public static BlockPainter Instance { get; private set; }
+
+    // Event for changing color
+    public delegate void ChangeColor(Color baseC, Color texC);
+    public static event ChangeColor OnColorChange;
 
     // Object references
     [SerializeField] private ScrollTextureContainer scrollContainer;
@@ -61,6 +71,7 @@ public class BlockPainter : MonoBehaviour
         blockRenderer.materials = materials;
         selectedTextureId = selectedId;
         scrollContainer.UpdateColors(baseColor, textureColor);
+        OnColorChange?.Invoke(baseColor, textureColor);
     }
 
     public void Activate()

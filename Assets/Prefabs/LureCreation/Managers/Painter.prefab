@@ -51,14 +51,14 @@ MonoBehaviour:
   textureColorButton: {fileID: 0}
   lureTextures:
   - {fileID: 2800000, guid: 8778adcf621d5ae4c8146c526bf035ed, type: 3}
-  - {fileID: 2800000, guid: 6d01987497144fb4daf91ff160a6f35b, type: 3}
-  - {fileID: 2800000, guid: 935637528d042c04486384c88770c20c, type: 3}
-  - {fileID: 2800000, guid: 01a631a3d08085b4c9b3b54ed3fc3fa2, type: 3}
-  - {fileID: 2800000, guid: c5b1a8241d13e1c4db65c47718d73e65, type: 3}
   - {fileID: 2800000, guid: 14c20ec6eb64d204885a7b489b3a2839, type: 3}
   - {fileID: 2800000, guid: 63cdc32d0ec422742b9078ff8dc03e58, type: 3}
+  - {fileID: 2800000, guid: 01a631a3d08085b4c9b3b54ed3fc3fa2, type: 3}
   - {fileID: 2800000, guid: 9b1b8d30beb8aed42b64ef5f7fb9ba3d, type: 3}
   - {fileID: 2800000, guid: 14e5924f8cabf344094e1444b6e4ba2f, type: 3}
-  - {fileID: 2800000, guid: 6329645a3ead5c44facda1d4e458d4ac, type: 3}
   - {fileID: 2800000, guid: 08627fe25c127d74a997d6bbab304414, type: 3}
+  - {fileID: 2800000, guid: 6d01987497144fb4daf91ff160a6f35b, type: 3}
+  - {fileID: 2800000, guid: c5b1a8241d13e1c4db65c47718d73e65, type: 3}
+  - {fileID: 2800000, guid: 6329645a3ead5c44facda1d4e458d4ac, type: 3}
+  - {fileID: 2800000, guid: 935637528d042c04486384c88770c20c, type: 3}
   coloredBlockMaterial: {fileID: 2100000, guid: 1723407e93abffe41b3cf6492645fe23, type: 2}

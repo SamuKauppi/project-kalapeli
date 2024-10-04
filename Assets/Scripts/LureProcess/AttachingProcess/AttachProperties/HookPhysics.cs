@@ -25,6 +25,7 @@ public class HookPhysics : MonoBehaviour
     {
         isParentRotating = true;
         shouldRotate = true;
+        parent = transform.parent;
     }
 
     private void StopRotate(int sideId, int upId)
@@ -46,10 +47,6 @@ public class HookPhysics : MonoBehaviour
             {
                 shouldRotate = false;
             }
-        }
-        else
-        {
-            parent = transform.parent;
         }
     }
 }

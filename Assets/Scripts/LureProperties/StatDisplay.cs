@@ -1,0 +1,78 @@
+using System;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class StatDisplay : MonoBehaviour
+{
+    public static StatDisplay Instance { get; private set; }
+
+    // Swimming style
+    [SerializeField] private TMP_Text swimmingTypeText;
+    [SerializeField] private Image badSwimImage;
+
+    // Streamline
+    [SerializeField] private Slider streamlineSlider;
+    [SerializeField] private TMP_Text streamlineText;
+
+    // Depth
+    [SerializeField] private Slider depthSilder;
+    [SerializeField] private TMP_Text depthText;
+
+    // Weight
+    [SerializeField] private Slider weightSlider;
+    [SerializeField] private TMP_Text weightText;
+
+    // Color
+    [SerializeField] private Image baseColorImage;
+    [SerializeField] private Image texColorImage;
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
+
+    public void SetDisplayBounds(float minDepth, float maxDepth, float maxStreamlineRatio, float maxWeight)
+    {
+        // Set depth bounds
+        depthSilder.minValue = minDepth;
+        depthSilder.maxValue = maxDepth;
+        // Set streamline bounds 
+        streamlineSlider.minValue = 0f;
+        streamlineSlider.maxValue = maxStreamlineRatio;
+        // Set Weight bounds
+        weightSlider.minValue = 0f;
+        weightSlider.maxValue = maxWeight;
+        // Hide bad swimming image
+        badSwimImage.gameObject.SetActive(false);
+    }
+
+    public void UpdateDisplayStats(SwimmingType type,
+                                   float streamlineRatio,
+                                   float depth,
+                                   float weight,
+                                   Color baseC,
+                                   Color texC)
+    {
+        swimmingTypeText.text = type.ToString();
+        if (type == SwimmingType.Bad)
+        {
+            badSwimImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            badSwimImage.gameObject.SetActive(false);
+        }
+        streamlineText.text = MathF.Round(streamlineRatio, 2).ToString();
+        streamlineSlider.value = streamlineRatio;
+        depthText.text = MathF.Round(depth, 2).ToString() + "m";
+        depthSilder.value = depth;
+        weightText.text = MathF.Round(weight, 2).ToString() + "g";
+        weightSlider.value = weight;
+        baseColorImage.color = baseC;
+        texColorImage.color = texC;
+    }
+}

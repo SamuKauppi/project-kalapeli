@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3387688374180264442}
   - component: {fileID: 2167458529050501580}
   - component: {fileID: -1557290075087177460}
+  - component: {fileID: 7677517316292408577}
   - component: {fileID: 2632832261839840480}
   m_Layer: 0
   m_Name: Chub_prefab
@@ -70,6 +71,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 2632832261839840480}
+--- !u!114 &7677517316292408577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2307156293450293997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 378bebe4e7ed4c3409aff4d50faf6c40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 0.5
+  swimmingType: 2
+  swimmingDepthInMeters: 2
 --- !u!114 &2632832261839840480
 MonoBehaviour:
   m_ObjectHideFlags: 0

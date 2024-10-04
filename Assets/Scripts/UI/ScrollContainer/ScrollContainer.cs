@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ScrollContainer : MonoBehaviour
 {
+    [SerializeField] private GameObject showScroll;
     [SerializeField] protected ScrollObject contentPrefab;
     [SerializeField] protected RectTransform contentParent;
     [SerializeField] protected float padding = 40f;
@@ -24,6 +25,6 @@ public class ScrollContainer : MonoBehaviour
         contentParent.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,
                                                 contentImages.Length * (contentImages[0].displayImage.rectTransform.rect.height + (padding * 2f)));
 
-        transform.GetChild(0).gameObject.SetActive(false);
+        showScroll.SetActive(false);
     }
 }
