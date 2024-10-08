@@ -206,7 +206,7 @@ public class AttachingProcess : MonoBehaviour
         IsAttaching = true;
         lureCollider = lureObj.GetComponent<Collider>();
         Vector3 meshLocalCenter = lureCollider.bounds.center;
-        meshOffset = transform.TransformPoint(meshLocalCenter) - transform.position;
+        meshOffset = transform.TransformPoint(meshLocalCenter) - transform.TransformPoint(lureObj.transform.position);
     }
 
 
