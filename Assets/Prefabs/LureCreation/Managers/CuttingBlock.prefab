@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7fd2d9827800e94aad21e0b0be9f7fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uncutBlockLengthM: 0.125
+  uncutBlockLengthM: 0.1
   materialDensity: 450
   minStreamlineRatio: 0.28
   minLengthOneHook: 1

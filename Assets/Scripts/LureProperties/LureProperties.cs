@@ -14,6 +14,7 @@ public class LureProperties : MonoBehaviour
     public float SwimmingDepth { get; private set; } = 0f;      // Is determined by Mass and SwimmingType (meters)
     public Color BaseColor { get; private set; } = Color.white; // Base color (white by default)
     public Color TexColor { get; private set; } = Color.black;  // Texture color (black by default)
+    public int PatternID { get; private set; } = 1;             // Index of paint pattern (0 = no pattern)
     public AttachingType[] AttachedTypes { get; private set; }  // Is set by the player
 
     // SerializeFields
@@ -33,6 +34,7 @@ public class LureProperties : MonoBehaviour
     private float streamlineRatio;  // streamlineRatio
     private float attachWeight;     // total weight of all attachments
     private float volume;           // volume of mesh
+    private bool isDisplayingColor; // Prevents multiple functions calls
 
     private void Start()
     {
@@ -41,7 +43,7 @@ public class LureProperties : MonoBehaviour
         CalculateStats();
         statDisplay = StatDisplay.Instance;
         statDisplay.SetDisplayBounds(minDepth, maxDepth, streamlineRatio, Mass);
-        statDisplay.UpdateDisplayStats(SwimType, streamlineRatio, SwimmingDepth, Mass, BaseColor, TexColor);
+        statDisplay.UpdateDisplayStats(SwimType, streamlineRatio, SwimmingDepth, Mass, BaseColor, TexColor, PatternID);
     }
 
     private void OnEnable()
@@ -334,19 +336,26 @@ public class LureProperties : MonoBehaviour
         // Update variables
         SwimType = type;
         SwimmingDepth = depth;
-        Debug.Log("Mass: " + Mass + "g");
-        Debug.Log("Swimming depth: " + SwimmingDepth + "m");
-        Debug.Log("Streamline ratio: " + streamlineRatio + ", " + type);
-        Debug.Log("------");
         if (statDisplay)
-            statDisplay.UpdateDisplayStats(SwimType, streamlineRatio, SwimmingDepth, Mass, BaseColor, TexColor);
+        {
+            statDisplay.UpdateDisplayStats(SwimType, streamlineRatio, SwimmingDepth, Mass, BaseColor, TexColor, PatternID);
+        }
     }
-    private void ChangeColors(Color baseC, Color texC)
+    private void ChangeColors(Color baseC, Color texC, int textureID)
     {
         BaseColor = baseC;
         TexColor = texC;
+        PatternID = textureID;
         if (statDisplay)
-            statDisplay.UpdateDisplayStats(SwimType, streamlineRatio, SwimmingDepth, Mass, BaseColor, TexColor);
+        {
+            statDisplay.UpdateDisplayStats(SwimType, streamlineRatio, SwimmingDepth, Mass, BaseColor, TexColor, PatternID);
+
+            if (!isDisplayingColor)
+            {
+                statDisplay.DisplayColors();
+                isDisplayingColor = true;
+            }
+        }
     }
 
     public float MatchingToFish()

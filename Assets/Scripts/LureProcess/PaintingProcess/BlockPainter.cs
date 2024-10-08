@@ -12,7 +12,7 @@ public class BlockPainter : MonoBehaviour
     public static BlockPainter Instance { get; private set; }
 
     // Event for changing color
-    public delegate void ChangeColor(Color baseC, Color texC);
+    public delegate void ChangeColor(Color baseC, Color texC, int textureID);
     public static event ChangeColor OnColorChange;
 
     // Object references
@@ -71,7 +71,7 @@ public class BlockPainter : MonoBehaviour
         blockRenderer.materials = materials;
         selectedTextureId = selectedId;
         scrollContainer.UpdateColors(baseColor, textureColor);
-        OnColorChange?.Invoke(baseColor, textureColor);
+        OnColorChange?.Invoke(baseColor, textureColor, selectedTextureId);
     }
 
     public void Activate()
@@ -108,5 +108,12 @@ public class BlockPainter : MonoBehaviour
     public void SelectTexture(int id)
     {
         UpdateColoring(baseColor, textureColor, id);
+    }
+
+    public Sprite GetTextureSprites(int id)
+    {
+        return Sprite.Create(lureTextures[id],
+                                       new Rect(0, 0, -lureTextures[id].width, lureTextures[id].height),
+                                       new Vector2(0.5f, 0.5f));
     }
 }

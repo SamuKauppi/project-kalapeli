@@ -14,7 +14,7 @@ public class AttachingProcess : MonoBehaviour
     /// <summary>
     /// Is the script active
     /// </summary>
-    public bool IsAttaching { get; private set; } = false;
+    public bool IsAttaching { get; set; } = false;
 
     // Event for when object is attached, moved or removed
     public delegate void AttachEvent();
@@ -273,13 +273,14 @@ public class AttachingProcess : MonoBehaviour
             return;
 
         attachedObject = obj;
-
+        attachedObject.transform.parent = null;
         attachPos = pos;
         matchRotation = matchRot;
         mirrorObj = mirror;
 
         if (mirrorObj != null)
         {
+            mirrorObj.transform.parent = null;
             attachBothSides = true;
             mirrorObj.GetComponent<MoveAttach>().EnableOutline(true);
         }

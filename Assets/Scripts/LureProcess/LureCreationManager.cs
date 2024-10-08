@@ -15,6 +15,7 @@ public class LureCreationManager : MonoBehaviour
     [SerializeField] private GameObject cuttingButtons;
     [SerializeField] private GameObject paintingButtons;
     [SerializeField] private GameObject attachButtons;
+    [SerializeField] private GameObject saveButtons;
 
     private void Start()
     {
@@ -22,8 +23,8 @@ public class LureCreationManager : MonoBehaviour
         cuttingButtons.SetActive(true);
         paintingButtons.SetActive(false);
         attachButtons.SetActive(false);
+        saveButtons.SetActive(false);
     }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -36,26 +37,54 @@ public class LureCreationManager : MonoBehaviour
 
     public void EndCutting()
     {
+        // Hide cutting buttons and reveal painting buttons
+        cuttingButtons.SetActive(false);
+        paintingButtons.SetActive(true);
+
+        // Disable cutting
         cutProcess.IsCutting = false;
         cutProcess.gameObject.SetActive(false);
 
-        cuttingButtons.SetActive(false);
+        // Activate painting
         paintProcess.Activate();
-        paintingButtons.SetActive(true);
 
-        // Ensure that the block can be rotated after cutting ends
+        // Ensure that the block can be rotated
         lureObject.GetComponent<BlockRotation>().StopRotating = false;
     }
 
     public void EndPainting()
     {
+        // Hide painting buttons and reveal attach buttons
         paintingButtons.SetActive(false);
-        paintProcess.gameObject.SetActive(false);
         attachButtons.SetActive(true);
 
+        // Disable painting
+        paintProcess.gameObject.SetActive(false);
+
+        // Enable attaching
         attachProcess.ActivateAttaching();
 
-        // Ensure that the block can be rotated after cutting ends
+        // Ensure that the block can be rotated
         lureObject.GetComponent<BlockRotation>().StopRotating = false;
+    }
+
+    public void EndAttaching()
+    {
+        // Hide attach buttons and reveal save buttons
+        attachButtons.SetActive(false);
+        saveButtons.SetActive(true);
+
+        // Disable attaching
+        attachProcess.IsAttaching = false;
+        attachProcess.gameObject.SetActive(false);
+
+        // Ensure that the block can be rotated
+        lureObject.GetComponent<BlockRotation>().StopRotating = false;
+    }
+
+    public void SaveLure()
+    {
+        saveButtons.SetActive(false);
+        PersitentManager.Instance.AddLure(lureObject);
     }
 }

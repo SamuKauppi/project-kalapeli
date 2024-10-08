@@ -23,9 +23,10 @@ public class StatDisplay : MonoBehaviour
     [SerializeField] private Slider weightSlider;
     [SerializeField] private TMP_Text weightText;
 
-    // Color
+    // Color and texture
     [SerializeField] private Image baseColorImage;
     [SerializeField] private Image texColorImage;
+    int lastID = -1;
 
     private void Awake()
     {
@@ -33,6 +34,12 @@ public class StatDisplay : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        baseColorImage.gameObject.SetActive(false);
+        texColorImage.gameObject.SetActive(false);
     }
 
     public void SetDisplayBounds(float minDepth, float maxDepth, float maxStreamlineRatio, float maxWeight)
@@ -55,7 +62,8 @@ public class StatDisplay : MonoBehaviour
                                    float depth,
                                    float weight,
                                    Color baseC,
-                                   Color texC)
+                                   Color texC,
+                                   int textureId)
     {
         swimmingTypeText.text = type.ToString();
         if (type == SwimmingType.Bad)
@@ -74,5 +82,16 @@ public class StatDisplay : MonoBehaviour
         weightSlider.value = weight;
         baseColorImage.color = baseC;
         texColorImage.color = texC;
+        if (textureId != lastID)
+        {
+            texColorImage.sprite = BlockPainter.Instance.GetTextureSprites(textureId);
+        }
+        lastID = textureId;
+    }
+
+    public void DisplayColors()
+    {
+        baseColorImage.gameObject.SetActive(true);
+        texColorImage.gameObject.SetActive(true);
     }
 }
