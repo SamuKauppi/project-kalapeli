@@ -83,6 +83,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913efcf95d2e2a3489d42690f298361f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attachingType: 12
+  attachPosition: 2
+  attachBothSides: 0
+  matchRotationToNormal: 0
   weight: 0.5
 --- !u!114 &-3612186551285969589
 MonoBehaviour:

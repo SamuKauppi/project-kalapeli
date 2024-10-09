@@ -25,8 +25,8 @@ public class AttachingProcess : MonoBehaviour
 
     // Attaching refs
     [SerializeField] private LayerMask blockLayer;
-    [SerializeField] private ObjectToAttach[] objectTypes;                          // Types of object that will be attached
-    private readonly Dictionary<AttachingType, ObjectToAttach> attachDict = new();  // Dictionary set in runtime for faster searches
+    [SerializeField] private AttachProperties[] attachPrefabs;                        // References to prefabs set in inspector
+    private readonly Dictionary<AttachingType, AttachProperties> attachDict = new();  // Dictionary set in runtime for faster searches
     private Camera cam;
     private BlockRotation blockRotation;                                            // Script that rotates the block
 
@@ -63,9 +63,9 @@ public class AttachingProcess : MonoBehaviour
     private void Start()
     {
         blockRotation = BlockRotation.Instance;
-        foreach (ObjectToAttach obj in objectTypes)
+        foreach (AttachProperties obj in attachPrefabs)
         {
-            attachDict.Add(obj.type, obj);
+            attachDict.Add(obj.AttachingType, obj);
         }
         cam = Camera.main;
         lureObj = blockRotation.gameObject;
@@ -230,24 +230,24 @@ public class AttachingProcess : MonoBehaviour
         Vector3 nullPos = new(0f, -1000f, 0f);
 
         // Set the attached object
-        attachedObject = Instantiate(attachDict[type].attachedPrefab,
+        attachedObject = Instantiate(attachDict[type].gameObject,
                                   nullPos,
                                   blockRotation.DefaultRotation);
-        attachPos = attachDict[type].attachPosition;
-        attachBothSides = attachDict[type].attachBothSides;
-        matchRotation = attachDict[type].matchRotationToNormal;
+
+        attachPos = attachDict[type].AttachPosition;
+        attachBothSides = attachDict[type].AttachBothSides;
+        matchRotation = attachDict[type].MatchRotationToNormal;
 
         // Save data to the object incase it's moved later
         MoveAttach ma1 = attachedObject.GetComponent<MoveAttach>();
         ma1.EnableOutline(true);
         ma1.AttachPosition = attachPos;
         ma1.MatchRotation = matchRotation;
-        attachedObject.GetComponent<AttachProperties>().AttachingType = type;
 
         // Set the possible mirrored object
         if (attachBothSides)
         {
-            mirrorObj = Instantiate(attachDict[type].attachedPrefab,
+            mirrorObj = Instantiate(attachDict[type].gameObject,
                                     nullPos,
                                     blockRotation.DefaultRotation);
             Vector3 flipScale = GetFlippedScale();
@@ -259,7 +259,6 @@ public class AttachingProcess : MonoBehaviour
             MoveAttach ma2 = mirrorObj.GetComponent<MoveAttach>();
             ma2.EnableOutline(true);
             ma2.IsMirrored = true;  // Tell the new object that it's a mirror that cannot be moved
-            mirrorObj.GetComponent<AttachProperties>().AttachingType = type;
         }
 
         blockRotation.ResetRotation();

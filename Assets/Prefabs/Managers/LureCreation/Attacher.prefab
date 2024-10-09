@@ -647,29 +647,9 @@ MonoBehaviour:
   blockLayer:
     serializedVersion: 2
     m_Bits: 128
-  objectTypes:
-  - type: 1
-    attachedPrefab: {fileID: 6065737130116171019, guid: 4d92b80be0bb6214290e747c869ad9eb, type: 3}
-    attachPosition: 1
-    attachBothSides: 0
-    matchRotationToNormal: 0
-  - type: 3
-    attachedPrefab: {fileID: 5968378554784932008, guid: 62d20838cd693c94880bd76fd98ed8c5, type: 3}
-    attachPosition: 0
-    attachBothSides: 1
-    matchRotationToNormal: 1
-  - type: 8
-    attachedPrefab: {fileID: 2307156293450293997, guid: 25b5c2b1ea2ac20408d772b1ac5c342e, type: 3}
-    attachPosition: 3
-    attachBothSides: 0
-    matchRotationToNormal: 0
-  - type: 12
-    attachedPrefab: {fileID: 4823234238868544674, guid: ad7b536f058e425409494e0a3cc71b3c, type: 3}
-    attachPosition: 2
-    attachBothSides: 0
-    matchRotationToNormal: 0
-  - type: 16
-    attachedPrefab: {fileID: 4017152633848480788, guid: c356ebfaf1719bd4fa2c78b6d17a8d9a, type: 3}
-    attachPosition: 4
-    attachBothSides: 0
-    matchRotationToNormal: 0
+  attachPrefabs:
+  - {fileID: 5430767208718756139, guid: 7e66654fc92e75e41b8e420290416a1c, type: 3}
+  - {fileID: 7863017974253153847, guid: 62d20838cd693c94880bd76fd98ed8c5, type: 3}
+  - {fileID: 5764822535924133430, guid: ad7b536f058e425409494e0a3cc71b3c, type: 3}
+  - {fileID: 8922330541972517436, guid: 4d92b80be0bb6214290e747c869ad9eb, type: 3}
+  - {fileID: 7827189326637805923, guid: d2a7aac059d13e14182c5c9ce485ae1b, type: 3}
