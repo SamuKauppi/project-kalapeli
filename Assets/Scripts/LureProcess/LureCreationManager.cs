@@ -5,6 +5,8 @@ using UnityEngine;
 /// </summary>
 public class LureCreationManager : MonoBehaviour
 {
+    public static LureCreationManager Instance { get; private set; }
+
     // References
     [SerializeField] private DrawCut cutProcess;                // Cut process
     [SerializeField] private BlockPainter paintProcess;         // Painting process
@@ -17,22 +19,73 @@ public class LureCreationManager : MonoBehaviour
     [SerializeField] private GameObject attachButtons;
     [SerializeField] private GameObject saveButtons;
 
+    // Mesh reset
+    [SerializeField] private Mesh blockMesh;
+    [SerializeField] private Material blockMaterial;
+    [SerializeField] private PhysicMaterial physicMaterial;
+    private MeshRenderer blockRend;
+    private MeshFilter blockFilter;
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
+
     private void Start()
     {
-        cutProcess.IsCutting = true;
-        cuttingButtons.SetActive(true);
-        paintingButtons.SetActive(false);
-        attachButtons.SetActive(false);
-        saveButtons.SetActive(false);
+        blockRend = BlockRotation.Instance.GetComponent<MeshRenderer>();
+        blockFilter = BlockRotation.Instance.GetComponent<MeshFilter>();
+        ResetLureCreation();
     }
+
+#if UNITY_EDITOR
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-#if UNITY_EDITOR
+
             SaveAsset.SaveGameObjectAsPrefab(lureObject);
-#endif
         }
+    }
+#endif
+
+    public void ResetLureCreation()
+    {
+        // Enable cutting
+        cutProcess.IsCutting = true;
+        cutProcess.gameObject.SetActive(true);
+        cuttingButtons.SetActive(true);
+
+        // Reset mesh
+        blockFilter.mesh = blockMesh;
+
+        // Reset materials
+        Material[] mats = new Material[1];
+        mats[0] = blockMaterial;
+        blockRend.materials = mats;
+
+        // Reset collider
+        MeshCollider col = lureObject.GetComponent<MeshCollider>();
+        col.sharedMaterial = physicMaterial;
+        col.sharedMesh = blockMesh;
+        col.convex = true;
+
+        // Reset lure properties (remove children adn reset stats)
+        lureObject.GetComponent<LureProperties>().ResetLure();
+
+        // Disable painting
+        paintingButtons.SetActive(false);
+
+        // Disable attaching
+        attachButtons.SetActive(false);
+        attachProcess.IsAttaching = false;
+        attachProcess.gameObject.SetActive(true);   // Keep it visible
+
+        // Disable saving
+        saveButtons.SetActive(false);
     }
 
     public void EndCutting()
@@ -49,7 +102,7 @@ public class LureCreationManager : MonoBehaviour
         paintProcess.Activate();
 
         // Ensure that the block can be rotated
-        lureObject.GetComponent<BlockRotation>().StopRotating = false;
+        BlockRotation.Instance.StopRotating = false;
     }
 
     public void EndPainting()
@@ -65,7 +118,7 @@ public class LureCreationManager : MonoBehaviour
         attachProcess.ActivateAttaching();
 
         // Ensure that the block can be rotated
-        lureObject.GetComponent<BlockRotation>().StopRotating = false;
+        BlockRotation.Instance.StopRotating = false;
     }
 
     public void EndAttaching()
@@ -79,12 +132,17 @@ public class LureCreationManager : MonoBehaviour
         attachProcess.gameObject.SetActive(false);
 
         // Ensure that the block can be rotated
-        lureObject.GetComponent<BlockRotation>().StopRotating = false;
+        BlockRotation.Instance.StopRotating = false;
     }
 
     public void SaveLure()
     {
         saveButtons.SetActive(false);
         PersitentManager.Instance.AddLure(lureObject);
+    }
+
+    public void EndLureCreation()
+    {
+        GameManager.Instance.SwapModes();
     }
 }

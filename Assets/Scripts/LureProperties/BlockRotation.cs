@@ -19,7 +19,7 @@ public class BlockRotation : MonoBehaviour
     public static event Rotate OnRotationEnd;
 
     // Rotations
-    [SerializeField] private float cameraRotationTime = 0.5f; // How fast the block rotates
+    [SerializeField] private float rotationTime = 0.5f; // How fast the block rotates
 
     public Quaternion DefaultRotation { get { return defaultRot; } }
 
@@ -53,7 +53,7 @@ public class BlockRotation : MonoBehaviour
             if (IsRotating) StopAllCoroutines();
             if (upRotIndex == 0)
                 currentRotDir = UpRotation.Up;
-            StartCoroutine(RotateTransform(0, -1, cameraRotationTime));
+            StartCoroutine(RotateTransform(0, -1, rotationTime));
         }
 
         if ((Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) &&
@@ -62,19 +62,19 @@ public class BlockRotation : MonoBehaviour
             if (IsRotating) StopAllCoroutines();
             if (upRotIndex == 0)
                 currentRotDir = UpRotation.Down;
-            StartCoroutine(RotateTransform(0, 1, cameraRotationTime));
+            StartCoroutine(RotateTransform(0, 1, rotationTime));
         }
 
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if (IsRotating) StopAllCoroutines();
-            StartCoroutine(RotateTransform(-1 * (upRotIndex == 0 ? 1 : upRotIndex), 0, cameraRotationTime));
+            StartCoroutine(RotateTransform(-1 * (upRotIndex == 0 ? 1 : upRotIndex), 0, rotationTime));
         }
 
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (IsRotating) StopAllCoroutines();
-            StartCoroutine(RotateTransform(1 * (upRotIndex == 0 ? 1 : upRotIndex), 0, cameraRotationTime));
+            StartCoroutine(RotateTransform(1 * (upRotIndex == 0 ? 1 : upRotIndex), 0, rotationTime));
         }
 
     }

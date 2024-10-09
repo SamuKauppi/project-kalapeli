@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Cutter : MonoBehaviour
 {
@@ -51,12 +50,12 @@ public class Cutter : MonoBehaviour
         }
 
         // Calculate the volume of the generated mesh
-        float leftVol = leftMesh.GetVolume();
-        float rightVol = rightMesh.GetVolume();
+        float leftDist = leftMesh.GetDistanceToCenter();
+        float rightDist = rightMesh.GetDistanceToCenter();
 
         // Determine bigger and smaller mesh and create the final meshes based on them
-        Mesh biggerMesh = leftVol >= rightVol ? leftMesh.GetGeneratedMesh() : rightMesh.GetGeneratedMesh();
-        Mesh smallerMesh = leftVol < rightVol ? leftMesh.GetGeneratedMesh() : rightMesh.GetGeneratedMesh();
+        Mesh biggerMesh = leftDist <= rightDist ? leftMesh.GetGeneratedMesh() : rightMesh.GetGeneratedMesh();
+        Mesh smallerMesh = leftDist > rightDist ? leftMesh.GetGeneratedMesh() : rightMesh.GetGeneratedMesh();
 
         // Assgin the bigger mesh to original object and clean up empty submeshes
         Material mat = originalGameObject.GetComponent<MeshRenderer>().material;
@@ -103,7 +102,7 @@ public class Cutter : MonoBehaviour
 
         // Set rigidbody
         var rightRigidbody = otherObj.AddComponent<Rigidbody>();
-        float direction = leftVol > rightVol ? -1f : 1f;
+        float direction = leftDist > rightDist ? -1f : 1f;
         rightRigidbody.AddRelativeForce(1000f * direction * cutPlane.normal);
 
         // Free cutter
@@ -367,16 +366,12 @@ public class Cutter : MonoBehaviour
 
     private static void FlipTriangle(MeshTriangle _triangle)
     {
-        Vector3 temp = _triangle.Vertices[2];
-        _triangle.Vertices[2] = _triangle.Vertices[0];
-        _triangle.Vertices[0] = temp;
-
-        temp = _triangle.Normals[2];
-        _triangle.Normals[2] = _triangle.Normals[0];
-        _triangle.Normals[0] = temp;
-
-        (_triangle.UVs[2], _triangle.UVs[0]) = (_triangle.UVs[0], _triangle.UVs[2]);
+        // Swap vertices, normals, and UVs using tuple assignment
+        (_triangle.Vertices[0], _triangle.Vertices[2]) = (_triangle.Vertices[2], _triangle.Vertices[0]);
+        (_triangle.Normals[0], _triangle.Normals[2]) = (_triangle.Normals[2], _triangle.Normals[0]);
+        (_triangle.UVs[0], _triangle.UVs[2]) = (_triangle.UVs[2], _triangle.UVs[0]);
     }
+
 
     public static void FillCut(List<Vector3> _addedVertices, Plane _plane, GeneratedMesh _leftMesh, GeneratedMesh _rightMesh)
     {
@@ -520,10 +515,9 @@ public class Cutter : MonoBehaviour
             }
         }
 
-        // If no submeshes are valid, log a warning and exit
+        // If no submeshes are valid, return
         if (validSubmeshTriangles.Count == 0)
         {
-            Debug.LogWarning("No valid submeshes found. The mesh may be completely empty.");
             return;
         }
 
@@ -574,7 +568,7 @@ public class Cutter : MonoBehaviour
             _uvs[i] = new Vector2(1f - Mathf.InverseLerp(minX, maxX, vertex.x),
                                   Mathf.InverseLerp(minY, maxY, vertex.y));
 
-            // Clamp the value so that it does not stay to avoid texture bug
+            // Clamp the values to avoid texture bug
             _uvs[i].x = Mathf.Clamp(_uvs[i].x, 0.001f, 0.999f);
             _uvs[i].y = Mathf.Clamp(_uvs[i].y, 0.001f, 0.999f);
         }

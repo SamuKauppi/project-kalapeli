@@ -34,7 +34,7 @@ public class LureProperties : MonoBehaviour
     private float streamlineRatio;  // streamlineRatio
     private float attachWeight;     // total weight of all attachments
     private float volume;           // volume of mesh
-    private bool isDisplayingColor; // Prevents multiple functions calls
+    private bool isDisplayingColor; // Prevents multiple functions calls when no color should be shown
 
     private void Start()
     {
@@ -215,7 +215,7 @@ public class LureProperties : MonoBehaviour
 
         // Initialize class variables
         attachWeight = 0.0f;
-        AttachedTypes = new AttachingType[transform.childCount];
+        AttachedTypes = new AttachingType[transform.childCount - 1];
 
         for (int i = 1; i < transform.childCount; i++)
         {
@@ -231,7 +231,7 @@ public class LureProperties : MonoBehaviour
 
             // Add attachble weight
             attachWeight += attachProperties.Weight;
-            AttachedTypes[i] = attachProperties.AttachingType;
+            AttachedTypes[i - 1] = attachProperties.AttachingType;
 
             // Switch statement to handle different attachable types
             switch (groupType)
@@ -329,7 +329,7 @@ public class LureProperties : MonoBehaviour
         Mass *= 1000f;          // Convert to grams
         Mass += attachWeight;   // Add attachments weight (already in grams)
 
-        // Increse swimming depth by X-cm for each gram of weight
+        // Increse swimming depth by X-m for each gram of weight
         depth += Mass * depthFromMassM;
         depth = Mathf.Clamp(depth, minDepth, maxDepth);
 
@@ -352,11 +352,48 @@ public class LureProperties : MonoBehaviour
 
             if (!isDisplayingColor)
             {
-                statDisplay.DisplayColors();
+                statDisplay.DisplayColors(true);
                 isDisplayingColor = true;
             }
         }
     }
+
+    public void ResetLure()
+    {
+        // Color is no longer displayed
+        isDisplayingColor = false;
+        statDisplay.DisplayColors(false);
+        BaseColor = Color.white;
+        TexColor = Color.black;
+
+        // Reset pattern
+        PatternID = 1;
+
+        // Destroy children skipping 1st (the arrow obj)
+        for (int i = 1; i < transform.childCount; i++)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+
+        // Recalculate stats to reset them
+        CalculateStats();
+    }
+
+    public void FinnishLure()
+    {
+        if (transform.childCount == 0) return;
+
+        Destroy(transform.GetChild(0).gameObject);  // Destroy first child (arrow)
+
+        for (int i = 1; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).TryGetComponent<MoveAttach>(out var moveAttach))
+            {
+                moveAttach.enabled = false; 
+            }
+        }
+    }
+
 
     public float MatchingToFish()
     {

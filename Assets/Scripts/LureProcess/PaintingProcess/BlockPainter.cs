@@ -18,9 +18,9 @@ public class BlockPainter : MonoBehaviour
     // Object references
     [SerializeField] private ScrollTextureContainer scrollContainer;
     [SerializeField] private ColorWheel colorWheel;
-    [SerializeField] private MeshRenderer blockRenderer;
     [SerializeField] private Image baseColorButton;
     [SerializeField] private Image textureColorButton;
+    private MeshRenderer blockRenderer;
 
     // Matrial properties
     [SerializeField] private Texture2D[] lureTextures;
@@ -46,6 +46,7 @@ public class BlockPainter : MonoBehaviour
     private void Start()
     {
         scrollContainer.CreateTextureContentToSprite(lureTextures);
+        blockRenderer = BlockRotation.Instance.GetComponent<MeshRenderer>();    
     }
 
     private void UpdateColoring(Color baseC, Color textC, int selectedId)

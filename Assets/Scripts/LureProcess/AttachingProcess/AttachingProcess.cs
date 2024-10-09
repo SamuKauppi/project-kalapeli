@@ -69,7 +69,6 @@ public class AttachingProcess : MonoBehaviour
         }
         cam = Camera.main;
         lureObj = blockRotation.gameObject;
-        distanceToLure = Vector3.Distance(cam.transform.position, lureObj.transform.position);
     }
 
     private void Update()
@@ -201,12 +200,18 @@ public class AttachingProcess : MonoBehaviour
         };
     }
 
+    private void UpdateDistance()
+    {
+        distanceToLure = Vector3.Distance(cam.transform.position, lureObj.transform.position);
+    }
+
     public void ActivateAttaching()
     {
         IsAttaching = true;
         lureCollider = lureObj.GetComponent<Collider>();
         Vector3 meshLocalCenter = lureCollider.bounds.center;
         meshOffset = transform.TransformPoint(meshLocalCenter) - transform.TransformPoint(lureObj.transform.position);
+        UpdateDistance();
     }
 
 

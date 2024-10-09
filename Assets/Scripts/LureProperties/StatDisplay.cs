@@ -89,9 +89,9 @@ public class StatDisplay : MonoBehaviour
         lastID = textureId;
     }
 
-    public void DisplayColors()
+    public void DisplayColors(bool value)
     {
-        baseColorImage.gameObject.SetActive(true);
-        texColorImage.gameObject.SetActive(true);
+        baseColorImage.gameObject.SetActive(value);
+        texColorImage.gameObject.SetActive(value);
     }
 }

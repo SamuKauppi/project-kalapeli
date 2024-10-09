@@ -34,7 +34,6 @@ public class GeneratedMesh
             submeshIndices[_triangle.SubmeshIndex].Add(currentVerticeCount + i);
         }
     }
-
     public Mesh GetGeneratedMesh()
     {
         Mesh mesh = new();
@@ -50,11 +49,23 @@ public class GeneratedMesh
         }
         return mesh;
     }
+    public float GetDistanceToCenter()
+    {
+        Vector3 centerPos = Vector3.zero;
+
+        for (int i = 0; i < vertices.Count; i++)
+        {
+            centerPos += vertices[i];
+        }
+
+        centerPos /= vertices.Count;
+
+        return Vector3.Distance(centerPos, Vector3.zero);
+    }
     public float GetVolume()
     {
         return VolumeOfMesh();
     }
-
     private float VolumeOfMesh()
     {
         float vols = 0f;
@@ -70,8 +81,6 @@ public class GeneratedMesh
 
         return Mathf.Abs(vols); // Return the absolute volume
     }
-
-
     private float SignedVolumeOfTriangle(Vector3 p1, Vector3 p2, Vector3 p3)
     {
         var v321 = p3.x * p2.y * p1.z;

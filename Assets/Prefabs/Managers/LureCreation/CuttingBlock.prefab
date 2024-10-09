@@ -94,9 +94,9 @@ GameObject:
   - component: {fileID: 5801280803797260640}
   - component: {fileID: 7434758757150611141}
   - component: {fileID: 4668375717988213263}
-  - component: {fileID: 2543140471681494756}
   - component: {fileID: 5663000148207114756}
   - component: {fileID: 1259862936879279991}
+  - component: {fileID: 8350681727507843981}
   m_Layer: 7
   m_Name: CuttingBlock
   m_TagString: Block
@@ -170,27 +170,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2543140471681494756
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6613987449730270170}
-  m_Material: {fileID: 13400000, guid: 55e8019e26aedbb47a5cc7f394eaf42b, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 4, y: 2, z: 2.0000005}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5663000148207114756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fc2eef97d9399b44b71acaac273b523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraRotationTime: 0.25
+  rotationTime: 0.25
 --- !u!114 &1259862936879279991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,3 +203,25 @@ MonoBehaviour:
   depthFromMassM: 0.05
   minDepth: 1
   maxDepth: 15
+--- !u!64 &8350681727507843981
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6613987449730270170}
+  m_Material: {fileID: 13400000, guid: 55e8019e26aedbb47a5cc7f394eaf42b, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: 812b2ad10a6f4f14fa9dcf961adade06, type: 3}

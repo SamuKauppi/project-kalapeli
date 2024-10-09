@@ -17,10 +17,11 @@ public class DrawCut : MonoBehaviour
     private float lineDist = 8f;                                                // How far from camera is the line used for cutting
 
     // Cut detection
-    private Camera cam;     // Main camera
-    private Vector3 mouse;  // Mouse position on screen
-    private Vector3 pointA; // Start of the cut
-    private Vector3 pointB; // End of the cut
+    private Camera cam;         // Main camera
+    private Vector3 mouse;      // Mouse position on screen
+    private Vector3 pointA;     // Start of the cut (moves with the object) 
+    private Vector3 clickPos;   // Position of transform when the click happened 
+    private Vector3 pointB;     // End of the cut
 
     // Line renderer
     private LineRenderer cutRender;
@@ -31,10 +32,9 @@ public class DrawCut : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        cam = Camera.main;
         blockRotation = BlockRotation.Instance;
         lureProperties = blockRotation.GetComponent<LureProperties>();
-
-        cam = Camera.main;
         cutRender = GetComponent<LineRenderer>();
         cutRender.startWidth = .05f;
         cutRender.endWidth = .05f;
@@ -63,6 +63,7 @@ public class DrawCut : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             pointA = cam.ScreenToWorldPoint(mouse);
+            clickPos = transform.position;
             cancelCut = false;
             blockRotation.StopRotating = true;
         }
@@ -78,6 +79,12 @@ public class DrawCut : MonoBehaviour
         // When left mouse is held, set the positions of line renderer
         if (Input.GetMouseButton(0) && !cancelCut)
         {
+            // Object has moved. Move pointA equal to difference and update clickPos
+            if (transform.position != clickPos)
+            {
+                pointA += transform.position - clickPos;
+                clickPos = transform.position;
+            }
             animateCut = false;
             cutRender.SetPosition(0, pointA);
             cutRender.SetPosition(1, cam.ScreenToWorldPoint(mouse));
