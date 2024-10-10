@@ -51,7 +51,7 @@ MonoBehaviour:
   offTag: Untagged
   lureCam: {fileID: 5987873660034390328}
   lureCanvas: {fileID: 2667254979297991548}
-  fishingCam: {fileID: 4181094364578347774}
+  fishCam: {fileID: 4181094364578347774}
   fishCanvas: {fileID: 790101386812092465}
 --- !u!1001 &2904327156638894202
 PrefabInstance:
@@ -202,11 +202,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7398775733813051210, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
-      propertyPath: speed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7398775733813051210, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
-      propertyPath: maxMove
+      propertyPath: rotSpeed
       value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []

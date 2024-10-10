@@ -20,10 +20,6 @@ public class BlockRotation : MonoBehaviour
 
     // Rotations
     [SerializeField] private float rotationTime = 0.5f; // How fast the block rotates
-
-    public Quaternion DefaultRotation { get { return defaultRot; } }
-
-    private Quaternion defaultRot;  // Starting rotation
     private int sideRotIndex = 0;   // Which side rotation is used
     private int upRotIndex = 0;     // Which up rotation is used
 
@@ -36,11 +32,6 @@ public class BlockRotation : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
-    }
-
-    private void Start()
-    {
-        defaultRot = transform.rotation;
     }
 
     private void Update()
@@ -91,14 +82,17 @@ public class BlockRotation : MonoBehaviour
         IsRotating = true;
         // Initialize rotations
         Quaternion currentRot = transform.rotation;
-        Quaternion targetRot = defaultRot;
+        Quaternion cameraRot = GameManager.Instance.LureCamera.transform.rotation;
 
         // Get next index
         sideRotIndex = (sideRotIndex + sideRotDir + 4) % 4;
         upRotIndex = Mathf.Clamp(upRotIndex + upRotDir, -1 , 1);
 
-        targetRot *= Quaternion.Euler(90f * upRotIndex * Vector3.right);
-        targetRot *= Quaternion.Euler(0f, 90f * sideRotIndex, 0f);
+        Quaternion upRotation = Quaternion.Euler(90f * upRotIndex * Vector3.right);
+        Quaternion sideRotation = Quaternion.Euler(90f * sideRotIndex * Vector3.up);
+
+        // Combine the camera rotation with the local rotations
+        Quaternion targetRot = cameraRot * upRotation * sideRotation;
 
         OnRotationStart?.Invoke(sideRotIndex, upRotIndex);
         if (currentRot != targetRot)
@@ -112,9 +106,8 @@ public class BlockRotation : MonoBehaviour
                 transform.rotation = Quaternion.Lerp(currentRot, targetRot, t);
                 yield return null;
             }
-            transform.rotation = targetRot;
         }
-
+        transform.rotation = targetRot;
         IsRotating = false;
         OnRotationEnd?.Invoke(sideRotIndex, upRotIndex);
         currentRotDir = upRotIndex < 0 ? UpRotation.Up : upRotIndex > 0 ? UpRotation.Down : UpRotation.None;

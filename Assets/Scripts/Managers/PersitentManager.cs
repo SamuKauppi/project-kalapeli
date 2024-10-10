@@ -9,14 +9,13 @@ public class PersitentManager : MonoBehaviour
     public static PersitentManager Instance { get; private set; }
 
     // Lure
-    public List<GameObject> luresCreated = new();
+    private readonly List<GameObject> luresCreated = new();
 
     // Fish
-    [SerializeField] private List<FishInstance> everyFishInGame = new();    // Contains every fish that exists (set in inspector
-
-    private List<FishSpecies> fishForThisLevel = new();                     // Fishes available for this level (Set before loading to a level)
-    private readonly Dictionary<FishSpecies, FishInstance> fishDict = new();// Dictionary that is set during runtime    
-
+    [SerializeField] private List<Fish> everyFishInGame = new();    // Contains every fish that exists (set in inspector)
+    private List<FishSpecies> fishForThisLevel = new();             // Fishes available for this level (Set before loading to a level)
+    private readonly Dictionary<FishSpecies, Fish> fishDict = new();// Dictionary that is set during runtime    
+    
     private void Awake()
     {
         if (Instance == null)
@@ -32,7 +31,7 @@ public class PersitentManager : MonoBehaviour
 
     private void Start()
     {
-        // Temporary way to populate list
+        // Temporary way to populate fishForThisLevel
         // TODO: create a function to do this once menu exists
         fishForThisLevel = new()
         {
@@ -40,6 +39,7 @@ public class PersitentManager : MonoBehaviour
             FishSpecies.Bobber
         };
 
+        // Populate dictionary
         for (int i = 0; i < everyFishInGame.Count; i++)
         {
             fishDict.Add(everyFishInGame[i].Species, everyFishInGame[i]);
@@ -58,16 +58,16 @@ public class PersitentManager : MonoBehaviour
 
         if (newObj.TryGetComponent<LureProperties>(out var prop))
         {
-            prop.FinnishLure();
+            prop.FinishLure();
         }
 
         luresCreated.Add(newObj);
         oriObj.SetActive(true);
     }
 
-    public FishInstance[] GetFishesForThisLevel()
+    public Fish[] GetFishesForThisLevel()
     {
-        FishInstance[] fishes = new FishInstance[fishForThisLevel.Count];
+        Fish[] fishes = new Fish[fishForThisLevel.Count];
 
         for (int i = 0; i < fishes.Length; i++)
         {

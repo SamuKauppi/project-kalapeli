@@ -6,6 +6,7 @@ using UnityEngine;
 /// </summary>
 public class Fish : MonoBehaviour
 {
+    [SerializeField] private FishSpecies species;
     // Swimming depth
     [SerializeField] private float minSwimDepth;
     [SerializeField] private float maxSwimDepth;
@@ -21,7 +22,7 @@ public class Fish : MonoBehaviour
     [SerializeField] private int score;
 
     // Public getters
-
+    public FishSpecies Species { get { return species; } }
     public float MinSwimDepth { get { return minSwimDepth; } }
     public float MaxSwimDepth { get { return maxSwimDepth; } }
 

@@ -9,11 +9,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string offTag;         // Off tag for when camera is not active
 
     // Lure stuff
+    public Camera LureCamera { get { return lureCam; } }
     [SerializeField] private Camera lureCam;
     [SerializeField] private Canvas lureCanvas;
 
     // Fish stuff
-    [SerializeField] private Camera fishingCam;
+    public Camera FishCamera { get { return fishCam; } }
+    [SerializeField] private Camera fishCam;
     [SerializeField] private Canvas fishCanvas;
 
     private void Awake()
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        
         UpdateModeChange();
     }
 
@@ -46,8 +49,8 @@ public class GameManager : MonoBehaviour
         LureCreationManager.Instance.gameObject.SetActive(!isFishingMode);
 
         // Fish stuff
-        fishingCam.gameObject.SetActive(isFishingMode);
-        fishingCam.tag = isFishingMode ? onTag : offTag;
+        fishCam.gameObject.SetActive(isFishingMode);
+        fishCam.tag = isFishingMode ? onTag : offTag;
         fishCanvas.gameObject.SetActive(isFishingMode);
     }
 

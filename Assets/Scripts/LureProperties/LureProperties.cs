@@ -379,7 +379,7 @@ public class LureProperties : MonoBehaviour
         CalculateStats();
     }
 
-    public void FinnishLure()
+    public void FinishLure()
     {
         if (transform.childCount == 0) return;
 

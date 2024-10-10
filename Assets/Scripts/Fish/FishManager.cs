@@ -6,7 +6,7 @@ using UnityEngine;
 public class FishManager : MonoBehaviour
 {
     // Fishes for this level
-    private FishInstance[] availableFish;
+    private Fish[] availableFish;
 
     private void Start()
     {
