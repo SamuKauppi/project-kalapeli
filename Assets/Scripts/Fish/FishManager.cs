@@ -5,11 +5,29 @@ using UnityEngine;
 /// </summary>
 public class FishManager : MonoBehaviour
 {
+    public static FishManager Instance { get; private set; }
+
     // Fishes for this level
-    private Fish[] availableFish;
+    [SerializeField] private Fish[] availableFish;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
         availableFish = PersitentManager.Instance.GetFishesForThisLevel();
+    }
+
+    public void EndFishing()
+    {
+        GameManager.Instance.SwapModes();
     }
 }

@@ -16,6 +16,7 @@ public class LureProperties : MonoBehaviour
     public Color TexColor { get; private set; } = Color.black;  // Texture color (black by default)
     public int PatternID { get; private set; } = 1;             // Index of paint pattern (0 = no pattern)
     public AttachingType[] AttachedTypes { get; private set; }  // Is set by the player
+    = new AttachingType[0];
 
     // SerializeFields
     [SerializeField] private float uncutBlockLengthM = 0.1f;    // The desired length of uncut block in meters
@@ -389,7 +390,7 @@ public class LureProperties : MonoBehaviour
         {
             if (transform.GetChild(i).TryGetComponent<MoveAttach>(out var moveAttach))
             {
-                moveAttach.enabled = false; 
+                moveAttach.enabled = false;
             }
         }
     }

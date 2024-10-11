@@ -32,14 +32,6 @@ public class GameManager : MonoBehaviour
         UpdateModeChange();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            SwapModes();
-        }
-    }
-
     private void UpdateModeChange()
     {
         // Lure stuff

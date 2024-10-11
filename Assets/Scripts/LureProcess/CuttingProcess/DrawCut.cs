@@ -32,7 +32,7 @@ public class DrawCut : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cam = Camera.main;
+        cam = GameManager.Instance.LureCamera;
         blockRotation = BlockRotation.Instance;
         lureProperties = blockRotation.GetComponent<LureProperties>();
         cutRender = GetComponent<LineRenderer>();
@@ -156,7 +156,6 @@ public class DrawCut : MonoBehaviour
         cutRender.SetPosition(0, pointA);
         cutRender.SetPosition(1, pointB);
     }
-
 
     private void UpdateLineDistance()
     {

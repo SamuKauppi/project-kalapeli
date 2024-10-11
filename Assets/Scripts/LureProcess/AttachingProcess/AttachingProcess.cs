@@ -67,7 +67,7 @@ public class AttachingProcess : MonoBehaviour
         {
             attachDict.Add(obj.AttachingType, obj);
         }
-        cam = Camera.main;
+        cam = GameManager.Instance.LureCamera;
         lureObj = blockRotation.gameObject;
     }
 
@@ -161,7 +161,11 @@ public class AttachingProcess : MonoBehaviour
         Vector3 posAwayFromLure = cam.ScreenToWorldPoint(mousePos);
         posAwayFromLure.z += meshOffset.z;
         posAwayFromLure += 0.5f * attachDistance * directionAway;
+
+        // Match rotation to lure object
         attachObject.transform.rotation = lureObj.transform.rotation;
+
+        // Raycast
         if (Physics.Raycast(posAwayFromLure, -directionAway, out RaycastHit hit, attachDistance, blockLayer))
         {
             // Move the object to hit position when hits
@@ -182,7 +186,7 @@ public class AttachingProcess : MonoBehaviour
             isValidPos = false;
         }
 
-        // Move the possible mirror object but don't continue the mirroring
+        // Move the possible mirror object but disable it for the next
         if (attachBothSides)
         {
             MoveObject(mirrorObj, -directionAway, false);

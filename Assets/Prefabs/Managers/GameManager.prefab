@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ba9dc99f1ee8c4a906fb17a5e60363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFishingMode: 1
+  isFishingMode: 0
   onTag: MainCamera
   offTag: Untagged
   lureCam: {fileID: 5987873660034390328}
@@ -61,6 +61,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7424921075736582894}
     m_Modifications:
+    - target: {fileID: 694292937374036617, guid: f0e72de8cf1ef0142a41a19f5d6c2007, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2827721126952736368, guid: f0e72de8cf1ef0142a41a19f5d6c2007, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2900804118334996948, guid: f0e72de8cf1ef0142a41a19f5d6c2007, type: 3}
       propertyPath: m_Name
       value: FishManager
@@ -202,8 +210,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7398775733813051210, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
+      propertyPath: speed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7398775733813051210, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
       propertyPath: rotSpeed
-      value: 15
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

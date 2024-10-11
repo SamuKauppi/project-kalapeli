@@ -69,6 +69,11 @@ public class DisplayTemplate : MonoBehaviour
         templateIndex = id;
         templateImage.sprite = templateSprites[templateIndex].sprites[spriteIndex];
     }
+
+    public void ShowTemplate(bool value)
+    {
+        templateImage.gameObject.SetActive(value);
+    }
 }
 
 [System.Serializable]

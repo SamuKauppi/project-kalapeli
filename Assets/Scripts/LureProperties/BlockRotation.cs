@@ -24,7 +24,13 @@ public class BlockRotation : MonoBehaviour
     private int upRotIndex = 0;     // Which up rotation is used
 
     // Used to avoid restart same up rotation corountine
-    private UpRotation currentRotDir = UpRotation.None;
+    private enum UpRotation
+    {
+        Up,
+        Middle,
+        Down
+    }
+    private UpRotation currentRotDir = UpRotation.Middle;
 
     private void Awake()
     {
@@ -82,17 +88,13 @@ public class BlockRotation : MonoBehaviour
         IsRotating = true;
         // Initialize rotations
         Quaternion currentRot = transform.rotation;
-        Quaternion cameraRot = GameManager.Instance.LureCamera.transform.rotation;
 
         // Get next index
         sideRotIndex = (sideRotIndex + sideRotDir + 4) % 4;
-        upRotIndex = Mathf.Clamp(upRotIndex + upRotDir, -1 , 1);
+        upRotIndex = Mathf.Clamp(upRotIndex + upRotDir, -1, 1);
 
-        Quaternion upRotation = Quaternion.Euler(90f * upRotIndex * Vector3.right);
-        Quaternion sideRotation = Quaternion.Euler(90f * sideRotIndex * Vector3.up);
-
-        // Combine the camera rotation with the local rotations
-        Quaternion targetRot = cameraRot * upRotation * sideRotation;
+        // Get current rotation
+        Quaternion targetRot = GetCurrentTargetRot();
 
         OnRotationStart?.Invoke(sideRotIndex, upRotIndex);
         if (currentRot != targetRot)
@@ -106,11 +108,20 @@ public class BlockRotation : MonoBehaviour
                 transform.rotation = Quaternion.Lerp(currentRot, targetRot, t);
                 yield return null;
             }
+            targetRot = GetCurrentTargetRot();
         }
         transform.rotation = targetRot;
         IsRotating = false;
         OnRotationEnd?.Invoke(sideRotIndex, upRotIndex);
-        currentRotDir = upRotIndex < 0 ? UpRotation.Up : upRotIndex > 0 ? UpRotation.Down : UpRotation.None;
+        // This sets rotation for up or down to max preventing jittering
+        currentRotDir = upRotIndex < 0 ? UpRotation.Up : upRotIndex > 0 ? UpRotation.Down : UpRotation.Middle;
+    }
+
+    private Quaternion GetCurrentTargetRot()
+    {
+        return GameManager.Instance.LureCamera.transform.rotation *
+            Quaternion.Euler(90f * upRotIndex * Vector3.right) *
+            Quaternion.Euler(90f * sideRotIndex * Vector3.up);
     }
 
     /// <summary>
@@ -124,9 +135,4 @@ public class BlockRotation : MonoBehaviour
     }
 }
 
-public enum UpRotation
-{
-    None,
-    Up,
-    Down
-}
+

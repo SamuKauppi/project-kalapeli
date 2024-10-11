@@ -35,8 +35,7 @@ public class PersitentManager : MonoBehaviour
         // TODO: create a function to do this once menu exists
         fishForThisLevel = new()
         {
-            FishSpecies.Dipfish,
-            FishSpecies.Bobber
+            FishSpecies.Dipfish
         };
 
         // Populate dictionary
