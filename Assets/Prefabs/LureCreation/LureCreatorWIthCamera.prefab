@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3978554252099637604}
-  - component: {fileID: 7398775733813051210}
   m_Layer: 0
   m_Name: LureCreatorWIthCamera
   m_TagString: Untagged
@@ -34,21 +33,6 @@ Transform:
   - {fileID: 5615326709060724758}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7398775733813051210
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 587284255616439300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b74058256bd0ca64389a45bb8629bd23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxMove: 15
-  speed: 3
-  rotSpeed: 1
 --- !u!1001 &1160960565714579483
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -71,7 +55,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7861898657679417973, guid: 7663fe4e1d3ff4f498e97a242616d4aa, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8
+      value: -1.541
       objectReference: {fileID: 0}
     - target: {fileID: 7861898657679417973, guid: 7663fe4e1d3ff4f498e97a242616d4aa, type: 3}
       propertyPath: m_LocalRotation.w

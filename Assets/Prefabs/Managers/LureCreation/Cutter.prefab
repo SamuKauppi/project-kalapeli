@@ -48,8 +48,7 @@ MonoBehaviour:
   blockLayer:
     serializedVersion: 2
     m_Bits: 128
-  checkBoxSize: {x: 10, y: 0.01, z: 10}
-  lineDist: 7
+  lineWidth: 0.002
 --- !u!120 &1671180869580617301
 LineRenderer:
   serializedVersion: 2

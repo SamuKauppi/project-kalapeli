@@ -306,42 +306,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 3413053592188381706}
-    - target: {fileID: 2718079873762216328, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2723164806220700427, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 3098104780002610873}
     - target: {fileID: 2881851730623315245, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2881851730623315245, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2881851730623315245, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 8911467493231374899}
-    - target: {fileID: 2881851730623315245, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2881851730623315245, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowTemplate
-      objectReference: {fileID: 0}
-    - target: {fileID: 2881851730623315245, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: DisplayTemplate, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 2881851730623315245, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 3009681159210095371, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
       propertyPath: m_Name
       value: LureCreationCanvas
@@ -385,10 +357,6 @@ PrefabInstance:
     - target: {fileID: 5210803073543752938, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5819390305307271897, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
-      propertyPath: m_Name
-      value: ToggleTemplate
       objectReference: {fileID: 0}
     - target: {fileID: 6471697887476225815, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1209,8 +1177,7 @@ PrefabInstance:
       value: Attacher
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 2861451145183031723, guid: a01cf86c1c0caee4cbb9527640a64d7e, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a01cf86c1c0caee4cbb9527640a64d7e, type: 3}

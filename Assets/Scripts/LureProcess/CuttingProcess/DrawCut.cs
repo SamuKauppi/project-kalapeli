@@ -13,8 +13,9 @@ public class DrawCut : MonoBehaviour
     private LureProperties lureProperties;
 
     // SerializeFields
-    [SerializeField] private Vector3 checkBoxSize = new(1000f, 0.01f, 1000f);   // Size of the cut check
-    private float lineDist = 8f;                                                // How far from camera is the line used for cutting
+    [SerializeField] private float lineWidth;
+    private Vector3 checkBoxSize = new(1000f, 0.001f, 1000f);   // Size of the cut check
+    private float lineDist = 8f;                                // How far from camera is the line used for cutting
 
     // Cut detection
     private Camera cam;             // Main camera
@@ -36,8 +37,9 @@ public class DrawCut : MonoBehaviour
         blockRotation = BlockRotation.Instance;
         lureProperties = blockRotation.GetComponent<LureProperties>();
         cutRender = GetComponent<LineRenderer>();
-        cutRender.startWidth = .05f;
-        cutRender.endWidth = .05f;
+        checkBoxSize.y = lineWidth;
+        cutRender.startWidth = lineWidth;
+        cutRender.endWidth = lineWidth;
         ResetLineRender();
         UpdateLineDistance();
     }
@@ -97,11 +99,14 @@ public class DrawCut : MonoBehaviour
             }
 
             pointB = cam.ScreenToWorldPoint(mouse);
-            CreateSlicePlane();
-            cutRender.positionCount = 2;
-            cutRender.SetPosition(0, pointA);
-            cutRender.SetPosition(1, pointB);
-            animateCut = true;
+            if (Vector3.Distance(pointA, pointB) > 0)
+            {
+                CreateSlicePlane();
+                cutRender.positionCount = 2;
+                cutRender.SetPosition(0, pointA);
+                cutRender.SetPosition(1, pointB);
+                animateCut = true;
+            }
         }
 
         // Animate line renderer

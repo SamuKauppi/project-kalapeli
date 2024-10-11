@@ -162,9 +162,6 @@ public class AttachingProcess : MonoBehaviour
         posAwayFromLure.z += meshOffset.z;
         posAwayFromLure += 0.5f * attachDistance * directionAway;
 
-        // Match rotation to lure object
-        attachObject.transform.rotation = lureObj.transform.rotation;
-
         // Raycast
         if (Physics.Raycast(posAwayFromLure, -directionAway, out RaycastHit hit, attachDistance, blockLayer))
         {
@@ -236,7 +233,8 @@ public class AttachingProcess : MonoBehaviour
         // Set the attached object
         attachedObject = Instantiate(attachDict[type].gameObject,
                                   nullPos,
-                                  GameManager.Instance.LureCamera.transform.rotation);
+                                  GameManager.Instance.LureCamera.transform.rotation,
+                                  lureObj.transform);
 
         attachPos = attachDict[type].AttachPosition;
         attachBothSides = attachDict[type].AttachBothSides;
@@ -253,7 +251,8 @@ public class AttachingProcess : MonoBehaviour
         {
             mirrorObj = Instantiate(attachDict[type].gameObject,
                                     nullPos,
-                                    GameManager.Instance.LureCamera.transform.rotation);
+                                    GameManager.Instance.LureCamera.transform.rotation,
+                                    lureObj.transform);
             Vector3 flipScale = GetFlippedScale();
 
             mirrorObj.transform.localScale = flipScale;

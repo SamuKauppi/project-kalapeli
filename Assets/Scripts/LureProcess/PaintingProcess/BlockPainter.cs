@@ -25,6 +25,7 @@ public class BlockPainter : MonoBehaviour
     // Matrial properties
     [SerializeField] private Texture2D[] lureTextures;
     [SerializeField] private Material coloredBlockMaterial;
+    [SerializeField] private int defaultPaintID;
 
     // Coloring variables
     private Color baseColor;
@@ -82,6 +83,7 @@ public class BlockPainter : MonoBehaviour
         {
             mats[i] = coloredBlockMaterial;
         }
+        selectedTextureId = defaultPaintID;
         blockRenderer.materials = mats;
         UpdateColoring(Color.white, Color.black, selectedTextureId);
     }

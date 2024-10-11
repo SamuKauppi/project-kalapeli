@@ -73,7 +73,6 @@ public class BlockRotation : MonoBehaviour
             if (IsRotating) StopAllCoroutines();
             StartCoroutine(RotateTransform(1 * (upRotIndex == 0 ? 1 : upRotIndex), 0, rotationTime));
         }
-
     }
 
     /// <summary>

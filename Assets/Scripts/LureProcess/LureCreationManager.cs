@@ -86,6 +86,9 @@ public class LureCreationManager : MonoBehaviour
 
         // Disable saving
         saveButtons.SetActive(false);
+
+        // Ensure that the block can be rotated
+        BlockRotation.Instance.StopRotating = false;
     }
 
     public void EndCutting()
@@ -143,6 +146,12 @@ public class LureCreationManager : MonoBehaviour
 
     public void EndLureCreation()
     {
+        BlockRotation.Instance.StopRotating = true;
         GameManager.Instance.SwapModes();
+    }
+
+    public void ResumeLureCreation()
+    {
+        BlockRotation.Instance.StopRotating = false;
     }
 }
