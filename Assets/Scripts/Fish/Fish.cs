@@ -23,7 +23,7 @@ public class Fish : MonoBehaviour
     [SerializeField] private int score;
 
     // Set in runtime
-    private HashSet<AttachingType> attachTable = new();
+    private readonly HashSet<AttachingType> attachTable = new();
 
     // Public getters
     public FishSpecies Species { get { return species; } }
@@ -60,7 +60,6 @@ public class Fish : MonoBehaviour
 
             score += Mathf.FloorToInt(Mathf.Lerp(CatchManager.Instance.GetCatchScoreForType(CatchScoreType.Color), 0f, baseDiff));
         }
-        score /= PreferredColors.Length;
 
         return score;
     }

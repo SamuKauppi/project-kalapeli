@@ -1,5 +1,8 @@
 ﻿public enum FishSpecies
 {
+    None,
     Dipfish,
-    Bobber
+    Bobber,
+    Fry,
+    Pickley
 }

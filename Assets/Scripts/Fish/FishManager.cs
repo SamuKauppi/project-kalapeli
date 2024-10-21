@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -7,8 +8,12 @@ public class FishManager : MonoBehaviour
 {
     public static FishManager Instance { get; private set; }
 
-    // Fishes for this level
-    [SerializeField] private Fish[] availableFish;
+    [SerializeField] private Rod rodPrefab;                 // Prefab
+    [SerializeField] private Transform[] rodAttachPoints;   // Points where rods are attached
+
+    private Fish[] availableFish;   // Fishes for this level
+    private Rod[] rods;             // Rods made during runtime
+
     private void Awake()
     {
         if (Instance == null)
@@ -24,7 +29,48 @@ public class FishManager : MonoBehaviour
     private void Start()
     {
         availableFish = PersitentManager.Instance.GetFishesForThisLevel();
+
+        rods = new Rod[rodAttachPoints.Length];
+        for (int i = 0; i < rodAttachPoints.Length; i++)
+        {
+            rods[i] = Instantiate(rodPrefab, rodAttachPoints[i].position, rodAttachPoints[i].rotation, transform);
+        }
     }
+
+    public void OnLureClick(Rod targetRod)
+    {
+        LureProperties nextLure = PersitentManager.Instance.GetLure();
+        if (nextLure != null)
+        {
+            List<FishCatchScore> fishCatchScores = new();
+            int totalScore = 0;
+
+            for (int i = 0; i < availableFish.Length; i++)
+            {
+                int score = availableFish[i].GetCatchChance(nextLure);
+                if (score > 0)
+                {
+                    FishCatchScore fcs = new()
+                    {
+                        species = availableFish[i].Species,
+                        minScore = totalScore
+                    };
+
+                    totalScore += score;
+                    fcs.maxScore = totalScore;
+                    fishCatchScores.Add(fcs);
+                }
+            }
+
+            targetRod.AttachLure(nextLure, totalScore, fishCatchScores.ToArray());
+        }
+    }
+
+    public void CatchFish(FishSpecies fish)
+    {
+
+    }
+
 
     public void EndFishing()
     {

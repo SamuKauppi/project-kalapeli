@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Used to refer how much every type of stat in lure properties affects catch score
+/// </summary>
 public class CatchManager : MonoBehaviour
 {
     public static CatchManager Instance { get; private set; }

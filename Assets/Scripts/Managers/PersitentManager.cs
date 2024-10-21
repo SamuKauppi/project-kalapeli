@@ -9,13 +9,13 @@ public class PersitentManager : MonoBehaviour
     public static PersitentManager Instance { get; private set; }
 
     // Lure
-    private readonly List<GameObject> luresCreated = new();
+    private readonly List<LureProperties> luresCreated = new();
 
     // Fish
     [SerializeField] private List<Fish> everyFishInGame = new();    // Contains every fish that exists (set in inspector)
     private List<FishSpecies> fishForThisLevel = new();             // Fishes available for this level (Set before loading to a level)
     private readonly Dictionary<FishSpecies, Fish> fishDict = new();// Dictionary that is set during runtime    
-    
+
     private void Awake()
     {
         if (Instance == null)
@@ -60,7 +60,7 @@ public class PersitentManager : MonoBehaviour
             prop.FinishLure();
         }
 
-        luresCreated.Add(newObj);
+        luresCreated.Add(newObj.GetComponent<LureProperties>());
         oriObj.SetActive(true);
     }
 
@@ -77,5 +77,17 @@ public class PersitentManager : MonoBehaviour
         }
 
         return fishes;
+    }
+
+    public LureProperties GetLure()
+    {
+        if (luresCreated.Count > 0)
+        {
+            LureProperties nextLure = luresCreated[^1];
+            luresCreated.Remove(nextLure);
+            return nextLure;
+        }
+
+        return null;
     }
 }

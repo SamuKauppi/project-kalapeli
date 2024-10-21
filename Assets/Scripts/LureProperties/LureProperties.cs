@@ -332,11 +332,11 @@ public class LureProperties : MonoBehaviour
 
         // Increse swimming depth by X-m for each gram of weight
         depth += Mass * depthFromMassM;
-        depth = Mathf.Clamp(depth, minDepth, maxDepth);
 
         // Update variables
         SwimType = type;
         SwimmingDepth = depth;
+        // Display stat changes
         if (statDisplay)
         {
             statDisplay.UpdateDisplayStats(SwimType, streamlineRatio, SwimmingDepth, Mass, BaseColor, TexColor, PatternID);
@@ -344,9 +344,12 @@ public class LureProperties : MonoBehaviour
     }
     private void ChangeColors(Color baseC, Color texC, int textureID)
     {
+        // Update variables
         BaseColor = baseC;
         TexColor = texC;
         PatternID = textureID;
+
+        // Display stat changes
         if (statDisplay)
         {
             statDisplay.UpdateDisplayStats(SwimType, streamlineRatio, SwimmingDepth, Mass, BaseColor, TexColor, PatternID);

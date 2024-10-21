@@ -5,6 +5,7 @@ public class Cutter : MonoBehaviour
 {
     private static bool isBusy;
     private static Mesh originalMesh;
+    private const float REPEL_FORCE = 10f;
 
     /// <summary>
     /// Cuts Gameobject into two sperate objects
@@ -103,7 +104,7 @@ public class Cutter : MonoBehaviour
         // Set rigidbody
         var rightRigidbody = otherObj.AddComponent<Rigidbody>();
         float direction = leftDist > rightDist ? -1f : 1f;
-        rightRigidbody.AddRelativeForce(1000f * direction * cutPlane.normal);
+        rightRigidbody.AddRelativeForce(REPEL_FORCE * direction * cutPlane.normal);
 
         // Free cutter
         isBusy = false;

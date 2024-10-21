@@ -202,7 +202,7 @@ MonoBehaviour:
   minLengthTwoHook: 2.5
   depthFromMassM: 0.05
   minDepth: 1
-  maxDepth: 15
+  maxDepth: 30
 --- !u!64 &8350681727507843981
 MeshCollider:
   m_ObjectHideFlags: 0

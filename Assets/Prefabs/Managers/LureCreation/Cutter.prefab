@@ -48,7 +48,7 @@ MonoBehaviour:
   blockLayer:
     serializedVersion: 2
     m_Bits: 128
-  lineWidth: 0.1
+  lineWidth: 0.005
 --- !u!120 &1671180869580617301
 LineRenderer:
   serializedVersion: 2

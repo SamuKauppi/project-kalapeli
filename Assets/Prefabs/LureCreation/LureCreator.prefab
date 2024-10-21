@@ -60,7 +60,7 @@ MonoBehaviour:
   paintingButtons: {fileID: 6537167509050355387}
   attachButtons: {fileID: 7792863017956502304}
   saveButtons: {fileID: 7518342044372506779}
-  blockMesh: {fileID: -5495902117074765545, guid: 812b2ad10a6f4f14fa9dcf961adade06, type: 3}
+  blockMesh: {fileID: -6427765413431730091, guid: b1b75f29a52337442917a373a3c6719d, type: 3}
   blockMaterial: {fileID: 2100000, guid: 4ee39a05e07c95240a88eca791255342, type: 2}
   physicMaterial: {fileID: 13400000, guid: 55e8019e26aedbb47a5cc7f394eaf42b, type: 2}
 --- !u!1 &6893337277739500867
