@@ -191,6 +191,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &890715109 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2601539329372860434, guid: 8d8eb8c67bc7ad848a5e10bfe762b80d, type: 3}
+  m_PrefabInstance: {fileID: 2503304264855557688}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &890715111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890715109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b74058256bd0ca64389a45bb8629bd23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxMove: 15
+  speed: 0.25
+  rotSpeed: 1
 --- !u!1 &1842069921
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,10 +394,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2250899766904258595, guid: 8d8eb8c67bc7ad848a5e10bfe762b80d, type: 3}
-      propertyPath: isFishingMode
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5228243583224915073, guid: 8d8eb8c67bc7ad848a5e10bfe762b80d, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -425,7 +441,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2601539329372860434, guid: 8d8eb8c67bc7ad848a5e10bfe762b80d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 890715111}
   m_SourcePrefab: {fileID: 100100000, guid: 8d8eb8c67bc7ad848a5e10bfe762b80d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

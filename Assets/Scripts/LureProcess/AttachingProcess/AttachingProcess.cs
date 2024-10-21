@@ -41,10 +41,13 @@ public class AttachingProcess : MonoBehaviour
     private bool matchRotation;         // Will the rotation of attached object be matched to face normal
 
     // Positioning
+    Vector3 nullPos = new(0f, -1000f, 0f);  // Position where the attachbles are hidden
     private Vector3 mousePos;           // Mouse vector
     private Vector3 meshOffset;         // Distance from gameobject center to mesh position
-    private bool mouseHeld;             // Mouse input detection for fixed update
+    private float mouseHeld;            // Mouse held input detection for fixed update
+    private bool mouseUp;               // Mouse up input detection for fixed update
     private bool isValidPos = false;    // Is the attached object at a valid position
+    private bool wasRotating = false;   // Checks if the block was rotating and fixes attachable rotaion when needed
 
     /// <summary>
     /// Singleton is set in Awake
@@ -71,25 +74,62 @@ public class AttachingProcess : MonoBehaviour
         lureObj = blockRotation.gameObject;
     }
 
+    /// <summary>
+    /// Update is used for input detection
+    /// </summary>
     private void Update()
     {
-        if (!IsAttaching || !attachedObject || blockRotation.IsRotating) { return; }
+        if (!IsAttaching || !attachedObject) { return; }
 
         // Get mouse pos
         mousePos = Input.mousePosition;
         mousePos.z = distanceToLure;
 
-        // While mouse is being held, set the attached object position to mouse
         if (Input.GetMouseButton(0))
         {
             blockRotation.StopRotating = true;
-            mouseHeld = true;
+            mouseHeld += Time.deltaTime;
         }
         else
-            mouseHeld = false;
+            mouseHeld = 0f;
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            mouseUp = true;
+        }
+    }
+
+    /// <summary>
+    /// Fixed update is used for reacting to inputs
+    /// </summary>
+    private void FixedUpdate()
+    {
+        if (!IsAttaching || !attachedObject) { return; }
+        if (blockRotation.IsRotating) { wasRotating = true; return; }
+
+        // Check if the block was rotating and fix the rotation and position if needed
+        if (wasRotating)
+        {
+            attachedObject.transform.rotation = blockRotation.transform.rotation;
+            if (attachBothSides)
+            {
+                mirrorObj.transform.rotation = blockRotation.transform.rotation;
+            }
+            if (mouseHeld <= 0.1f)
+            {
+                MoveObjectToAttachPosition();
+            }
+            wasRotating = false;
+        }
+
+        // While mouse is being held, set the attached object position to mouse
+        if (mouseHeld > 0.1f)
+        {
+            MoveObjectToAttachPosition();
+        }
 
         // When mouse is released either place it or destroy it
-        if (Input.GetMouseButtonUp(0))
+        if (mouseUp)
         {
             if (!isValidPos)
             {
@@ -112,14 +152,8 @@ public class AttachingProcess : MonoBehaviour
             mirrorObj = null;
             blockRotation.StopRotating = false;
             OnAttach?.Invoke();
+            mouseUp = false;
         }
-    }
-
-    private void FixedUpdate()
-    {
-        if (!IsAttaching || !attachedObject || blockRotation.IsRotating) { return; }
-        if (mouseHeld)
-            MoveObjectToAttachPosition();
     }
 
     /// <summary>
@@ -190,6 +224,10 @@ public class AttachingProcess : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Returns vector that can be used to flip scale
+    /// </summary>
+    /// <returns></returns>
     private Vector3 GetFlippedScale()
     {
         return attachPos switch
@@ -201,11 +239,17 @@ public class AttachingProcess : MonoBehaviour
         };
     }
 
+    /// <summary>
+    /// Updates distance from camera to block
+    /// </summary>
     private void UpdateDistance()
     {
         distanceToLure = Vector3.Distance(cam.transform.position, lureObj.transform.position);
     }
 
+    /// <summary>
+    /// Activates the attaching related variables and stuff
+    /// </summary>
     public void ActivateAttaching()
     {
         IsAttaching = true;
@@ -228,13 +272,11 @@ public class AttachingProcess : MonoBehaviour
         // Check if the object is determined
         if (!attachDict.ContainsKey(type)) { Debug.LogWarning("key " + type + " was not found."); return; }
 
-        Vector3 nullPos = new(0f, -1000f, 0f);
-
         // Set the attached object
         attachedObject = Instantiate(attachDict[type].gameObject,
                                   nullPos,
                                   GameManager.Instance.LureCamera.transform.rotation,
-                                  lureObj.transform);
+                                  transform);
 
         attachPos = attachDict[type].AttachPosition;
         attachBothSides = attachDict[type].AttachBothSides;
@@ -252,7 +294,7 @@ public class AttachingProcess : MonoBehaviour
             mirrorObj = Instantiate(attachDict[type].gameObject,
                                     nullPos,
                                     GameManager.Instance.LureCamera.transform.rotation,
-                                    lureObj.transform);
+                                    transform);
             Vector3 flipScale = GetFlippedScale();
 
             mirrorObj.transform.localScale = flipScale;
@@ -276,18 +318,20 @@ public class AttachingProcess : MonoBehaviour
     /// <param name="mirror">Was there a mirrored object</param>
     public void MoveAttached(GameObject obj, AttachPosition pos, bool matchRot, GameObject mirror)
     {
-        if (attachedObject)
-            return;
+        // Check that attaching not disabled and we don't have an attached obj
+        if (!IsAttaching || attachedObject) { return; }
 
         attachedObject = obj;
-        attachedObject.transform.parent = null;
+        attachedObject.transform.parent = transform;
+        attachedObject.transform.position = cam.ScreenToWorldPoint(mousePos);
         attachPos = pos;
         matchRotation = matchRot;
         mirrorObj = mirror;
 
         if (mirrorObj != null)
         {
-            mirrorObj.transform.parent = null;
+            mirrorObj.transform.parent = transform;
+            mirrorObj.transform.position = cam.WorldToScreenPoint(mousePos);
             attachBothSides = true;
             mirrorObj.GetComponent<MoveAttach>().EnableOutline(true);
         }

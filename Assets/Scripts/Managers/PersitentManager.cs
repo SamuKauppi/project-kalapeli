@@ -12,7 +12,7 @@ public class PersitentManager : MonoBehaviour
     private readonly List<LureProperties> luresCreated = new();
 
     // Fish
-    [SerializeField] private List<Fish> everyFishInGame = new();    // Contains every fish that exists (set in inspector)
+    [SerializeField] private Fish[] everyFishInGame;                // Contains every fish that exists (set in inspector)
     private List<FishSpecies> fishForThisLevel = new();             // Fishes available for this level (Set before loading to a level)
     private readonly Dictionary<FishSpecies, Fish> fishDict = new();// Dictionary that is set during runtime    
 
@@ -35,11 +35,14 @@ public class PersitentManager : MonoBehaviour
         // TODO: create a function to do this once menu exists
         fishForThisLevel = new()
         {
-            FishSpecies.Dipfish
+            FishSpecies.Dipfish,
+            FishSpecies.Bobber,
+            FishSpecies.Pickley,
+            FishSpecies.Fry
         };
 
         // Populate dictionary
-        for (int i = 0; i < everyFishInGame.Count; i++)
+        for (int i = 0; i < everyFishInGame.Length; i++)
         {
             fishDict.Add(everyFishInGame[i].Species, everyFishInGame[i]);
         }
@@ -53,11 +56,6 @@ public class PersitentManager : MonoBehaviour
         if (newObj.TryGetComponent<BlockRotation>(out var rot))
         {
             Destroy(rot);
-        }
-
-        if (newObj.TryGetComponent<LureProperties>(out var prop))
-        {
-            prop.FinishLure();
         }
 
         luresCreated.Add(newObj.GetComponent<LureProperties>());

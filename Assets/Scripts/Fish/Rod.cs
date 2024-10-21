@@ -6,7 +6,7 @@ public class Rod : MonoBehaviour
     public bool IsAttached { get; private set; } = false;
     public LureProperties LureAttached { get; private set; } = null;
     public FishSpecies CaughtFish { get; private set; } = FishSpecies.None;
-    public bool HasFish { get; private set; }
+    public bool HasFish { get; private set; } = false;
 
     [SerializeField] private Outline outline;
     [SerializeField] private float minTimeForFish;
@@ -36,9 +36,10 @@ public class Rod : MonoBehaviour
     private void OnMouseDown()
     {
         if (!IsAttached)
+        {
             FishManager.Instance.OnLureClick(this);
-
-        if (HasFish)
+        }
+        else if (HasFish)
         {
             FishManager.Instance.CatchFish(CaughtFish);
             CaughtFish = FishSpecies.None;
@@ -57,7 +58,6 @@ public class Rod : MonoBehaviour
             {
                 HasFish = true;
                 CaughtFish = fishCatchChances[i].species;
-                Debug.Log("You caught: " + CaughtFish);
                 break;
             }
         }
@@ -72,10 +72,6 @@ public class Rod : MonoBehaviour
         outline.enabled = false;
         totalScore = catchTotal;
         fishCatchChances = catchScores;
-        foreach (FishCatchScore f in fishCatchChances)
-        {
-            Debug.Log("Name: " + f.species + ", Chance: " + (f.maxScore - f.minScore));
-        }
         StartCoroutine(WaitingForFish());
     }
 

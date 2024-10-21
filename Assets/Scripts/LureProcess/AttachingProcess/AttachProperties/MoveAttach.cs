@@ -16,6 +16,9 @@ public class MoveAttach : MonoBehaviour
 
     private void OnMouseDown()
     {
+        // Check if the attaching process is active
+        if (!AttachingProcess.Instance.IsAttaching) { return; }
+
         if (!IsMirrored)
         {
             AttachingProcess.Instance.MoveAttached(gameObject, AttachPosition, MatchRotation, MirroredObj);
@@ -25,6 +28,9 @@ public class MoveAttach : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        // Check if the attaching process is active
+        if (!AttachingProcess.Instance.IsAttaching) { return; }
+
         if (!IsMirrored)
         {
             AddOutline(1);
@@ -33,6 +39,9 @@ public class MoveAttach : MonoBehaviour
 
     private void OnMouseExit()
     {
+        // Check if the attaching process is active
+        if (!AttachingProcess.Instance.IsAttaching) { return; }
+
         if (!IsMirrored)
         {
             AddOutline(-1);
@@ -42,7 +51,7 @@ public class MoveAttach : MonoBehaviour
     private void AddOutline(int change)
     {
         shouldHighlight += change;
-        if(shouldHighlight > 0)
+        if (shouldHighlight > 0)
         {
             outline.enabled = true;
         }
@@ -54,6 +63,10 @@ public class MoveAttach : MonoBehaviour
 
     public void EnableOutline(bool value)
     {
+        // Check if the attaching process is active
+        if (!AttachingProcess.Instance.IsAttaching) { return; }
+
         AddOutline(value ? 1 : -1);
     }
+
 }

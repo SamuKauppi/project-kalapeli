@@ -60,15 +60,15 @@ public class FishManager : MonoBehaviour
                     fcs.maxScore = totalScore;
                     fishCatchScores.Add(fcs);
                 }
+                Debug.Log("Fish: " + availableFish[i].Species + ", Score: " + score);
             }
-
             targetRod.AttachLure(nextLure, totalScore, fishCatchScores.ToArray());
         }
     }
 
     public void CatchFish(FishSpecies fish)
     {
-
+        Debug.Log("You caught: " + fish);
     }
 
 

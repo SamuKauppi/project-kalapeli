@@ -397,11 +397,4 @@ public class LureProperties : MonoBehaviour
             }
         }
     }
-
-
-    public float MatchingToFish()
-    {
-
-        return 0;
-    }
 }

@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 2849073659460621452}
+  minTimeForFish: 0
+  maxTimeForFish: 0
 --- !u!114 &2849073659460621452
 MonoBehaviour:
   m_ObjectHideFlags: 0

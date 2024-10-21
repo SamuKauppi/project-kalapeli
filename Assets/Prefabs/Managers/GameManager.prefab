@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ba9dc99f1ee8c4a906fb17a5e60363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFishingMode: 1
+  isFishingMode: 0
   onTag: MainCamera
   offTag: Untagged
   lureCam: {fileID: 5987873660034390328}

@@ -145,6 +145,7 @@ public class LureCreationManager : MonoBehaviour
 
         // Ensure that the block can be rotated
         BlockRotation.Instance.StopRotating = false;
+        BlockRotation.Instance.GetComponent<LureProperties>().FinishLure();
     }
 
     public void SaveLure()
