@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: d64e2b8253520924b99c5effb7e4d6de, type: 3}
       propertyPath: m_LocalScale.x
-      value: 26
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d64e2b8253520924b99c5effb7e4d6de, type: 3}
       propertyPath: m_LocalScale.y
-      value: 26
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d64e2b8253520924b99c5effb7e4d6de, type: 3}
       propertyPath: m_LocalScale.z
-      value: 26
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d64e2b8253520924b99c5effb7e4d6de, type: 3}
       propertyPath: m_LocalPosition.x
@@ -175,8 +175,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.8815291, y: 0.17694011, z: 0.8472351}
-  m_Center: {x: 0.44270647, y: -0.043647125, z: -0.0015588403}
+  m_Size: {x: 0.03441856, y: 0.01139579, z: 0.03507841}
+  m_Center: {x: 0.0191512, y: -0.0025835298, z: -0.00079140626}
 --- !u!4 &6446189065538525730 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3387688374180264442, guid: 25b5c2b1ea2ac20408d772b1ac5c342e, type: 3}

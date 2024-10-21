@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: d2345e016fd46c446b3a7cecdc2aa6f9, type: 3}
       propertyPath: m_LocalScale.x
-      value: 26
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d2345e016fd46c446b3a7cecdc2aa6f9, type: 3}
       propertyPath: m_LocalScale.y
-      value: 26
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d2345e016fd46c446b3a7cecdc2aa6f9, type: 3}
       propertyPath: m_LocalScale.z
-      value: 26
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d2345e016fd46c446b3a7cecdc2aa6f9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -176,5 +176,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0319561, y: 0.6073968, z: 0.15088171}
-  m_Center: {x: 0.000000059604645, y: 0.0022825897, z: -0.07075986}
+  m_Size: {x: 0.06997964, y: 0.039628997, z: 0.015906736}
+  m_Center: {x: 0.0006727427, y: -0.00040825456, z: -0.003272377}
