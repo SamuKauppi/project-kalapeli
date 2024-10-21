@@ -23,8 +23,10 @@ public class LureCreationManager : MonoBehaviour
     [SerializeField] private Mesh blockMesh;
     [SerializeField] private Material blockMaterial;
     [SerializeField] private PhysicMaterial physicMaterial;
+
     private MeshRenderer blockRend;
     private MeshFilter blockFilter;
+    private LureProperties lureProperties;
 
     private void Awake()
     {
@@ -38,6 +40,7 @@ public class LureCreationManager : MonoBehaviour
     {
         blockRend = BlockRotation.Instance.GetComponent<MeshRenderer>();
         blockFilter = BlockRotation.Instance.GetComponent<MeshFilter>();
+        lureProperties = BlockRotation.Instance.GetComponent<LureProperties>(); 
         ResetLureCreation();
     }
 
@@ -73,8 +76,8 @@ public class LureCreationManager : MonoBehaviour
         col.sharedMesh = blockMesh;
         col.convex = true;
 
-        // Reset lure properties (remove children adn reset stats)
-        lureObject.GetComponent<LureProperties>().ResetLure();
+        // Reset lure properties (remove children and reset stats)
+        lureProperties.ResetLure();
 
         // Disable painting
         paintingButtons.SetActive(false);
@@ -93,6 +96,9 @@ public class LureCreationManager : MonoBehaviour
 
     public void EndCutting()
     {
+        if (lureProperties.SwimType == SwimmingType.Bad)
+            return;
+
         // Hide cutting buttons and reveal painting buttons
         cuttingButtons.SetActive(false);
         paintingButtons.SetActive(true);
@@ -126,6 +132,9 @@ public class LureCreationManager : MonoBehaviour
 
     public void EndAttaching()
     {
+        if (lureProperties.SwimType == SwimmingType.Bad)
+            return;
+
         // Hide attach buttons and reveal save buttons
         attachButtons.SetActive(false);
         saveButtons.SetActive(true);

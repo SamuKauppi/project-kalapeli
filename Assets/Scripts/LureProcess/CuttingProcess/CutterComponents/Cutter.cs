@@ -102,9 +102,8 @@ public class Cutter : MonoBehaviour
 
         // Set rigidbody
         var rightRigidbody = otherObj.AddComponent<Rigidbody>();
-        rightRigidbody.mass = 0.1f;
         float direction = leftDist > rightDist ? -1f : 1f;
-        rightRigidbody.AddRelativeForce(15f * direction * cutPlane.normal);
+        rightRigidbody.AddRelativeForce(1000f * direction * cutPlane.normal);
 
         // Free cutter
         isBusy = false;
