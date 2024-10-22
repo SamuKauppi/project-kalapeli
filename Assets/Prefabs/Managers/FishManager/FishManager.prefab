@@ -86,6 +86,7 @@ MonoBehaviour:
   - {fileID: 845654506506391950}
   - {fileID: 4760031263229817587}
   - {fileID: 1297510856925574802}
+  fishDisplay: {fileID: 7415735936268305139}
 --- !u!1 &4585150437015930731
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,6 +180,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5655265401048825127}
   m_LocalEulerAnglesHint: {x: 35, y: 45, z: 0}
+--- !u!1 &8188268276514858256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7415735936268305139}
+  m_Layer: 0
+  m_Name: FishDisplay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7415735936268305139
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8188268276514858256}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.8870109, z: 0, w: 0.46174863}
+  m_LocalPosition: {x: 0, y: 0.014, z: 0.396}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1182863248712424900}
+  m_LocalEulerAnglesHint: {x: 0, y: 125, z: 0}
 --- !u!1001 &1543886875604259350
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -190,10 +222,6 @@ PrefabInstance:
     - target: {fileID: 2075705680089211039, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
       propertyPath: m_Name
       value: FishCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 2075705680089211039, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3618581826491945486, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
       propertyPath: m_Pivot.x
@@ -347,7 +375,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7861898657679417973, guid: 7663fe4e1d3ff4f498e97a242616d4aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7415735936268305139}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7663fe4e1d3ff4f498e97a242616d4aa, type: 3}
 --- !u!4 &1182863248712424900 stripped

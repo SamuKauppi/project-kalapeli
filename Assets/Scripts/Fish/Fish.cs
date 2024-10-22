@@ -91,10 +91,8 @@ public class Fish : MonoBehaviour
         return score;
     }
 
-    public int GetCatchChance(LureProperties lure)
+    public int GetCatchChance(LureStats lure)
     {
-        int catchScore = catchChance;
-
         // if lures depth does not match the fish swimming depth, return 0 chance
         if (lure.SwimmingDepth < MinSwimDepth || lure.SwimmingDepth > MaxSwimDepth)
         {
@@ -102,10 +100,12 @@ public class Fish : MonoBehaviour
         }
 
         // Otherwise calculate score
-        catchScore += GetColorScore(lure.BaseColor, lure.TexColor, lure.PatternID);
-        catchScore += GetScoreFromSet(lure.AttachedTypes, attachTable, CatchScoreType.Attachment);
-        catchScore += GetScoreFromValue(lure.SwimType, PreferredSwimStyle, CatchScoreType.SwimStyle);
-        catchScore += GetScoreFromValue(lure.PatternID, PreferredPatternIndex, CatchScoreType.Pattern);
+        int catchScore = catchChance;
+        catchScore += CatchManager.Instance.GetCatchScoreForType(CatchScoreType.Depth);                 // Depth score
+        catchScore += GetColorScore(lure.BaseColor, lure.TexColor, lure.PatternID);                     // Color score
+        catchScore += GetScoreFromSet(lure.AttachedTypes, attachTable, CatchScoreType.Attachment);      // Attachment score
+        catchScore += GetScoreFromValue(lure.SwimType, PreferredSwimStyle, CatchScoreType.SwimStyle);   // Swim score
+        catchScore += GetScoreFromValue(lure.PatternID, PreferredPatternIndex, CatchScoreType.Pattern); // Patthern score
         
         // return score
         return catchScore;

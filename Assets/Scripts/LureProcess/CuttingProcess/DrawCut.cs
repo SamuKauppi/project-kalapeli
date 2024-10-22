@@ -10,11 +10,11 @@ public class DrawCut : MonoBehaviour
     // References
     [SerializeField] private LayerMask blockLayer;
     private BlockRotation blockRotation;   // Script that rotates the block that will be cut
-    private LureProperties lureProperties;
+    private LureFunctions lureProperties;
 
     // SerializeFields
     [SerializeField] private float lineWidth;
-    private Vector3 checkBoxSize = new(1000f, 0.001f, 1000f);   // Size of the cut check
+    private Vector3 checkBoxSize = new(100f, 0.001f, 100f);     // Size of the cut check
     private float lineDist = 8f;                                // How far from camera is the line used for cutting
 
     // Cut detection
@@ -30,12 +30,18 @@ public class DrawCut : MonoBehaviour
     private bool cancelCut;
     private bool wasRotating;
 
+    // Debug
+    private bool drawBox = false;
+    private Vector3 boxCenter;
+    private Quaternion boxOrientation;
+
+
     // Start is called before the first frame update
     void Start()
     {
         cam = GameManager.Instance.LureCamera;
         blockRotation = BlockRotation.Instance;
-        lureProperties = blockRotation.GetComponent<LureProperties>();
+        lureProperties = blockRotation.GetComponent<LureFunctions>();
         cutRender = GetComponent<LineRenderer>();
         checkBoxSize.y = lineWidth;
         cutRender.startWidth = lineWidth;
@@ -48,7 +54,8 @@ public class DrawCut : MonoBehaviour
     void Update()
     {
         // Stop the ability to cut when the block is rotatig
-        if (blockRotation.IsRotating || !IsCutting) { wasRotating = true; return; }
+        if (blockRotation.IsRotating) { wasRotating = true; return; }
+        if (!IsCutting) { return; }
 
         // Once this script is enabled, update line distance
         if (wasRotating)
@@ -122,8 +129,6 @@ public class DrawCut : MonoBehaviour
     /// </summary>
     private void CreateSlicePlane()
     {
-        checkBoxSize.x = Vector3.Distance(pointA, pointB);
-
         Vector3 pointInPlane = (pointA + pointB) / 2;
 
         Vector3 cutPlaneNormal = Vector3.Cross(pointA - pointB, cam.transform.forward).normalized;
@@ -137,8 +142,16 @@ public class DrawCut : MonoBehaviour
                                                       orientation,
                                                       blockLayer);
 
-        if (numColliders <= 0) { return; }
+        drawBox = true;
+        boxCenter = pointInPlane;
+        boxOrientation = orientation;
+        Debug.DrawLine(pointA, pointB, Color.red, 25f);
 
+        if (numColliders <= 0)
+        {
+
+            return;
+        }
         foreach (Collider hit in results)
         {
             if (hit && hit.gameObject.TryGetComponent(out MeshFilter _))
@@ -149,6 +162,17 @@ public class DrawCut : MonoBehaviour
 
         lureProperties.CalculateStats();
     }
+
+    void OnDrawGizmos()
+    {
+        if (drawBox)
+        {
+            Gizmos.color = Color.red;  // Set the color to red to indicate no colliders
+            Gizmos.matrix = Matrix4x4.TRS(boxCenter, boxOrientation, Vector3.one);
+            Gizmos.DrawWireCube(Vector3.zero, checkBoxSize / 2);  // Draw the box
+        }
+    }
+
 
     /// <summary>
     /// Resets line renderer

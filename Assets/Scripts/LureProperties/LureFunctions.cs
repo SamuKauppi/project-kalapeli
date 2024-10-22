@@ -1,50 +1,37 @@
-using System.Linq;
 using UnityEngine;
 
-public class LureProperties : MonoBehaviour
+/// <summary>
+/// Class used to determine stats for the lure while creating it
+/// After the lure is finished and used, this script will be removed
+/// </summary>
+public class LureFunctions : MonoBehaviour
 {
-    // Stats
-    public float Mass { get; private set; } = 0f;               // Is determined by volume of mesh and attachables (grams)
-    public SwimmingType SwimType { get; private set; }          // Is determined by chub and how streamlined is the mesh
-                                                                // Becomes bad if:
-                                                                // - Has too many attachables
-                                                                // - Has too many hooks
-                                                                // - Has more than one chub
-                                                                // - Is not streamlined enough 
-    public float SwimmingDepth { get; private set; } = 0f;      // Is determined by Mass and SwimmingType (meters)
-    public Color BaseColor { get; private set; } = Color.white; // Base color (white by default)
-    public Color TexColor { get; private set; } = Color.black;  // Texture color (black by default)
-    public int PatternID { get; private set; } = 1;             // Index of paint pattern (0 = no pattern)
-    public AttachingType[] AttachedTypes { get; private set; }  // Is set by the player
-    = new AttachingType[0];
+    public LureStats Stats {  get; private set; }
 
     // SerializeFields
-    [SerializeField] private float uncutBlockLengthM = 0.1f;    // The desired length of uncut block in meters
-    [SerializeField] private float materialDensity = 500f;      // kg/m³ (average for wood is 600 - 500 kg/m³)
-    [SerializeField] private float minStreamlineRatio = 0.28f;  // Min streamline ratio needed for a proper swimming type
-    [SerializeField] private float minLengthOneHook = 1;        // Min length for the mesh with one hook to maintain proper swimming
-    [SerializeField] private float minLengthTwoHook = 2.5f;     // Min length for the mesh with two hooks to maintain proper swimming
+    [SerializeField] private float streamlineMultiplier = 1f;   // Increases streamlineratio to make it more readable
+    [SerializeField] private float uncutBlockLengthM = 0.1f;    // The desired length of uncut block in meters (used to convert from mesh to meters)
+    [SerializeField] private float materialDensity = 500f;      // kg/m³ (average for wood is 400 - 700 kg/m³)
+    [SerializeField] private float thresholdStreamlineRatio;    // Min streamline ratio needed for a proper swimming type
+    [SerializeField] private float minLengthOneHook = 1;        // Min length with one hook to maintain proper swimming
+    [SerializeField] private float minLengthTwoHook = 2.5f;     // Min length with two hooks to maintain proper swimming
     [SerializeField] private float depthFromMassM = 0.1f;       // How much depth is added for each gram (default 10cm)
-    [SerializeField] private float minDepth = 1.0f;             // Min depth achievable
-    [SerializeField] private float maxDepth = 10f;              // Max depth achievable
 
     // private variables
-    private StatDisplay statDisplay;
-    private MeshFilter _filter;     // Reference to filter  
-    private float unitConverter;    // The multiplier that converts uncut block length to desired length
-    private float streamlineRatio;  // streamlineRatio
-    private float attachWeight;     // total weight of all attachments
-    private float volume;           // volume of mesh
-    private bool isDisplayingColor; // Prevents multiple functions calls when no color should be shown
+    private MeshFilter _filter;         // Reference to filter  
+    private float unitConverter;        // The multiplier that converts uncut block length to desired length
+    private float streamlineRatio;      // StreamlineRatio
+    private float worstStreamlineRatio; // Starting streamline ratio
+    private float attachWeight;         // Total weight of all attachments
+    private float volume;               // volume of mesh
+    private bool isDisplayingColor;     // Prevents multiple functions calls when no color should be shown
+    private bool isStatBoundsSet;       // Detects if stat display bounds are set
 
     private void Start()
     {
         _filter = GetComponent<MeshFilter>();
         unitConverter = uncutBlockLengthM / _filter.mesh.bounds.size.x;
-        CalculateStats();
-        statDisplay = StatDisplay.Instance;
-        statDisplay.SetDisplayBounds(minDepth, maxDepth, streamlineRatio, Mass);
-        statDisplay.UpdateDisplayStats(SwimType, streamlineRatio, SwimmingDepth, Mass, BaseColor, TexColor, PatternID);
+        Stats = GetComponent<LureStats>();
     }
 
     private void OnEnable()
@@ -77,7 +64,8 @@ public class LureProperties : MonoBehaviour
         streamlineIndex *= (1 + alignmentFactor);
 
         // Return index as ratio
-        return streamlineIndex;
+        // Increase the value to make it more readable
+        return streamlineIndex * streamlineMultiplier;
     }
 
     /// <summary>
@@ -97,7 +85,8 @@ public class LureProperties : MonoBehaviour
                 vertices[triangles[i + 2]]
             );
         }
-        return area;
+        // Multiply with unit converter^2 since it's square meter
+        return area * Mathf.Pow(unitConverter, 2);
     }
 
     /// <summary>
@@ -120,7 +109,8 @@ public class LureProperties : MonoBehaviour
             volume += Vector3.Dot(v1, Vector3.Cross(v2, v3)) / 6f; // Tetrahedron volume formula
         }
 
-        return Mathf.Abs(volume);
+        // Multiply with unitconverter^3 since it's cubic meters
+        return Mathf.Abs(volume) * Mathf.Pow(unitConverter, 3);
     }
 
     /// <summary>
@@ -195,7 +185,17 @@ public class LureProperties : MonoBehaviour
         // Calculate streamlineratio and assgin volume
         streamlineRatio = CalculateStreamlineRatio(vertices, triangles, volume);
 
-        if (streamlineRatio > minStreamlineRatio)
+        // Set worstStreamlineRatio first time
+        if (worstStreamlineRatio == 0)
+        {
+            worstStreamlineRatio = streamlineRatio;
+        }
+
+        // Lerp streamline ratio
+        streamlineRatio = Mathf.InverseLerp(0, worstStreamlineRatio, streamlineRatio);
+
+
+        if (streamlineRatio > thresholdStreamlineRatio)
         {
             type = SwimmingType.Bad;
         }
@@ -210,13 +210,13 @@ public class LureProperties : MonoBehaviour
     {
         // Initialize local variabes
         bool stopChecking = false;
-        float length = _filter.mesh.bounds.size.x;
+        float length = _filter.mesh.bounds.size.x * unitConverter;  // Convert units
         int hookCount = 0;
         int chubCount = 0;
 
         // Initialize class variables
         attachWeight = 0.0f;
-        AttachedTypes = new AttachingType[transform.childCount - 1];
+        Stats.AttachedTypes = new AttachingType[transform.childCount - 1];
 
         for (int i = 1; i < transform.childCount; i++)
         {
@@ -232,7 +232,7 @@ public class LureProperties : MonoBehaviour
 
             // Add attachble weight
             attachWeight += attachProperties.Weight;
-            AttachedTypes[i - 1] = attachProperties.AttachingType;
+            Stats.AttachedTypes[i - 1] = attachProperties.AttachingType;
 
             // Switch statement to handle different attachable types
             switch (groupType)
@@ -325,38 +325,48 @@ public class LureProperties : MonoBehaviour
 
         // Calculate mass
         // (volume is calculated in CalculateMeshStats and attachWeight is calculated in CalculateAttachStats)
-        // Use unitConverter to change the volume from cubic unity units to m³ (what ever gives the most relistic values)
-        Mass = volume * Mathf.Pow(unitConverter, 3) * materialDensity;
-        Mass *= 1000f;          // Convert to grams
-        Mass += attachWeight;   // Add attachments weight (already in grams)
+        Stats.Mass = volume * materialDensity;
+        Stats.Mass *= 1000f;          // Convert to grams
+        Stats.Mass += attachWeight;   // Add attachments weight (already in grams)
 
         // Increse swimming depth by X-m for each gram of weight
-        depth += Mass * depthFromMassM;
+        depth += Stats.Mass * depthFromMassM;
 
         // Update variables
-        SwimType = type;
-        SwimmingDepth = depth;
+        Stats.SwimType = type;
+        Stats.SwimmingDepth = depth;
+
         // Display stat changes
-        if (statDisplay)
-        {
-            statDisplay.UpdateDisplayStats(SwimType, streamlineRatio, SwimmingDepth, Mass, BaseColor, TexColor, PatternID);
-        }
+        if (isStatBoundsSet)
+            StatDisplay.Instance.UpdateDisplayStats(Stats.SwimType,
+                                                    streamlineRatio,
+                                                    Stats.SwimmingDepth,
+                                                    Stats.Mass,
+                                                    Stats.BaseColor,
+                                                    Stats.TexColor,
+                                                    Stats.PatternID);
     }
     private void ChangeColors(Color baseC, Color texC, int textureID)
     {
         // Update variables
-        BaseColor = baseC;
-        TexColor = texC;
-        PatternID = textureID;
+        Stats.BaseColor = baseC;
+        Stats.TexColor = texC;
+        Stats.PatternID = textureID;
 
         // Display stat changes
-        if (statDisplay)
+        if (isStatBoundsSet)
         {
-            statDisplay.UpdateDisplayStats(SwimType, streamlineRatio, SwimmingDepth, Mass, BaseColor, TexColor, PatternID);
+            StatDisplay.Instance.UpdateDisplayStats(Stats.SwimType,
+                                                    streamlineRatio,
+                                                    Stats.SwimmingDepth,
+                                                    Stats.Mass,
+                                                    Stats.BaseColor,
+                                                    Stats.TexColor,
+                                                    Stats.PatternID);
 
             if (!isDisplayingColor)
             {
-                statDisplay.DisplayColors(true);
+                StatDisplay.Instance.DisplayColors(true);
                 isDisplayingColor = true;
             }
         }
@@ -366,12 +376,12 @@ public class LureProperties : MonoBehaviour
     {
         // Color is no longer displayed
         isDisplayingColor = false;
-        statDisplay.DisplayColors(false);
-        BaseColor = Color.white;
-        TexColor = Color.black;
+        StatDisplay.Instance.DisplayColors(false);
+        Stats.BaseColor = Color.white;
+        Stats.TexColor = Color.black;
 
         // Reset pattern
-        PatternID = 1;
+        Stats.PatternID = 1;
 
         // Destroy children skipping 1st (the arrow obj)
         for (int i = 1; i < transform.childCount; i++)
@@ -381,6 +391,20 @@ public class LureProperties : MonoBehaviour
 
         // Recalculate stats to reset them
         CalculateStats();
+
+        // If display bounds have not been made, make them
+        if (!isStatBoundsSet)
+        {
+            StatDisplay.Instance.SetDisplayBounds(streamlineRatio, Stats.Mass);
+            StatDisplay.Instance.UpdateDisplayStats(Stats.SwimType,
+                                                    streamlineRatio,
+                                                    Stats.SwimmingDepth,
+                                                    Stats.Mass,
+                                                    Stats.BaseColor,
+                                                    Stats.TexColor,
+                                                    Stats.PatternID);
+            isStatBoundsSet = true;
+        }
     }
 
     public void FinishLure()

@@ -142,7 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   catchScoreTable:
   - scoreType: 0
-    catchScore: 100
+    catchScore: 20
   - scoreType: 1
     catchScore: 50
   - scoreType: 2

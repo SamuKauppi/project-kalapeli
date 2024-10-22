@@ -9,7 +9,7 @@ public class PersitentManager : MonoBehaviour
     public static PersitentManager Instance { get; private set; }
 
     // Lure
-    private readonly List<LureProperties> luresCreated = new();
+    private readonly List<GameObject> luresCreated = new();
 
     // Fish
     [SerializeField] private Fish[] everyFishInGame;                // Contains every fish that exists (set in inspector)
@@ -58,7 +58,12 @@ public class PersitentManager : MonoBehaviour
             Destroy(rot);
         }
 
-        luresCreated.Add(newObj.GetComponent<LureProperties>());
+        if (newObj.TryGetComponent<LureFunctions>(out var func))
+        {
+            Destroy(func);
+        }
+
+        luresCreated.Add(newObj);
         oriObj.SetActive(true);
     }
 
@@ -77,11 +82,11 @@ public class PersitentManager : MonoBehaviour
         return fishes;
     }
 
-    public LureProperties GetLure()
+    public GameObject GetLure()
     {
         if (luresCreated.Count > 0)
         {
-            LureProperties nextLure = luresCreated[^1];
+            GameObject nextLure = luresCreated[^1];
             luresCreated.Remove(nextLure);
             return nextLure;
         }

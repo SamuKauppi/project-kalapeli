@@ -47,7 +47,12 @@ MonoBehaviour:
   swimmingTypeText: {fileID: 0}
   badSwimImage: {fileID: 0}
   streamlineSlider: {fileID: 0}
+  streamlineText: {fileID: 0}
   depthSilder: {fileID: 0}
   depthText: {fileID: 0}
+  minDepth: 1
+  maxDepth: 20
+  weightSlider: {fileID: 0}
+  weightText: {fileID: 0}
   baseColorImage: {fileID: 0}
   texColorImage: {fileID: 0}

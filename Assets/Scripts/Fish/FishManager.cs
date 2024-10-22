@@ -10,6 +10,7 @@ public class FishManager : MonoBehaviour
 
     [SerializeField] private Rod rodPrefab;                 // Prefab
     [SerializeField] private Transform[] rodAttachPoints;   // Points where rods are attached
+    [SerializeField] private Transform fishDisplay;
 
     private Fish[] availableFish;   // Fishes for this level
     private Rod[] rods;             // Rods made during runtime
@@ -39,8 +40,10 @@ public class FishManager : MonoBehaviour
 
     public void OnLureClick(Rod targetRod)
     {
-        LureProperties nextLure = PersitentManager.Instance.GetLure();
-        if (nextLure != null)
+        GameObject lure = PersitentManager.Instance.GetLure();
+        if (lure == null) { return; }
+
+        if (lure.TryGetComponent<LureStats>(out var nextLure))
         {
             List<FishCatchScore> fishCatchScores = new();
             int totalScore = 0;
@@ -66,9 +69,16 @@ public class FishManager : MonoBehaviour
         }
     }
 
-    public void CatchFish(FishSpecies fish)
+    public void CatchFish(FishSpecies caughtFish)
     {
-        Debug.Log("You caught: " + fish);
+        foreach (Fish fish in availableFish)
+        {
+            if (fish.Species.Equals(caughtFish))
+            {
+                GameObject f = Instantiate(fish.gameObject, fishDisplay.transform.position, fishDisplay.transform.rotation, fishDisplay);
+                break;
+            }
+        }
     }
 
 

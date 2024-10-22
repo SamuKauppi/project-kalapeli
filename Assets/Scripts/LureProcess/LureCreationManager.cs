@@ -26,7 +26,7 @@ public class LureCreationManager : MonoBehaviour
 
     private MeshRenderer blockRend;
     private MeshFilter blockFilter;
-    private LureProperties lureProperties;
+    private LureFunctions lureProperties;
 
     private void Awake()
     {
@@ -40,7 +40,7 @@ public class LureCreationManager : MonoBehaviour
     {
         blockRend = BlockRotation.Instance.GetComponent<MeshRenderer>();
         blockFilter = BlockRotation.Instance.GetComponent<MeshFilter>();
-        lureProperties = BlockRotation.Instance.GetComponent<LureProperties>(); 
+        lureProperties = BlockRotation.Instance.GetComponent<LureFunctions>(); 
         ResetLureCreation();
     }
 
@@ -49,7 +49,6 @@ public class LureCreationManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-
             SaveAsset.SaveGameObjectAsPrefab(lureObject);
         }
     }
@@ -96,7 +95,7 @@ public class LureCreationManager : MonoBehaviour
 
     public void EndCutting()
     {
-        if (lureProperties.SwimType == SwimmingType.Bad)
+        if (lureProperties.Stats.SwimType == SwimmingType.Bad)
             return;
 
         // Hide cutting buttons and reveal painting buttons
@@ -132,7 +131,9 @@ public class LureCreationManager : MonoBehaviour
 
     public void EndAttaching()
     {
-        if (lureProperties.SwimType == SwimmingType.Bad)
+        // Don't end attaching if swimstyle is not valid
+        if (lureProperties.Stats.SwimType == SwimmingType.Bad || 
+            lureProperties.Stats.SwimType == SwimmingType.None)
             return;
 
         // Hide attach buttons and reveal save buttons
@@ -145,7 +146,7 @@ public class LureCreationManager : MonoBehaviour
 
         // Ensure that the block can be rotated
         BlockRotation.Instance.StopRotating = false;
-        BlockRotation.Instance.GetComponent<LureProperties>().FinishLure();
+        BlockRotation.Instance.GetComponent<LureFunctions>().FinishLure();
     }
 
     public void SaveLure()

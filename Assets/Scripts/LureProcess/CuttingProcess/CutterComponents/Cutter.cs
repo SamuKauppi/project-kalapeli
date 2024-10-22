@@ -5,7 +5,7 @@ public class Cutter : MonoBehaviour
 {
     private static bool isBusy;
     private static Mesh originalMesh;
-    private const float REPEL_FORCE = 5f;
+    private const float REPEL_FORCE = 20f;
 
     /// <summary>
     /// Cuts Gameobject into two sperate objects

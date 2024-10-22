@@ -18,6 +18,8 @@ public class StatDisplay : MonoBehaviour
     // Depth
     [SerializeField] private Slider depthSilder;
     [SerializeField] private TMP_Text depthText;
+    [SerializeField] private float minDepth = 1.0f;             // Min depth (used only for display bounds)
+    [SerializeField] private float maxDepth = 10f;              // Max depth (used only for display bounds)
 
     // Weight
     [SerializeField] private Slider weightSlider;
@@ -42,14 +44,14 @@ public class StatDisplay : MonoBehaviour
         texColorImage.gameObject.SetActive(false);
     }
 
-    public void SetDisplayBounds(float minDepth, float maxDepth, float maxStreamlineRatio, float maxWeight)
+    public void SetDisplayBounds(float maxStreamlineRatio, float maxWeight)
     {
         // Set depth bounds
         depthSilder.minValue = minDepth;
         depthSilder.maxValue = maxDepth;
         // Set streamline bounds 
-        streamlineSlider.minValue = 0f;
-        streamlineSlider.maxValue = maxStreamlineRatio;
+        streamlineSlider.minValue = -maxStreamlineRatio;
+        streamlineSlider.maxValue = 0f;
         // Set Weight bounds
         weightSlider.minValue = 0f;
         weightSlider.maxValue = maxWeight;
@@ -75,7 +77,7 @@ public class StatDisplay : MonoBehaviour
             badSwimImage.gameObject.SetActive(false);
         }
         streamlineText.text = MathF.Round(streamlineRatio, 2).ToString();
-        streamlineSlider.value = streamlineRatio;
+        streamlineSlider.value = -streamlineRatio;
         depthText.text = MathF.Round(depth, 2).ToString() + "m";
         depthSilder.value = depth;
         weightText.text = MathF.Round(weight, 2).ToString() + "g";

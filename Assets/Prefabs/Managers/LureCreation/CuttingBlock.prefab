@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2960794662086922}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.4, y: 0, z: 0}
+  m_LocalPosition: {x: 0.27, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -95,7 +95,8 @@ GameObject:
   - component: {fileID: 7434758757150611141}
   - component: {fileID: 4668375717988213263}
   - component: {fileID: 5663000148207114756}
-  - component: {fileID: 1259862936879279991}
+  - component: {fileID: 1744438499120138163}
+  - component: {fileID: 9213585019420134121}
   - component: {fileID: 8350681727507843981}
   m_Layer: 7
   m_Name: CuttingBlock
@@ -183,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationTime: 0.25
---- !u!114 &1259862936879279991
+--- !u!114 &1744438499120138163
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,17 +193,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 6613987449730270170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7fd2d9827800e94aad21e0b0be9f7fa, type: 3}
+  m_Script: {fileID: 11500000, guid: b02ba9b5f6a45774293a983538eeeb75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uncutBlockLengthM: 0.1
-  materialDensity: 450
-  minStreamlineRatio: 0.28
-  minLengthOneHook: 1
-  minLengthTwoHook: 2.5
-  depthFromMassM: 0.05
-  minDepth: 1
-  maxDepth: 30
+  streamlineMultiplier: 100
+  uncutBlockLengthM: 0.15
+  materialDensity: 320
+  thresholdStreamlineRatio: 0.6
+  minLengthOneHook: 0.035
+  minLengthTwoHook: 0.05
+  depthFromMassM: 0.035
+--- !u!114 &9213585019420134121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6613987449730270170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e5811ead5cc9b94daeddfac286374ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!64 &8350681727507843981
 MeshCollider:
   m_ObjectHideFlags: 0

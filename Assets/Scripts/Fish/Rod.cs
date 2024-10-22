@@ -4,7 +4,7 @@ using UnityEngine;
 public class Rod : MonoBehaviour
 {
     public bool IsAttached { get; private set; } = false;
-    public LureProperties LureAttached { get; private set; } = null;
+    public LureStats LureAttached { get; private set; } = null;
     public FishSpecies CaughtFish { get; private set; } = FishSpecies.None;
     public bool HasFish { get; private set; } = false;
 
@@ -35,37 +35,39 @@ public class Rod : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!IsAttached)
-        {
-            FishManager.Instance.OnLureClick(this);
-        }
-        else if (HasFish)
+        if (HasFish) // Check if there is a fish first
         {
             FishManager.Instance.CatchFish(CaughtFish);
             CaughtFish = FishSpecies.None;
             HasFish = false;
             DetachLure();
         }
+        else if (!IsAttached) // Check if the lure is not attached next
+        {
+            FishManager.Instance.OnLureClick(this);
+        }
+
     }
 
     private IEnumerator WaitingForFish()
     {
         yield return new WaitForSeconds(Random.Range(minTimeForFish, maxTimeForFish));
+
         int catchValue = Random.Range(0, totalScore);
+        Debug.Log("finding fish with: " + catchValue);
         for (int i = 0; i < fishCatchChances.Length; i++)
         {
             if (catchValue >= fishCatchChances[i].minScore && catchValue < fishCatchChances[i].maxScore)
             {
                 HasFish = true;
                 CaughtFish = fishCatchChances[i].species;
+                Debug.Log(CaughtFish + " is hooked!");
                 break;
             }
         }
-
-        DetachLure();
     }
 
-    public void AttachLure(LureProperties lure, int catchTotal, FishCatchScore[] catchScores)
+    public void AttachLure(LureStats lure, int catchTotal, FishCatchScore[] catchScores)
     {
         LureAttached = lure;
         IsAttached = true;

@@ -143,8 +143,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7677517316292408577, guid: 25b5c2b1ea2ac20408d772b1ac5c342e, type: 3}
+      propertyPath: swimmingType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677517316292408577, guid: 25b5c2b1ea2ac20408d772b1ac5c342e, type: 3}
       propertyPath: attachingType
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677517316292408577, guid: 25b5c2b1ea2ac20408d772b1ac5c342e, type: 3}
+      propertyPath: swimmingDepthInMeters
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2167458529050501580, guid: 25b5c2b1ea2ac20408d772b1ac5c342e, type: 3}

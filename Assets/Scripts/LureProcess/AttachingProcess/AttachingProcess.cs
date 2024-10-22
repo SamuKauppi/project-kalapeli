@@ -33,7 +33,6 @@ public class AttachingProcess : MonoBehaviour
     // Attachable object currently being attached
     private readonly float attachDistance = 20f;    // Used to raycast while attaching
     private GameObject lureObj;         // Lure object the objects will be attached to
-    private Collider lureCollider;      // Lure objects meshfilter that is used to create offset to attach object properly
     private GameObject attachedObject;  // Object being currently attached
     private GameObject mirrorObj;       // Mirrored object
     private AttachPosition attachPos;   // Where the object being currently attached can be placed
@@ -240,6 +239,28 @@ public class AttachingProcess : MonoBehaviour
     }
 
     /// <summary>
+    /// Calculates the center position of mesh in world space
+    /// </summary>
+    /// <param name="vertices"></param>
+    /// <param name="transform"></param>
+    /// <returns></returns>
+    private Vector3 CalculateMeshCenter(Vector3[] vertices, Transform transform)
+    {
+        // Calculate the average of the vertices
+        Vector3 center = Vector3.zero;
+
+        foreach (Vector3 vertex in vertices)
+        {
+            center += vertex;
+        }
+
+        center /= vertices.Length;
+
+        // Convert the local center to world space
+        return transform.TransformPoint(center);
+    }
+
+    /// <summary>
     /// Updates distance from camera to block
     /// </summary>
     private void UpdateDistance()
@@ -253,9 +274,8 @@ public class AttachingProcess : MonoBehaviour
     public void ActivateAttaching()
     {
         IsAttaching = true;
-        lureCollider = lureObj.GetComponent<Collider>();
-        Vector3 meshLocalCenter = lureCollider.bounds.center;
-        meshOffset = transform.TransformPoint(meshLocalCenter) - transform.TransformPoint(lureObj.transform.position);
+        Vector3 meshCenter = CalculateMeshCenter(lureObj.GetComponent<MeshFilter>().mesh.vertices, lureObj.transform);
+        meshOffset = meshCenter - transform.position;
         UpdateDistance();
     }
 
