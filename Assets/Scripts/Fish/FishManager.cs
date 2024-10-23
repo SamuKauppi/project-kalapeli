@@ -29,8 +29,10 @@ public class FishManager : MonoBehaviour
 
     private void Start()
     {
+        // Get fishes for this level
         availableFish = PersitentManager.Instance.GetFishesForThisLevel();
 
+        // Create rods
         rods = new Rod[rodAttachPoints.Length];
         for (int i = 0; i < rodAttachPoints.Length; i++)
         {
@@ -38,19 +40,29 @@ public class FishManager : MonoBehaviour
         }
     }
 
-    public void OnLureClick(Rod targetRod)
+    /// <summary>
+    /// When that does not have a lure is clicked
+    /// Calculate catch chances for each fish and attach lure to rod
+    /// </summary>
+    /// <param name="targetRod"></param>
+    public void OnRodClick(Rod targetRod)
     {
+        // Get next lure
         GameObject lure = PersitentManager.Instance.GetLure();
         if (lure == null) { return; }
 
+        // Ensure that LureStats is found
         if (lure.TryGetComponent<LureStats>(out var nextLure))
         {
+            // Create a list of fishes that can be caught
             List<FishCatchScore> fishCatchScores = new();
             int totalScore = 0;
 
             for (int i = 0; i < availableFish.Length; i++)
             {
                 int score = availableFish[i].GetCatchChance(nextLure);
+
+                // If Fish can be caught, add it to list and increment totalScore
                 if (score > 0)
                 {
                     FishCatchScore fcs = new()
@@ -65,23 +77,31 @@ public class FishManager : MonoBehaviour
                 }
                 Debug.Log("Fish: " + availableFish[i].Species + ", Score: " + score);
             }
+            // Attach lure and it's catch chances to rod
             targetRod.AttachLure(nextLure, totalScore, fishCatchScores.ToArray());
         }
     }
 
+    /// <summary>
+    /// Catch and display given fish species
+    /// </summary>
+    /// <param name="caughtFish"></param>
     public void CatchFish(FishSpecies caughtFish)
     {
+        // TODO: display fish properly after catching
         foreach (Fish fish in availableFish)
         {
             if (fish.Species.Equals(caughtFish))
             {
-                GameObject f = Instantiate(fish.gameObject, fishDisplay.transform.position, fishDisplay.transform.rotation, fishDisplay);
+                Instantiate(fish.gameObject, fishDisplay.transform.position, fishDisplay.transform.rotation, fishDisplay);
                 break;
             }
         }
     }
 
-
+    /// <summary>
+    /// End fishing mode
+    /// </summary>
     public void EndFishing()
     {
         GameManager.Instance.SwapModes();

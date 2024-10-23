@@ -64,6 +64,22 @@ public class Fish : MonoBehaviour
         return score;
     }
 
+    private int GetDepthScore(float depth)
+    {
+        float worstDiff = maxSwimDepth - minSwimDepth;
+        float depthDiff = Mathf.Abs(depth - ((minSwimDepth + maxSwimDepth) * 0.5f));
+
+        // If depthDiff is greater than or equal to worstDiff, return 0 immediately.
+        if (depthDiff >= worstDiff)
+            return 0;
+
+        int bestScore = CatchManager.Instance.GetCatchScoreForType(CatchScoreType.Depth);
+
+        // Calculate score directly using Lerp, no need to clamp as depthDiff >= worstDiff is already handled.
+        return Mathf.RoundToInt(Mathf.Lerp(bestScore, 0, depthDiff / worstDiff));
+    }
+
+
     private int GetScoreFromSet<T>(T[] values, HashSet<T> set, CatchScoreType type)
     {
         int score = 0;
@@ -101,7 +117,7 @@ public class Fish : MonoBehaviour
 
         // Otherwise calculate score
         int catchScore = catchChance;
-        catchScore += CatchManager.Instance.GetCatchScoreForType(CatchScoreType.Depth);                 // Depth score
+        catchScore += GetDepthScore(lure.SwimmingDepth);                                                // Depth score
         catchScore += GetColorScore(lure.BaseColor, lure.TexColor, lure.PatternID);                     // Color score
         catchScore += GetScoreFromSet(lure.AttachedTypes, attachTable, CatchScoreType.Attachment);      // Attachment score
         catchScore += GetScoreFromValue(lure.SwimType, PreferredSwimStyle, CatchScoreType.SwimStyle);   // Swim score

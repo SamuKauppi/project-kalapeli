@@ -1,14 +1,19 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Used to catch fishes
+/// </summary>
 public class Rod : MonoBehaviour
 {
-    public bool IsAttached { get; private set; } = false;
-    public LureStats LureAttached { get; private set; } = null;
-    public FishSpecies CaughtFish { get; private set; } = FishSpecies.None;
-    public bool HasFish { get; private set; } = false;
+    public bool IsAttached { get; private set; } = false;                   // If a lure is attached
+    public LureStats LureAttached { get; private set; } = null;             // Lure attached
+    public bool HasFish { get; private set; } = false;                      // Has a fish attached
+    public FishSpecies CaughtFish { get; private set; } = FishSpecies.None; // Fish species attached
 
-    [SerializeField] private Outline outline;
+    // Reference to outline script
+    [SerializeField] private Outline outline;     
+    // Min & Max time to wait for fish to be caught
     [SerializeField] private float minTimeForFish;
     [SerializeField] private float maxTimeForFish;
 
@@ -35,26 +40,33 @@ public class Rod : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (HasFish) // Check if there is a fish first
+        if (HasFish) // Check first if there is a fish
         {
             FishManager.Instance.CatchFish(CaughtFish);
             CaughtFish = FishSpecies.None;
             HasFish = false;
             DetachLure();
         }
-        else if (!IsAttached) // Check if the lure is not attached next
+        else if (!IsAttached) // Then check if the lure is not attached
         {
-            FishManager.Instance.OnLureClick(this);
+            FishManager.Instance.OnRodClick(this);
         }
 
     }
 
+    /// <summary>
+    /// Wait for a fish to be caugth
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator WaitingForFish()
     {
+        // Wait for a random time
         yield return new WaitForSeconds(Random.Range(minTimeForFish, maxTimeForFish));
 
+        // Create catch value
         int catchValue = Random.Range(0, totalScore);
-        Debug.Log("finding fish with: " + catchValue);
+
+        // Catch fish
         for (int i = 0; i < fishCatchChances.Length; i++)
         {
             if (catchValue >= fishCatchChances[i].minScore && catchValue < fishCatchChances[i].maxScore)
@@ -67,6 +79,12 @@ public class Rod : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Attaches lure to rod
+    /// </summary>
+    /// <param name="lure"></param>
+    /// <param name="catchTotal"></param>
+    /// <param name="catchScores"></param>
     public void AttachLure(LureStats lure, int catchTotal, FishCatchScore[] catchScores)
     {
         LureAttached = lure;
@@ -77,9 +95,13 @@ public class Rod : MonoBehaviour
         StartCoroutine(WaitingForFish());
     }
 
+    /// <summary>
+    /// Removes lure from rod
+    /// </summary>
     public void DetachLure()
     {
-        Destroy(LureAttached.gameObject);
+        // TODO: display fish and lure before destroying lure
+        Destroy(LureAttached.gameObject); 
         LureAttached = null;
         IsAttached = false;
         outline.enabled = false;

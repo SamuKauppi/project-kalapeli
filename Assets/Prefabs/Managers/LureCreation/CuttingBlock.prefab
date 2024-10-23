@@ -199,9 +199,9 @@ MonoBehaviour:
   streamlineMultiplier: 100
   uncutBlockLengthM: 0.15
   materialDensity: 320
-  thresholdStreamlineRatio: 0.6
-  minLengthOneHook: 0.035
-  minLengthTwoHook: 0.05
+  thresholdStreamlineRatio: 0.5
+  minLengthOneHook: 0.05
+  minLengthTwoHook: 0.08
   depthFromMassM: 0.035
 --- !u!114 &9213585019420134121
 MonoBehaviour:
@@ -215,6 +215,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e5811ead5cc9b94daeddfac286374ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Mass: 0
+  SwimType: 0
+  SwimmingDepth: 0
+  BaseColor: {r: 1, g: 1, b: 1, a: 1}
+  TexColor: {r: 0, g: 0, b: 0, a: 1}
+  PatternID: 1
+  AttachedTypes: 
 --- !u!64 &8350681727507843981
 MeshCollider:
   m_ObjectHideFlags: 0

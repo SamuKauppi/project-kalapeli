@@ -6,10 +6,10 @@ using UnityEngine;
 /// </summary>
 public class LureFunctions : MonoBehaviour
 {
-    public LureStats Stats {  get; private set; }
+    public LureStats Stats { get; private set; }
 
     // SerializeFields
-    [SerializeField] private float streamlineMultiplier = 1f;   // Increases streamlineratio to make it more readable
+    [SerializeField] private float streamlineMultiplier = 1f;   // Multiplies streamlineRatio to make it more readable
     [SerializeField] private float uncutBlockLengthM = 0.1f;    // The desired length of uncut block in meters (used to convert from mesh to meters)
     [SerializeField] private float materialDensity = 500f;      // kg/m³ (average for wood is 400 - 700 kg/m³)
     [SerializeField] private float thresholdStreamlineRatio;    // Min streamline ratio needed for a proper swimming type
