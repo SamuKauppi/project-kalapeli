@@ -133,7 +133,8 @@ public class LureCreationManager : MonoBehaviour
     {
         // Don't end attaching if swimstyle is not valid
         if (lureProperties.Stats.SwimType == SwimmingType.Bad || 
-            lureProperties.Stats.SwimType == SwimmingType.None)
+            lureProperties.Stats.SwimType == SwimmingType.None ||
+            !lureProperties.CanCatch)
             return;
 
         // Hide attach buttons and reveal save buttons

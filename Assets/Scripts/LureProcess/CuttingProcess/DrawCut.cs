@@ -14,10 +14,11 @@ public class DrawCut : MonoBehaviour
 
     // SerializeFields
     [SerializeField] private float lineWidth;
-    private Vector3 checkBoxSize = new(100f, 0.001f, 100f);     // Size of the cut check
-    private float lineDist = 8f;                                // How far from camera is the line used for cutting
+    [SerializeField] private float minCutDist;
 
     // Cut detection
+    private Vector3 checkBoxSize = new(0f, 0.001f, 100f);     // Size of the cut check
+    private float lineDist = 8f;                                // How far from camera is the line used for cutting
     private Camera cam;             // Main camera
     private Vector3 mouse;          // Mouse position on screen
     private Vector3 pointA;         // Start of the cut (moves with the object) 
@@ -29,11 +30,6 @@ public class DrawCut : MonoBehaviour
     private bool animateCut;
     private bool cancelCut;
     private bool wasRotating;
-
-    // Debug
-    private bool drawBox = false;
-    private Vector3 boxCenter;
-    private Quaternion boxOrientation;
 
 
     // Start is called before the first frame update
@@ -106,14 +102,14 @@ public class DrawCut : MonoBehaviour
             }
 
             pointB = cam.ScreenToWorldPoint(mouse);
-            if (Vector3.Distance(pointA, pointB) > 0)
+            if (Vector3.Distance(pointA, pointB) > minCutDist)
             {
                 CreateSlicePlane();
-                cutRender.positionCount = 2;
-                cutRender.SetPosition(0, pointA);
-                cutRender.SetPosition(1, pointB);
-                animateCut = true;
             }
+            cutRender.positionCount = 2;
+            cutRender.SetPosition(0, pointA);
+            cutRender.SetPosition(1, pointB);
+            animateCut = true;
         }
 
         // Animate line renderer
@@ -129,23 +125,27 @@ public class DrawCut : MonoBehaviour
     /// </summary>
     private void CreateSlicePlane()
     {
+        // Calculate the midpoint between pointA and pointB
         Vector3 pointInPlane = (pointA + pointB) / 2;
 
+        // Define the size of the OverlapBox
+        checkBoxSize.x = Vector3.Distance(pointA, pointB) * 0.5f;
+
+        // Calculate the orientation of the OverlapBox based on the normal between pointA and pointB
         Vector3 cutPlaneNormal = Vector3.Cross(pointA - pointB, cam.transform.forward).normalized;
 
-        Quaternion orientation = Quaternion.FromToRotation(Vector3.up, cutPlaneNormal);
+        // Ensure that the box aligns with the correct axes by setting orientation explicitly
+        Quaternion orientation = Quaternion.LookRotation(cam.transform.forward, cutPlaneNormal);
 
+        // Run OverlapBoxNonAlloc using the calculated values
         Collider[] results = new Collider[5];
-        int numColliders = Physics.OverlapBoxNonAlloc(pointInPlane,
-                                                      checkBoxSize / 2,
-                                                      results,
-                                                      orientation,
-                                                      blockLayer);
-
-        drawBox = true;
-        boxCenter = pointInPlane;
-        boxOrientation = orientation;
-        Debug.DrawLine(pointA, pointB, Color.red, 25f);
+        int numColliders = Physics.OverlapBoxNonAlloc(
+            pointInPlane,
+            checkBoxSize,
+            results,
+            orientation,
+            blockLayer
+        );
 
         if (numColliders <= 0)
         {
@@ -162,17 +162,6 @@ public class DrawCut : MonoBehaviour
 
         lureProperties.CalculateStats();
     }
-
-    void OnDrawGizmos()
-    {
-        if (drawBox)
-        {
-            Gizmos.color = Color.red;  // Set the color to red to indicate no colliders
-            Gizmos.matrix = Matrix4x4.TRS(boxCenter, boxOrientation, Vector3.one);
-            Gizmos.DrawWireCube(Vector3.zero, checkBoxSize / 2);  // Draw the box
-        }
-    }
-
 
     /// <summary>
     /// Resets line renderer

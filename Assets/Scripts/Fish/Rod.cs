@@ -19,7 +19,9 @@ public class Rod : MonoBehaviour
 
     // Got from FishManager
     private FishCatchScore[] fishCatchChances;
-    private int totalScore;
+
+    // Total catchscore
+    private int totalCatchScore;
 
     private void Start()
     {
@@ -46,6 +48,7 @@ public class Rod : MonoBehaviour
             CaughtFish = FishSpecies.None;
             HasFish = false;
             DetachLure();
+            StopAllCoroutines();
         }
         else if (!IsAttached) // Then check if the lure is not attached
         {
@@ -64,7 +67,8 @@ public class Rod : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(minTimeForFish, maxTimeForFish));
 
         // Create catch value
-        int catchValue = Random.Range(0, totalScore);
+        int catchValue = Random.Range(0, totalCatchScore);
+        float timeAttached = 0;
 
         // Catch fish
         for (int i = 0; i < fishCatchChances.Length; i++)
@@ -73,10 +77,17 @@ public class Rod : MonoBehaviour
             {
                 HasFish = true;
                 CaughtFish = fishCatchChances[i].species;
-                Debug.Log(CaughtFish + " is hooked!");
+                timeAttached = fishCatchChances[i].timeAttached;
+                Debug.Log(CaughtFish + " is hooked! Score: " + catchValue);
                 break;
             }
         }
+
+        yield return new WaitForSeconds(timeAttached);
+
+        HasFish = false;
+        CaughtFish = FishSpecies.None;
+        StartCoroutine(WaitingForFish());
     }
 
     /// <summary>
@@ -90,7 +101,7 @@ public class Rod : MonoBehaviour
         LureAttached = lure;
         IsAttached = true;
         outline.enabled = false;
-        totalScore = catchTotal;
+        totalCatchScore = catchTotal;
         fishCatchChances = catchScores;
         StartCoroutine(WaitingForFish());
     }

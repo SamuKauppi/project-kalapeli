@@ -74,17 +74,32 @@ public class ColorWheel : MonoBehaviour
         }
     }
 
-    public void ChangeHue(float sliderValue)
+    private void UpdateSelectedColorUI(Color c)
     {
-        hue = sliderValue;
-        newColor = Color.HSVToRGB(hue, saturation, brightness);
-        colorImage.color = Color.HSVToRGB(hue, 1f, 1f);
+        // Extract hsv values
+        Color.RGBToHSV(c, out float newHue, out  float newSaturation, out float newBrightness);
+
+        // Update variables
+        hue = newHue;
+        saturation = newSaturation;
+        brightness = newBrightness;
+        newColor = c;
+
+        // Update slider
+        hueSlider.value = newHue;
+
+        // Update pick sprite position
+        float width = colorImage.rectTransform.rect.width * 0.5f;
+        float height = colorImage.rectTransform.rect.height * 0.5f;
+
+        float xPos = Mathf.Lerp(-width, width, newSaturation);
+        float yPos = Mathf.Lerp(-height, height, newBrightness);
+
+        colorPickSprite.rectTransform.anchoredPosition = new(xPos, yPos);
+
+        ShowSelectedColor();
     }
 
-    public void GenerateRandomColor(Image target)
-    {
-        target.color = new(Random.value, Random.value, Random.value);
-    }
     private void ShowSelectedColor()
     {
         if (previewImage)
@@ -106,10 +121,15 @@ public class ColorWheel : MonoBehaviour
     {
         mats = previewRenderer.materials;
         this.targetImage = targetImage;
-        newColor = targetColor;
         colorType = type;
         IsActive = true;
-        ShowSelectedColor();
+        UpdateSelectedColorUI(targetColor);
+    }
+    public void ChangeHue(float sliderValue)
+    {
+        hue = sliderValue;
+        newColor = Color.HSVToRGB(hue, saturation, brightness);
+        colorImage.color = Color.HSVToRGB(hue, 1f, 1f);
     }
 
     public void SetColor()

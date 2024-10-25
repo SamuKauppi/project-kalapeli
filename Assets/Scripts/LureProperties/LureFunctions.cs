@@ -7,6 +7,7 @@ using UnityEngine;
 public class LureFunctions : MonoBehaviour
 {
     public LureStats Stats { get; private set; }
+    public bool CanCatch { get { return hookCount > 0; } }
 
     // SerializeFields
     [SerializeField] private float streamlineMultiplier = 1f;   // Multiplies streamlineRatio to make it more readable
@@ -23,6 +24,7 @@ public class LureFunctions : MonoBehaviour
     private float streamlineRatio;      // StreamlineRatio
     private float worstStreamlineRatio; // Starting streamline ratio
     private float attachWeight;         // Total weight of all attachments
+    private float hookCount;            // Number of hooks
     private float volume;               // volume of mesh
     private bool isDisplayingColor;     // Prevents multiple functions calls when no color should be shown
     private bool isStatBoundsSet;       // Detects if stat display bounds are set
@@ -211,8 +213,8 @@ public class LureFunctions : MonoBehaviour
         // Initialize local variabes
         bool stopChecking = false;
         float length = _filter.mesh.bounds.size.x * unitConverter;  // Convert units
-        int hookCount = 0;
         int chubCount = 0;
+        hookCount = 0;
 
         // Initialize class variables
         attachWeight = 0.0f;
@@ -238,7 +240,7 @@ public class LureFunctions : MonoBehaviour
             switch (groupType)
             {
                 case "Hook":
-                    stopChecking = HandleHook(ref type, ref hookCount, length);
+                    stopChecking = HandleHook(ref type, length);
                     break;
 
                 case "Chub":
@@ -259,7 +261,7 @@ public class LureFunctions : MonoBehaviour
     /// <param name="hookCount"></param>
     /// <param name="length"></param>
     /// <returns></returns>
-    private bool HandleHook(ref SwimmingType type, ref int hookCount, float length)
+    private bool HandleHook(ref SwimmingType type, float length)
     {
         hookCount++;
 
@@ -413,11 +415,11 @@ public class LureFunctions : MonoBehaviour
 
         Destroy(transform.GetChild(0).gameObject);  // Destroy first child (arrow)
 
-        for (int i = 1; i < transform.childCount; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
             if (transform.GetChild(i).TryGetComponent<MoveAttach>(out var moveAttach))
             {
-                moveAttach.enabled = false;
+                Destroy(moveAttach);
             }
         }
     }

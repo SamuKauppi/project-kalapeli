@@ -7,4 +7,5 @@ public class FishCatchScore
     public FishSpecies species;
     public float minScore;
     public float maxScore;
+    public float timeAttached; // How long the fish is attached until it frees itself
 }

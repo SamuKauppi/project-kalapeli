@@ -62,13 +62,14 @@ public class FishManager : MonoBehaviour
             {
                 int score = availableFish[i].GetCatchChance(nextLure);
 
-                // If Fish can be caught, add it to list and increment totalScore
+                // If Fish can be caught, add it to list and increment totalCatchScore
                 if (score > 0)
                 {
                     FishCatchScore fcs = new()
                     {
                         species = availableFish[i].Species,
-                        minScore = totalScore
+                        minScore = totalScore,
+                        timeAttached = availableFish[i].TimeAttached,
                     };
 
                     totalScore += score;

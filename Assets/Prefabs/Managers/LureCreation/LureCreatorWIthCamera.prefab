@@ -47,7 +47,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6507518484361439681, guid: 7663fe4e1d3ff4f498e97a242616d4aa, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7861898657679417973, guid: 7663fe4e1d3ff4f498e97a242616d4aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -147,9 +147,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5752246358138718710, guid: 37a6d9d02369693409e08866a0504735, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5752246358138718710, guid: 37a6d9d02369693409e08866a0504735, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6893337277739500867, guid: 37a6d9d02369693409e08866a0504735, type: 3}
       propertyPath: m_Name
       value: LureCreator
+      objectReference: {fileID: 0}
+    - target: {fileID: 7524240627521045099, guid: 37a6d9d02369693409e08866a0504735, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7524240627521045099, guid: 37a6d9d02369693409e08866a0504735, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828017668066747975, guid: 37a6d9d02369693409e08866a0504735, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828017668066747975, guid: 37a6d9d02369693409e08866a0504735, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

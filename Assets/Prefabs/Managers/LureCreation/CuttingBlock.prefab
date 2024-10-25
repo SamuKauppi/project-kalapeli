@@ -199,10 +199,10 @@ MonoBehaviour:
   streamlineMultiplier: 100
   uncutBlockLengthM: 0.15
   materialDensity: 320
-  thresholdStreamlineRatio: 0.5
+  thresholdStreamlineRatio: 0.6
   minLengthOneHook: 0.05
   minLengthTwoHook: 0.08
-  depthFromMassM: 0.035
+  depthFromMassM: 0.04
 --- !u!114 &9213585019420134121
 MonoBehaviour:
   m_ObjectHideFlags: 0
