@@ -160,7 +160,7 @@ public class DrawCut : MonoBehaviour
             }
         }
 
-        lureProperties.CalculateStats();
+        lureProperties.CalculateMeshStatsOnly();
     }
 
     /// <summary>

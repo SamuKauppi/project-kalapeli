@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Properties of a object attached to lure
+/// </summary>
 public class AttachProperties : MonoBehaviour
 {
     [SerializeField] protected AttachingType attachingType;     // What will be attached
