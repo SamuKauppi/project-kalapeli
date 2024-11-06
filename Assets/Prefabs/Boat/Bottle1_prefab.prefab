@@ -41,6 +41,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 8412649587950559366}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 47158e0b081700348b6d7798e3e94857, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 47158e0b081700348b6d7798e3e94857, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
@@ -80,6 +84,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 47158e0b081700348b6d7798e3e94857, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 793b1ad92c320d246ab09055aebc0a3a, type: 2}
     - target: {fileID: 919132149155446097, guid: 47158e0b081700348b6d7798e3e94857, type: 3}
       propertyPath: m_Name
       value: bottle_01
