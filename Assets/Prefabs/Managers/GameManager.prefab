@@ -61,21 +61,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7424921075736582894}
     m_Modifications:
-    - target: {fileID: 456380497079144388, guid: f0e72de8cf1ef0142a41a19f5d6c2007, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1317308411514139268, guid: f0e72de8cf1ef0142a41a19f5d6c2007, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 503
-      objectReference: {fileID: 0}
     - target: {fileID: 2900804118334996948, guid: f0e72de8cf1ef0142a41a19f5d6c2007, type: 3}
       propertyPath: m_Name
       value: FishManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 7397687123808213715, guid: f0e72de8cf1ef0142a41a19f5d6c2007, type: 3}
-      propertyPath: m_Cameras.Array.size
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8889848562612108899, guid: f0e72de8cf1ef0142a41a19f5d6c2007, type: 3}
       propertyPath: m_LocalPosition.x
@@ -118,9 +106,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 7785421410852900333, guid: f0e72de8cf1ef0142a41a19f5d6c2007, type: 3}
-    - {fileID: 6125765607513024011, guid: f0e72de8cf1ef0142a41a19f5d6c2007, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0e72de8cf1ef0142a41a19f5d6c2007, type: 3}
@@ -147,37 +133,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7424921075736582894}
     m_Modifications:
-    - target: {fileID: 75623670248941178, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 75623670248941178, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 587284255616439300, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
       propertyPath: m_Name
       value: LureCreator
-      objectReference: {fileID: 0}
-    - target: {fileID: 1828686047863872719, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.208
-      objectReference: {fileID: 0}
-    - target: {fileID: 2788790544994430439, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2788790544994430439, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3772843918770932171, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3772843918770932171, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3978554252099637604, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
       propertyPath: m_LocalPosition.x
@@ -218,18 +176,6 @@ PrefabInstance:
     - target: {fileID: 3978554252099637604, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5127122644741517830, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5355860701846018522, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9161947312158424366, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 503
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

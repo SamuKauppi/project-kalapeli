@@ -50,7 +50,7 @@ public class Fish : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns score value based on how close the colors are to fish desired colors
+    /// Returns score isCatalogOpen based on how close the colors are to fish desired colors
     /// </summary>
     /// <param name="baseC"></param>
     /// <param name="texC"></param>
@@ -76,7 +76,7 @@ public class Fish : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns score value based on how close is the depth to average depth
+    /// Returns score isCatalogOpen based on how close is the depth to average depth
     /// </summary>
     /// <param name="depth"></param>
     /// <returns></returns>

@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        
+
         UpdateModeChange();
     }
 
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         // Other stuff
         if (!isFishingMode)
         {
-            LureCreationManager.Instance.ResumeLureCreation();
+
         }
     }
 
@@ -58,5 +58,21 @@ public class GameManager : MonoBehaviour
     {
         isFishingMode = !isFishingMode;
         UpdateModeChange();
+    }
+
+    public void SetBothModes(bool value)
+    {
+        // Enable or disable stuff based on which mode is active
+        if (isFishingMode)
+        {
+            FishManager.Instance.CanFish = value;
+            fishCanvas.gameObject.SetActive(value);
+        }
+        else
+        {
+            lureCanvas.gameObject.SetActive(value);
+            LureCreationManager.Instance.SetLureCreation(value);
+        }
+
     }
 }

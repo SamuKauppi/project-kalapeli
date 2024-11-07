@@ -77,7 +77,7 @@ public class LureFunctions : MonoBehaviour
         streamlineIndex *= (1 + alignmentFactor);
 
         // Return index as ratio
-        // Increase the value to make it more readable
+        // Increase the isCatalogOpen to make it more readable
         return streamlineIndex * streamlineMultiplier;
     }
 

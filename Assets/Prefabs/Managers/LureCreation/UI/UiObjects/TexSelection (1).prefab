@@ -318,7 +318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -361,7 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d579ff13f56c964b8d6aed2e77c6669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectionButton: {fileID: 1511607811466666257}
   displayImage: {fileID: 2598829379911477141}
-  backgroundImage: {fileID: 6101041015701504070}
+  SelectionButton: {fileID: 1511607811466666257}
   arrayIndex: 0
+  backgroundImage: {fileID: 6101041015701504070}

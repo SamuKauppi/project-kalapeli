@@ -9,16 +9,18 @@ public class PickUpLure : MonoBehaviour
         if (outline == null)
             outline = GetComponent<Outline>();
 
-        outline.enabled = false;    
+        outline.enabled = false;
     }
 
     private void OnMouseDown()
     {
-        FishManager.Instance.PickUpLure();
+        if (FishManager.Instance.CanFish)
+            FishManager.Instance.PickUpLure();
     }
     private void OnMouseEnter()
     {
-        outline.enabled = true;
+        if (FishManager.Instance.CanFish)
+            outline.enabled = true;
     }
 
     private void OnMouseExit()

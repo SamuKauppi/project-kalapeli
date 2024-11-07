@@ -11,8 +11,10 @@ public class Rod : MonoBehaviour
     public bool HasFish { get; private set; } = false;                      // Has a fish attached
     public FishSpecies CaughtFish { get; private set; } = FishSpecies.None; // Fish species attached
 
-    // Reference to outline script
-    [SerializeField] private Outline outline;     
+    // References
+    [SerializeField] private Outline outline;
+    [SerializeField] private Animator anim;
+
     // Min & Max time to wait for fish to be caught
     [SerializeField] private float minTimeForFish;
     [SerializeField] private float maxTimeForFish;
@@ -30,7 +32,7 @@ public class Rod : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (!IsAttached || HasFish)
+        if ((!IsAttached || HasFish) && FishManager.Instance.CanFish)
             outline.enabled = true;
     }
 
@@ -42,7 +44,7 @@ public class Rod : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (HasFish) // Check first if there is a fish
+        if (HasFish && FishManager.Instance.CanFish) // Check first if there is a fish
         {
             FishManager.Instance.CatchFish(CaughtFish);
             CaughtFish = FishSpecies.None;
@@ -62,7 +64,7 @@ public class Rod : MonoBehaviour
         // Wait for a random time
         yield return new WaitForSeconds(Random.Range(minTimeForFish, maxTimeForFish));
 
-        // Create catch value
+        // Create catch isCatalogOpen
         int catchValue = Random.Range(0, totalCatchScore);
         float timeAttached = 0;
 
@@ -75,6 +77,7 @@ public class Rod : MonoBehaviour
                 CaughtFish = fishCatchChances[i].species;
                 timeAttached = fishCatchChances[i].timeAttached;
                 Debug.Log(CaughtFish + " is hooked! Score: " + catchValue);
+                anim.SetBool("Fish", true);
                 break;
             }
         }
@@ -86,6 +89,7 @@ public class Rod : MonoBehaviour
         CaughtFish = FishSpecies.None;
         StartCoroutine(WaitingForFish());
         Debug.Log("Got away");
+        anim.SetBool("Fish", true);
     }
 
     /// <summary>
@@ -102,6 +106,7 @@ public class Rod : MonoBehaviour
         totalCatchScore = catchTotal;
         fishCatchChances = catchScores;
         StartCoroutine(WaitingForFish());
+        anim.SetBool("Water", true);
     }
 
     /// <summary>
@@ -114,5 +119,7 @@ public class Rod : MonoBehaviour
         IsAttached = false;
         outline.enabled = false;
         StopAllCoroutines();
+        anim.SetBool("Water", false);
+        anim.SetBool("Fish", false);
     }
 }

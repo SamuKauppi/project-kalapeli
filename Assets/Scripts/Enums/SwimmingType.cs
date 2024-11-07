@@ -1,6 +1,6 @@
 ﻿public enum SwimmingType
 {
-    None,       // Empty value
+    None,       // Empty isCatalogOpen
     Bad,        // Bad (failed lure making process)
     Standard,   // Basic swimming style
     Fast,       // Faster lure movement (better for some fish)

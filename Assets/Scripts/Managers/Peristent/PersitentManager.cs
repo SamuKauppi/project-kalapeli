@@ -8,6 +8,7 @@ using UnityEngine;
 public class PersitentManager : MonoBehaviour
 {
     public static PersitentManager Instance { get; private set; }
+    public Fish[] EveryFish { get {  return everyFishInGame; } }
 
     // Lure
     private readonly Queue<GameObject> luresCreated = new();
@@ -16,7 +17,8 @@ public class PersitentManager : MonoBehaviour
     // Fish
     [SerializeField] private Fish[] everyFishInGame;                // Contains every fish that exists (set in inspector)
     private List<FishSpecies> fishForThisLevel = new();             // Fishes available for this level (Set before loading to a level)
-    private readonly Dictionary<FishSpecies, Fish> fishDict = new();// Dictionary that is set during runtime    
+    private readonly Dictionary<FishSpecies, Fish> fishDict = new();// Dictionary that is set during runtime
+    private readonly HashSet<FishSpecies> fishesCaught = new();
 
     // Score
     [SerializeField] private TMP_Text scoreText;
@@ -137,5 +139,6 @@ public class PersitentManager : MonoBehaviour
         int value = fishDict[fish].ScoreGained;
         score += value;
         scoreText.text = SCORE + score;
+        fishesCaught.Add(fish);
     }
 }

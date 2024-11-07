@@ -8,6 +8,7 @@ using TMPro;
 public class FishManager : MonoBehaviour
 {
     public static FishManager Instance { get; private set; }
+    public bool CanFish { get; set; }
     public bool IsAttachingLure { get; private set; }
 
     // Rod
@@ -63,7 +64,7 @@ public class FishManager : MonoBehaviour
 
     private void Update()
     {
-        if (!IsAttachingLure) { return; }
+        if (!IsAttachingLure || !CanFish) { return; }
         mousePos = Input.mousePosition;
         mousePos.z = lurePositionFromCam;
 

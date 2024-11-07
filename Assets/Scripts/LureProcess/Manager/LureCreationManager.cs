@@ -7,6 +7,15 @@ public class LureCreationManager : MonoBehaviour
 {
     public static LureCreationManager Instance { get; private set; }
 
+    private enum LureCreationProcess
+    {
+        Cutting,
+        Painting,
+        Attaching,
+        Saving
+    }
+    private LureCreationProcess _process;
+
     // References
     [SerializeField] private DrawCut cutProcess;                // Cut process
     [SerializeField] private BlockPainter paintProcess;         // Painting process
@@ -40,22 +49,14 @@ public class LureCreationManager : MonoBehaviour
     {
         blockRend = BlockRotation.Instance.GetComponent<MeshRenderer>();
         blockFilter = BlockRotation.Instance.GetComponent<MeshFilter>();
-        lureProperties = BlockRotation.Instance.GetComponent<LureFunctions>(); 
+        lureProperties = BlockRotation.Instance.GetComponent<LureFunctions>();
         ResetLureCreation();
     }
 
-#if UNITY_EDITOR
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SaveAsset.SaveGameObjectAsPrefab(lureObject);
-        }
-    }
-#endif
-
     public void ResetLureCreation()
     {
+        _process = LureCreationProcess.Cutting;
+
         // Enable cutting
         cutProcess.IsCutting = true;
         cutProcess.gameObject.SetActive(true);
@@ -98,6 +99,8 @@ public class LureCreationManager : MonoBehaviour
         if (lureProperties.Stats.SwimType == SwimmingType.Bad)
             return;
 
+        _process = LureCreationProcess.Painting;
+
         // Hide cutting buttons and reveal painting buttons
         cuttingButtons.SetActive(false);
         paintingButtons.SetActive(true);
@@ -115,6 +118,8 @@ public class LureCreationManager : MonoBehaviour
 
     public void EndPainting()
     {
+        _process = LureCreationProcess.Attaching;
+
         // Hide painting buttons and reveal attach buttons
         paintingButtons.SetActive(false);
         attachButtons.SetActive(true);
@@ -132,10 +137,12 @@ public class LureCreationManager : MonoBehaviour
     public void EndAttaching()
     {
         // Don't end attaching if swimstyle is not valid
-        if (lureProperties.Stats.SwimType == SwimmingType.Bad || 
+        if (lureProperties.Stats.SwimType == SwimmingType.Bad ||
             lureProperties.Stats.SwimType == SwimmingType.None ||
             !lureProperties.CanCatch)
             return;
+
+        _process = LureCreationProcess.Saving;
 
         // Hide attach buttons and reveal save buttons
         attachButtons.SetActive(false);
@@ -162,8 +169,16 @@ public class LureCreationManager : MonoBehaviour
         GameManager.Instance.SwapModes();
     }
 
-    public void ResumeLureCreation()
+    public void SetLureCreation(bool value)
     {
-        BlockRotation.Instance.StopRotating = false;
+        BlockRotation.Instance.StopRotating = !value;
+        if (_process == LureCreationProcess.Cutting)
+        {
+            cutProcess.GetComponent<DrawCut>().IsCutting = value;
+        }
+        else if (_process == LureCreationProcess.Attaching)
+        {
+            attachProcess.GetComponent<AttachingProcess>().IsAttaching = value;
+        }
     }
 }
