@@ -12,6 +12,7 @@ public class Rod : MonoBehaviour
     public FishSpecies CaughtFish { get; private set; } = FishSpecies.None; // Fish species attached
 
     // References
+    [SerializeField] private AudioSource sound;
     [SerializeField] private Outline outline;
     [SerializeField] private Animator anim;
 
@@ -78,6 +79,7 @@ public class Rod : MonoBehaviour
                 timeAttached = fishCatchChances[i].timeAttached;
                 Debug.Log(CaughtFish + " is hooked! Score: " + catchValue);
                 anim.SetBool("Fish", true);
+                sound.Play();
                 break;
             }
         }

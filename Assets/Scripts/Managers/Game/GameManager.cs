@@ -40,18 +40,14 @@ public class GameManager : MonoBehaviour
         lureCam.tag = isFishingMode ? offTag : onTag;
         lureCanvas.gameObject.SetActive(!isFishingMode);
         LureCreationManager.Instance.gameObject.SetActive(!isFishingMode);
+        LureCreationManager.Instance.SetLureCreation(!isFishingMode);
+
 
         // Fish stuff
         fishCam.gameObject.SetActive(isFishingMode);
         fishCam.enabled = isFishingMode;
         fishCam.tag = isFishingMode ? onTag : offTag;
         fishCanvas.gameObject.SetActive(isFishingMode);
-
-        // Other stuff
-        if (!isFishingMode)
-        {
-
-        }
     }
 
     public void SwapModes()

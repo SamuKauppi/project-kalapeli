@@ -3,6 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Used to display fishcatalog
+/// </summary>
 public class FishCatalog : MonoBehaviour
 {
     public static FishCatalog Instance { get; private set; }
@@ -67,6 +70,11 @@ public class FishCatalog : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets catalog open or closed
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="time"></param>
     public void SetCatalog(bool value, float time)
     {
         Vector3 targetPos = value ? cataOnPos.position : cataOffPos.position;
@@ -83,6 +91,10 @@ public class FishCatalog : MonoBehaviour
         ShowCatalog(0);
     }
 
+    /// <summary>
+    /// Shows the entries for this page in catalog
+    /// </summary>
+    /// <param name="page"></param>
     public void ShowCatalog(int page)
     {
         if (page < 0 || page >= fishCatalog.Count) { return; }
@@ -104,11 +116,19 @@ public class FishCatalog : MonoBehaviour
         pageForward.interactable = pageNumber < fishCatalog.Count - 1;
     }
 
+    /// <summary>
+    /// Moves the page by value
+    /// </summary>
+    /// <param name="direction"></param>
     public void ChangePage(int direction)
     {
         ShowCatalog(pageNumber + direction);
     }
 
+    /// <summary>
+    /// Diplays fish details in catalog
+    /// </summary>
+    /// <param name="fish"></param>
     public void DisplayFish(FishSpecies fish)
     {
         for (int i = 0; i < everyFish.Length; i++)
