@@ -455,6 +455,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4430982408283119524, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430982408283119524, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430982408283119524, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430982408283119524, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430982408283119524, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430982408283119524, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -20
+      objectReference: {fileID: 0}
     - target: {fileID: 5485056526138070361, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
       propertyPath: m_Name
       value: ScoreImage
