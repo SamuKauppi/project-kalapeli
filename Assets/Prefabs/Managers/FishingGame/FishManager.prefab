@@ -375,6 +375,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FishCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2075705680089211039, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3618581826491945486, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -568,7 +572,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6507518484361439681, guid: 7663fe4e1d3ff4f498e97a242616d4aa, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7861898657679417973, guid: 7663fe4e1d3ff4f498e97a242616d4aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -612,7 +616,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8014518315976969525, guid: 7663fe4e1d3ff4f498e97a242616d4aa, type: 3}
       propertyPath: field of view
-      value: 70
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8014518315976969525, guid: 7663fe4e1d3ff4f498e97a242616d4aa, type: 3}
       propertyPath: m_CullingMask.m_Bits

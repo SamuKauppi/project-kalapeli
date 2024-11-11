@@ -12,21 +12,22 @@ public class StartAttach : MonoBehaviour
         if (TryGetComponent<Outline>(out var line))
         {
             outline = line;
+            line.enabled = false;
         }
     }
 
     private void OnMouseEnter()
     {
-        if (outline != null)
+        if (outline != null && AttachingProcess.Instance.IsAttaching)
             outline.enabled = true;
     }
     private void OnMouseExit()
     {
-        if (outline != null)
+        if (outline != null && AttachingProcess.Instance.IsAttaching)
             outline.enabled = false;
     }
 
-    private void OnMouseDown()
+    virtual protected void OnMouseDown()
     {
         AttachingProcess.Instance.StartAttachingObject(objectToAttach);
     }

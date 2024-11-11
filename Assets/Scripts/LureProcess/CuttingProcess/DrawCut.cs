@@ -50,8 +50,21 @@ public class DrawCut : MonoBehaviour
     void Update()
     {
         // Stop the ability to cut when the block is rotatig
-        if (blockRotation.IsRotating) { wasRotating = true; return; }
-        if (!IsCutting) { return; }
+        if (blockRotation.IsRotating)
+        {
+            wasRotating = true; 
+            return;
+        }
+
+        if (!IsCutting) 
+        {
+            cancelCut = true;
+            return; 
+        }
+
+        // Find mouse pos
+        mouse = Input.mousePosition;
+        mouse.z = lineDist;
 
         // Once this script is enabled, update line distance
         if (wasRotating)
@@ -59,10 +72,6 @@ public class DrawCut : MonoBehaviour
             UpdateLineDistance();
             wasRotating = false;
         }
-
-        // Find mouse pos
-        mouse = Input.mousePosition;
-        mouse.z = lineDist;
 
         // When left mouse is pressed set pointA to the position of mouse
         if (Input.GetMouseButtonDown(0))

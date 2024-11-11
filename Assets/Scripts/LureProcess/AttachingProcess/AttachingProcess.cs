@@ -103,7 +103,15 @@ public class AttachingProcess : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        if (!IsAttaching || !attachedObject) { return; }
+        if (!IsAttaching)
+        {
+            if (attachedObject)
+            {
+                ReleaseObject();
+            }
+            return;
+        }
+        if (!attachedObject) { return; }
         if (blockRotation.IsRotating) { wasRotating = true; return; }
 
         // Check if the block was rotating and fix the rotation and position if needed
@@ -130,29 +138,34 @@ public class AttachingProcess : MonoBehaviour
         // When mouse is released either place it or destroy it
         if (mouseUp)
         {
-            if (!isValidPos)
-            {
-                Destroy(attachedObject);
-                if (attachBothSides)
-                    Destroy(mirrorObj);
-            }
-            else
-            {
-                attachedObject.transform.parent = lureObj.transform;
-                attachedObject.GetComponent<MoveAttach>().EnableOutline(false);
-                if (attachBothSides)
-                {
-                    mirrorObj.transform.parent = lureObj.transform;
-                    mirrorObj.GetComponent<MoveAttach>().EnableOutline(false);
-                }
-            }
-
-            attachedObject = null;
-            mirrorObj = null;
-            blockRotation.StopRotating = false;
-            OnAttach?.Invoke();
-            mouseUp = false;
+            ReleaseObject();
         }
+    }
+
+    private void ReleaseObject()
+    {
+        if (!isValidPos)
+        {
+            Destroy(attachedObject);
+            if (attachBothSides)
+                Destroy(mirrorObj);
+        }
+        else
+        {
+            attachedObject.transform.parent = lureObj.transform;
+            attachedObject.GetComponent<MoveAttach>().EnableOutline(false);
+            if (attachBothSides)
+            {
+                mirrorObj.transform.parent = lureObj.transform;
+                mirrorObj.GetComponent<MoveAttach>().EnableOutline(false);
+            }
+        }
+
+        attachedObject = null;
+        mirrorObj = null;
+        blockRotation.StopRotating = false;
+        OnAttach?.Invoke();
+        mouseUp = false;
     }
 
     /// <summary>
@@ -265,7 +278,11 @@ public class AttachingProcess : MonoBehaviour
     /// </summary>
     private void UpdateDistance()
     {
-        distanceToLure = Vector3.Distance(cam.transform.position, lureObj.transform.position);
+        // Get the vector from the camera to the lure object
+        Vector3 lureDirection = lureObj.transform.position - cam.transform.position;
+
+        // Project this vector onto the camera's forward direction
+        distanceToLure = Vector3.Dot(lureDirection, cam.transform.forward);
     }
 
     /// <summary>
@@ -277,6 +294,7 @@ public class AttachingProcess : MonoBehaviour
         Vector3 meshCenter = CalculateMeshCenter(lureObj.GetComponent<MeshFilter>().mesh.vertices, lureObj.transform);
         meshOffset = meshCenter - transform.position;
         UpdateDistance();
+        blockRotation.ResetRotation();
     }
 
 

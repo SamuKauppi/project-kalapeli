@@ -7,6 +7,13 @@ public class StatDisplay : MonoBehaviour
 {
     public static StatDisplay Instance { get; private set; }
 
+    // Positioning
+    [SerializeField] private GameObject displayWindow;
+    [SerializeField] private Transform displayArrow;
+    [SerializeField] private Transform onPos;
+    [SerializeField] private Transform offPos;
+    private bool isDiplaying = false;
+
     // Swimming style
     [SerializeField] private TMP_Text swimmingTypeText;
     [SerializeField] private Image badSwimImage;
@@ -42,6 +49,22 @@ public class StatDisplay : MonoBehaviour
     {
         baseColorImage.gameObject.SetActive(false);
         texColorImage.gameObject.SetActive(false);
+        ToggleStatDisplay(0f);
+    }
+
+    public void ToggleStatDisplay(float time)
+    {
+        isDiplaying = !isDiplaying;
+        if (LeanTween.isTweening(displayWindow))
+        {
+            LeanTween.cancel(displayWindow);
+        }
+        Vector3 endPos = isDiplaying ? onPos.position : offPos.position;
+
+        LeanTween.move(displayWindow, endPos, time).setEase(LeanTweenType.easeOutQuint);
+        Vector3 scale = displayArrow.localScale;
+        scale.x *= -1f;
+        displayArrow.localScale = scale;
     }
 
     public void SetDisplayBounds(float maxStreamlineRatio, float maxWeight)

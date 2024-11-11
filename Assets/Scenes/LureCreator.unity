@@ -476,7 +476,9 @@ PrefabInstance:
       value: Boat_prefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2724708213462413533, guid: f18a0d43dfee9c541b64e2302ae772fb, type: 3}
+    - {fileID: 4360997676398787454, guid: f18a0d43dfee9c541b64e2302ae772fb, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f18a0d43dfee9c541b64e2302ae772fb, type: 3}

@@ -10,9 +10,11 @@ public class FishCatalog : MonoBehaviour
 {
     public static FishCatalog Instance { get; private set; }
 
+    // Catalog
     [SerializeField] private GameObject catalogUI;          // Object moved when opening or closing catalog
     [SerializeField] private Transform cataOnPos;           // When active pos
     [SerializeField] private Transform cataOffPos;          // When closed pos
+    [SerializeField] private float displaySpeed = 0.35f;    // How fast is the catalog display
     [SerializeField] private LeanTweenType ease1;           // Ease type for the animation when opening
     [SerializeField] private LeanTweenType ease2;           // Ease type for the animation when closing
     private bool isCatalogOpen = false;                     // Is catalog open or closed
@@ -63,10 +65,9 @@ public class FishCatalog : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            isCatalogOpen = !isCatalogOpen;
-            SetCatalog(isCatalogOpen, 0.5f);
+            ToggleCatalog();
         }
     }
 
@@ -75,7 +76,7 @@ public class FishCatalog : MonoBehaviour
     /// </summary>
     /// <param name="value"></param>
     /// <param name="time"></param>
-    public void SetCatalog(bool value, float time)
+    private void SetCatalog(bool value, float time)
     {
         Vector3 targetPos = value ? cataOnPos.position : cataOffPos.position;
 
@@ -89,6 +90,12 @@ public class FishCatalog : MonoBehaviour
 
         GameManager.Instance.SetBothModes(!value);
         ShowCatalog(0);
+    }
+
+    public void ToggleCatalog()
+    {
+        isCatalogOpen = !isCatalogOpen;
+        SetCatalog(isCatalogOpen, displaySpeed);
     }
 
     /// <summary>

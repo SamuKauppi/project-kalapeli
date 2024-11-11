@@ -77,7 +77,7 @@ public class LureFunctions : MonoBehaviour
         streamlineIndex *= (1 + alignmentFactor);
 
         // Return index as ratio
-        // Increase the isCatalogOpen to make it more readable
+        // Increase the streamlineIndex to make it more readable
         return streamlineIndex * streamlineMultiplier;
     }
 
@@ -153,7 +153,7 @@ public class LureFunctions : MonoBehaviour
         float alignmentFactor = 0f;
         foreach (var normal in normals)
         {
-            alignmentFactor += Vector3.Dot(normal.normalized, transform.forward.normalized);
+            alignmentFactor += Vector3.Dot(normal.normalized, Vector3.right);
         }
 
         alignmentFactor /= normals.Length; // Average alignment

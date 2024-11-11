@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -15,6 +16,9 @@ public class LureCreationManager : MonoBehaviour
         Saving
     }
     private LureCreationProcess _process;
+
+    // Camera
+    [SerializeField] private Transform[] cameraPositions;
 
     // References
     [SerializeField] private DrawCut cutProcess;                // Cut process
@@ -55,6 +59,9 @@ public class LureCreationManager : MonoBehaviour
 
     public void ResetLureCreation()
     {
+        GameManager.Instance.LureCamera.transform.position = cameraPositions[0].position;
+        GameManager.Instance.LureCamera.transform.eulerAngles = cameraPositions[0].eulerAngles;
+
         _process = LureCreationProcess.Cutting;
 
         // Enable cutting
@@ -127,11 +134,20 @@ public class LureCreationManager : MonoBehaviour
         // Disable painting
         paintProcess.gameObject.SetActive(false);
 
-        // Enable attaching
-        attachProcess.ActivateAttaching();
-
         // Ensure that the block can be rotated
         BlockRotation.Instance.StopRotating = false;
+
+        LeanTween.move(GameManager.Instance.LureCamera.gameObject, cameraPositions[1].position, 0.5f);
+        LeanTween.rotate(GameManager.Instance.LureCamera.gameObject, cameraPositions[1].eulerAngles, 0.5f);
+
+        // Enable attaching
+        StartCoroutine(ActivateAttaching());
+    }
+
+    private IEnumerator ActivateAttaching()
+    {
+        yield return new WaitForSeconds(0.5f);
+        attachProcess.ActivateAttaching();
     }
 
     public void EndAttaching()
