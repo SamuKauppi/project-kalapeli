@@ -106,6 +106,9 @@ public class LureCreationManager : MonoBehaviour
         if (lureProperties.Stats.SwimType == SwimmingType.Bad)
             return;
 
+        SwimmingType type = MeshComparison.Instance.GetMatchingData(blockFilter.sharedMesh);
+        Debug.Log(type);
+
         _process = LureCreationProcess.Painting;
 
         // Hide cutting buttons and reveal painting buttons
