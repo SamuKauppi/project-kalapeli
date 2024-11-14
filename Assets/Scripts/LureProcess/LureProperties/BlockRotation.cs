@@ -85,15 +85,7 @@ public class BlockRotation : MonoBehaviour
     private IEnumerator RotateTransform(int sideRotDir, int upRotDir, float rotTime)
     {
         IsRotating = true;
-        // Initialize rotations
-        Quaternion currentRot = transform.rotation;
-
-        // Get next index
-        sideRotIndex = (sideRotIndex + sideRotDir + 4) % 4;
-        upRotIndex = Mathf.Clamp(upRotIndex + upRotDir, -1, 1);
-
-        // Get current rotation
-        Quaternion targetRot = GetCurrentTargetRot();
+        GetTargetRotation(sideRotDir, upRotDir, out Quaternion currentRot, out Quaternion targetRot);
 
         OnRotationStart?.Invoke(sideRotIndex, upRotIndex);
         if (currentRot != targetRot)
@@ -116,9 +108,22 @@ public class BlockRotation : MonoBehaviour
         currentRotDir = upRotIndex < 0 ? UpRotation.Up : upRotIndex > 0 ? UpRotation.Down : UpRotation.Middle;
     }
 
+    private void GetTargetRotation(int sideRotDir, int upRotDir, out Quaternion currentRot, out Quaternion targetRot)
+    {
+        // Initialize rotations
+        currentRot = transform.rotation;
+
+        // Get next index
+        sideRotIndex = (sideRotIndex + sideRotDir + 4) % 4;
+        upRotIndex = Mathf.Clamp(upRotIndex + upRotDir, -1, 1);
+
+        // Get current rotation
+        targetRot = GetCurrentTargetRot();
+    }
+
     private Quaternion GetCurrentTargetRot()
     {
-        return GameManager.Instance.LureCamera.transform.rotation *
+        return GameManager.Instance.MainCamera.transform.rotation *
             Quaternion.Euler(90f * upRotIndex * Vector3.right) *
             Quaternion.Euler(90f * sideRotIndex * Vector3.up);
     }
@@ -130,7 +135,7 @@ public class BlockRotation : MonoBehaviour
     {
         sideRotIndex = 0;
         upRotIndex = 0;
-        StartCoroutine(RotateTransform(0, 0, 0.1f));
+        StartCoroutine(RotateTransform(0, 0, 0f));
     }
 }
 

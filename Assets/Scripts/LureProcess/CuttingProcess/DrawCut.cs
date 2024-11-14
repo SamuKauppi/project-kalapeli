@@ -18,7 +18,7 @@ public class DrawCut : MonoBehaviour
 
     // Cut detection
     private Vector3 checkBoxSize = new(0f, 0.001f, 100f);     // Size of the cut check
-    private float lineDist = 8f;                                // How far from camera is the line used for cutting
+    private float lineDist = 8f;                              // How far from camera is the line used for cutting
     private Camera cam;             // Main camera
     private Vector3 mouse;          // Mouse position on screen
     private Vector3 pointA;         // Start of the cut (moves with the object) 
@@ -35,7 +35,7 @@ public class DrawCut : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cam = GameManager.Instance.LureCamera;
+        cam = GameManager.Instance.MainCamera;
         blockRotation = BlockRotation.Instance;
         lureProperties = blockRotation.GetComponent<LureFunctions>();
         cutRender = GetComponent<LineRenderer>();
@@ -107,6 +107,7 @@ public class DrawCut : MonoBehaviour
             if (cancelCut)
             {
                 cancelCut = false;
+                ResetLineRender();
                 return;
             }
 
@@ -165,7 +166,7 @@ public class DrawCut : MonoBehaviour
         {
             if (hit && hit.gameObject.TryGetComponent(out MeshFilter _))
             {
-                Cutter.Cut(hit.gameObject, pointInPlane, cutPlaneNormal);
+                Cutter.Instance.PerformCut(blockRotation.gameObject, pointInPlane, cutPlaneNormal);
             }
         }
 

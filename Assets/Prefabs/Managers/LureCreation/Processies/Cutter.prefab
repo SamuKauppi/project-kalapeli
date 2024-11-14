@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6753280029500360427}
   - component: {fileID: 3096281824789505703}
+  - component: {fileID: 8894856769942991990}
   - component: {fileID: 1671180869580617301}
   m_Layer: 31
   m_Name: Cutter
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8587680872303719844}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -50,6 +51,21 @@ MonoBehaviour:
     m_Bits: 128
   lineWidth: 0.005
   minCutDist: 0.02
+--- !u!114 &8894856769942991990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8587680872303719844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10757fe041fae3b4d9e7b77d8b0137fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutPiecePrefab: {fileID: 5913621298368924771, guid: 6a10608ea0ed7e9488c470c378049c88, type: 3}
+  blockMaterial: {fileID: 2100000, guid: 4ee39a05e07c95240a88eca791255342, type: 2}
+  physicsStrength: 100
 --- !u!120 &1671180869580617301
 LineRenderer:
   serializedVersion: 2

@@ -38,7 +38,6 @@ public class DisplayTemplate : MonoBehaviour
             sprites[i] = templateSprites[i].sprites[0];
         }
         scrollContainer.CreateTemplateContent(sprites);
-        ScaleTemplateImage();
     }
 
     private void ChangeTemplate(int sideRot, int upRot)
@@ -63,18 +62,6 @@ public class DisplayTemplate : MonoBehaviour
 
         templateImage.sprite = templateSprites[templateIndex].sprites[id];
         spriteIndex = id;
-    }
-
-    private void ScaleTemplateImage()
-    {
-        float objWidth = BlockRotation.Instance.GetComponent<Renderer>().bounds.size.x;
-        Vector3 screenPosition = GameManager.Instance.LureCamera.WorldToScreenPoint(BlockRotation.Instance.transform.position);
-        Vector3 rightEdge = GameManager.Instance.LureCamera.WorldToScreenPoint(BlockRotation.Instance.transform.position
-            + new Vector3(objWidth, 0, 0));
-        float screenWidth = Mathf.Abs(rightEdge.x - screenPosition.x);
-
-        templateImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, screenWidth);
-        templateImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, screenWidth);
     }
 
     public void ChangeTemplate(int id)

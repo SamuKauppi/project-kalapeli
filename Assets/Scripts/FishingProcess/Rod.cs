@@ -91,7 +91,7 @@ public class Rod : MonoBehaviour
         CaughtFish = FishSpecies.None;
         StartCoroutine(WaitingForFish());
         Debug.Log("Got away");
-        anim.SetBool("Fish", true);
+        anim.SetBool("Fish", false);
     }
 
     /// <summary>

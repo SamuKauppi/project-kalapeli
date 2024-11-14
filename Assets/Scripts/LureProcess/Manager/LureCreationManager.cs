@@ -17,9 +17,6 @@ public class LureCreationManager : MonoBehaviour
     }
     private LureCreationProcess _process;
 
-    // Camera
-    [SerializeField] private Transform[] cameraPositions;
-
     // References
     [SerializeField] private DrawCut cutProcess;                // Cut process
     [SerializeField] private BlockPainter paintProcess;         // Painting process
@@ -54,13 +51,14 @@ public class LureCreationManager : MonoBehaviour
         blockRend = BlockRotation.Instance.GetComponent<MeshRenderer>();
         blockFilter = BlockRotation.Instance.GetComponent<MeshFilter>();
         lureProperties = BlockRotation.Instance.GetComponent<LureFunctions>();
+        Cutter.Instance.RecalculateUvs(blockMesh);
         ResetLureCreation();
     }
 
     public void ResetLureCreation()
     {
-        GameManager.Instance.LureCamera.transform.position = cameraPositions[0].position;
-        GameManager.Instance.LureCamera.transform.eulerAngles = cameraPositions[0].eulerAngles;
+        GameManager.Instance.ChangeCameraAngle(0, 0f);
+        BlockRotation.Instance.ResetRotation();
 
         _process = LureCreationProcess.Cutting;
 
@@ -107,7 +105,7 @@ public class LureCreationManager : MonoBehaviour
             return;
 
         SwimmingType type = MeshComparison.Instance.GetMatchingData(blockFilter.sharedMesh);
-        Debug.Log(type);
+        Debug.Log("This mesh matches to: " + type);
 
         _process = LureCreationProcess.Painting;
 
@@ -140,15 +138,13 @@ public class LureCreationManager : MonoBehaviour
         // Ensure that the block can be rotated
         BlockRotation.Instance.StopRotating = false;
 
-        LeanTween.move(GameManager.Instance.LureCamera.gameObject, cameraPositions[1].position, 0.5f);
-        LeanTween.rotate(GameManager.Instance.LureCamera.gameObject, cameraPositions[1].eulerAngles, 0.5f);
-
         // Enable attaching
         StartCoroutine(ActivateAttaching());
     }
 
     private IEnumerator ActivateAttaching()
     {
+        GameManager.Instance.ChangeCameraAngle(1, 0.5f);
         yield return new WaitForSeconds(0.5f);
         attachProcess.ActivateAttaching();
     }
@@ -174,11 +170,14 @@ public class LureCreationManager : MonoBehaviour
         // Ensure that the block can be rotated
         BlockRotation.Instance.StopRotating = false;
         lureProperties.FinalizeLure();
+
+        GameManager.Instance.ChangeCameraAngle(0, 0.5f);
     }
 
     public void SaveLure()
     {
         saveButtons.SetActive(false);
+        BlockRotation.Instance.ResetRotation();
         PersitentManager.Instance.AddNewLure(lureObject);
     }
 

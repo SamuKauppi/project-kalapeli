@@ -69,7 +69,7 @@ public class AttachingProcess : MonoBehaviour
         {
             attachDict.Add(obj.AttachingType, obj);
         }
-        cam = GameManager.Instance.LureCamera;
+        cam = GameManager.Instance.MainCamera;
         lureObj = blockRotation.gameObject;
     }
 
@@ -111,32 +111,25 @@ public class AttachingProcess : MonoBehaviour
             }
             return;
         }
-        if (!attachedObject) { return; }
+
         if (blockRotation.IsRotating) { wasRotating = true; return; }
+        if (!attachedObject) { return; }
 
         // Check if the block was rotating and fix the rotation and position if needed
         if (wasRotating)
         {
-            attachedObject.transform.rotation = blockRotation.transform.rotation;
-            if (attachBothSides)
-            {
-                mirrorObj.transform.rotation = blockRotation.transform.rotation;
-            }
-            if (mouseHeld <= 0.1f)
-            {
-                MoveObjectToAttachPosition();
-            }
-            wasRotating = false;
-        }
+            MoveObjectToAttachPosition();
 
+            wasRotating = false;
+            mouseHeld = 0f;
+        }
         // While mouse is being held, set the attached object position to mouse
-        if (mouseHeld > 0.1f)
+        else if (mouseHeld > 0.1f)
         {
             MoveObjectToAttachPosition();
         }
-
         // When mouse is released either place it or destroy it
-        if (mouseUp)
+        else if (mouseUp)
         {
             ReleaseObject();
         }
@@ -205,14 +198,13 @@ public class AttachingProcess : MonoBehaviour
     {
         // Get mouse position away from lure
         Vector3 posAwayFromLure = cam.ScreenToWorldPoint(mousePos);
-        posAwayFromLure.z += meshOffset.z;
         posAwayFromLure += 0.5f * attachDistance * directionAway;
 
         // Raycast
         if (Physics.Raycast(posAwayFromLure, -directionAway, out RaycastHit hit, attachDistance, blockLayer))
         {
             // Move the object to hit position when hits
-            attachObject.transform.position = hit.point;
+            attachObject.transform.SetPositionAndRotation(hit.point, lureObj.transform.rotation);
 
             // Rotate object to match hit plane normal if it's active
             if (matchRotation)
@@ -252,28 +244,6 @@ public class AttachingProcess : MonoBehaviour
     }
 
     /// <summary>
-    /// Calculates the center position of mesh in world space
-    /// </summary>
-    /// <param name="vertices"></param>
-    /// <param name="transform"></param>
-    /// <returns></returns>
-    private Vector3 CalculateMeshCenter(Vector3[] vertices, Transform transform)
-    {
-        // Calculate the average of the vertices
-        Vector3 center = Vector3.zero;
-
-        foreach (Vector3 vertex in vertices)
-        {
-            center += vertex;
-        }
-
-        center /= vertices.Length;
-
-        // Convert the local center to world space
-        return transform.TransformPoint(center);
-    }
-
-    /// <summary>
     /// Updates distance from camera to block
     /// </summary>
     private void UpdateDistance()
@@ -291,8 +261,6 @@ public class AttachingProcess : MonoBehaviour
     public void ActivateAttaching()
     {
         IsAttaching = true;
-        Vector3 meshCenter = CalculateMeshCenter(lureObj.GetComponent<MeshFilter>().mesh.vertices, lureObj.transform);
-        meshOffset = meshCenter - transform.position;
         UpdateDistance();
         blockRotation.ResetRotation();
     }
@@ -313,7 +281,7 @@ public class AttachingProcess : MonoBehaviour
         // Set the attached object
         attachedObject = Instantiate(attachDict[type].gameObject,
                                   nullPos,
-                                  GameManager.Instance.LureCamera.transform.rotation,
+                                  GameManager.Instance.MainCamera.transform.rotation,
                                   transform);
 
         attachPos = attachDict[type].AttachPosition;
@@ -331,7 +299,7 @@ public class AttachingProcess : MonoBehaviour
         {
             mirrorObj = Instantiate(attachDict[type].gameObject,
                                     nullPos,
-                                    GameManager.Instance.LureCamera.transform.rotation,
+                                    GameManager.Instance.MainCamera.transform.rotation,
                                     transform);
             Vector3 flipScale = GetFlippedScale();
 
@@ -342,6 +310,10 @@ public class AttachingProcess : MonoBehaviour
             MoveAttach ma2 = mirrorObj.GetComponent<MoveAttach>();
             ma2.EnableOutline(true);
             ma2.IsMirrored = true;  // Tell the new object that it's a mirror that cannot be moved
+            if (mirrorObj.TryGetComponent(out Collider coll))
+            {
+                Destroy(coll);
+            }
         }
 
         blockRotation.ResetRotation();

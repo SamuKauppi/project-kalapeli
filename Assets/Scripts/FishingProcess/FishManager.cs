@@ -44,7 +44,6 @@ public class FishManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     private void Start()
     {
         // Get fishes for this level
@@ -57,7 +56,7 @@ public class FishManager : MonoBehaviour
             rods[i] = Instantiate(rodPrefab, rodAttachPoints[i].position, rodAttachPoints[i].rotation, rodAttachPoints[i]);
         }
 
-        cam = GameManager.Instance.FishCamera;
+        cam = GameManager.Instance.MainCamera;
         displayUI.SetActive(false);
         backButton.SetActive(true);
     }

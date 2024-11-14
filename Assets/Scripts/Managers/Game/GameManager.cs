@@ -1,22 +1,29 @@
+using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Manages camera angles and switching between lure creation and fishing
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public Camera MainCamera { get { return mainCam; } }
 
     [SerializeField] private bool isFishingMode;
-    [SerializeField] private string onTag;          // On tag for when camera is active
-    [SerializeField] private string offTag;         // Off tag for when camera is not active
 
-    // Lure stuff
-    public Camera LureCamera { get { return lureCam; } }
-    [SerializeField] private Camera lureCam;
+    // References
+    [SerializeField] private Camera mainCam;
+    [SerializeField] private Camera overlayCam;
     [SerializeField] private Canvas lureCanvas;
-
-    // Fish stuff
-    public Camera FishCamera { get { return fishCam; } }
-    [SerializeField] private Camera fishCam;
     [SerializeField] private Canvas fishCanvas;
+
+    // Camera angles
+    [SerializeField] private CameraAngle[] lureCameraAngles;
+    [SerializeField] private CameraAngle[] fishCameraAngles;
+
+    private int lureAngleID = 0;
+    private int fishAngleID = 0;
+
 
     private void Awake()
     {
@@ -28,32 +35,67 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-
         UpdateModeChange();
+        ChangeCameraAngle(0, 0f);
     }
 
     private void UpdateModeChange()
     {
-        // Lure stuff
-        lureCam.gameObject.SetActive(!isFishingMode);
-        lureCam.enabled = !isFishingMode;
-        lureCam.tag = isFishingMode ? offTag : onTag;
-        lureCanvas.gameObject.SetActive(!isFishingMode);
+        // Lure creation stuff
         LureCreationManager.Instance.gameObject.SetActive(!isFishingMode);
         LureCreationManager.Instance.SetLureCreation(!isFishingMode);
 
-
-        // Fish stuff
-        fishCam.gameObject.SetActive(isFishingMode);
-        fishCam.enabled = isFishingMode;
-        fishCam.tag = isFishingMode ? onTag : offTag;
+        // Canvas
         fishCanvas.gameObject.SetActive(isFishingMode);
+        lureCanvas.gameObject.SetActive(!isFishingMode);
+    }
+
+    private IEnumerator ChangeFov(float targetFov, float changeTime)
+    {
+        float startFov = mainCam.fieldOfView;
+        float time = 0f;
+
+        while (time < changeTime)
+        {
+            mainCam.fieldOfView = Mathf.Lerp(startFov, targetFov, time / changeTime);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        mainCam.fieldOfView = targetFov;
+        overlayCam.fieldOfView = targetFov;
     }
 
     public void SwapModes()
     {
         isFishingMode = !isFishingMode;
         UpdateModeChange();
+        int id = !isFishingMode ? lureAngleID : fishAngleID;
+        ChangeCameraAngle(id, 0f);
+    }
+
+    public void ChangeCameraAngle(int id, float changeTime)
+    {
+        CameraAngle angle = isFishingMode ? fishCameraAngles[id] : lureCameraAngles[id];
+
+        if (isFishingMode) fishAngleID = id;
+        else lureAngleID = id;
+
+        if (LeanTween.isTweening(mainCam.gameObject))
+        {
+            LeanTween.cancel(mainCam.gameObject);
+        }
+
+        if (changeTime > 0)
+        {
+            LeanTween.move(mainCam.gameObject, angle.posAndRot.position, changeTime);
+            LeanTween.rotate(mainCam.gameObject, angle.posAndRot.eulerAngles, changeTime);
+        }
+        else
+        {
+            mainCam.transform.position = angle.posAndRot.position;
+            mainCam.transform.eulerAngles = angle.posAndRot.eulerAngles;
+        }
+        StartCoroutine(ChangeFov(angle.Fov, changeTime));
     }
 
     public void SetBothModes(bool value)
@@ -71,4 +113,11 @@ public class GameManager : MonoBehaviour
         }
 
     }
+}
+
+[System.Serializable]
+public class CameraAngle
+{
+    public Transform posAndRot;
+    public float Fov;
 }
