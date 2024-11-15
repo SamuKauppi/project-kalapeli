@@ -32,10 +32,10 @@ public class PickUpLure : MonoBehaviour
 
     public void OpenLureBox(int lureCount)
     {
-        outline.enabled = lureCount >= 0;
+        outline.enabled = lureCount > 0;
         for (int i = 0; i < luresInBox.Length; i++)
         {
-            luresInBox[i].SetActive(lureCount >= 0);
+            luresInBox[i].SetActive(lureCount > 0);
         }
     }
 }
