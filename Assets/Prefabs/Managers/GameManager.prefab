@@ -2828,7 +2828,7 @@ MonoBehaviour:
     Fov: 26
   fishCameraAngles:
   - posAndRot: {fileID: 2970470296181680822}
-    Fov: 45
+    Fov: 50
 --- !u!1 &5348191059230580061
 GameObject:
   m_ObjectHideFlags: 0
