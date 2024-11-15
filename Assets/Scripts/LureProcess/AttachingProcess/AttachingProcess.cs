@@ -31,7 +31,7 @@ public class AttachingProcess : MonoBehaviour
     private Camera cam;
     private BlockRotation blockRotation;                                            // Script that rotates the block
 
-    private readonly float attachDistance = 20f;    // Used to raycast while attaching
+    [SerializeField] private float attachDistance = 20f;    // Used to raycast while attaching
     private GameObject lureObj;         // Lure object the objects will be attached to
 
     // Attachable object currently being attached

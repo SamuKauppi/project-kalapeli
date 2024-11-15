@@ -150,6 +150,7 @@ public class FishManager : MonoBehaviour
             attachedLure.SetActive(false);
             attachedLure = null;
             IsAttachingLure = false;
+            lureBox.OpenLureBox(PersitentManager.Instance.LureCount());
         }
         else
         {
@@ -186,7 +187,6 @@ public class FishManager : MonoBehaviour
         if (displayFish)
             Destroy(displayFish);
 
-        lureBox.OpenLureBox(PersitentManager.Instance.LureCount());
     }
 
 
