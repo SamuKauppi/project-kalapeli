@@ -207,6 +207,12 @@ public class LureFunctions : MonoBehaviour
         // Lerp streamline ratio
         streamlineRatio = Mathf.InverseLerp(0, worstStreamlineRatio, streamlineRatio);
 
+        if (streamlineRatio == float.NaN)
+        {
+            Debug.Log("Why does this happen?");
+
+        }
+
         // Set mesh swiming style to bad if not streamlined enough
         meshSwim = streamlineRatio > thresholdStreamlineRatio ? SwimmingType.Bad : SwimmingType.None;
     }
@@ -218,9 +224,6 @@ public class LureFunctions : MonoBehaviour
     /// <param name="depth"></param>
     private void CalculateAttachStats()
     {
-        if (transform.childCount <= 1)
-            return;
-
         // Initialize local variabes
         bool stopChecking = false;
         float length = _filter.mesh.bounds.size.x * unitConverter;  // Convert units

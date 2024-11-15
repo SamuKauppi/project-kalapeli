@@ -134,4 +134,9 @@ public class PersitentManager : MonoBehaviour
         scoreText.text = SCORE + score;
         fishesCaught.Add(fish);
     }
+
+    public int LureCount()
+    {
+        return luresCreated.Count;
+    }
 }

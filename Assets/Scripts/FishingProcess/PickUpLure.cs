@@ -3,7 +3,9 @@ using UnityEngine;
 public class PickUpLure : MonoBehaviour
 {
     [SerializeField] private Outline outline;
-
+    [SerializeField] private float onWidth;
+    [SerializeField] private float offWidth;
+    [SerializeField] private GameObject[] luresInBox;
     private void Start()
     {
         if (outline == null)
@@ -20,11 +22,20 @@ public class PickUpLure : MonoBehaviour
     private void OnMouseEnter()
     {
         if (FishManager.Instance.CanFish)
-            outline.enabled = true;
+            outline.OutlineWidth = onWidth;
     }
 
     private void OnMouseExit()
     {
-        outline.enabled = false;
+        outline.OutlineWidth = offWidth;
+    }
+
+    public void OpenLureBox(int lureCount)
+    {
+        outline.enabled = lureCount >= 0;
+        for (int i = 0; i < luresInBox.Length; i++)
+        {
+            luresInBox[i].SetActive(lureCount >= 0);
+        }
     }
 }

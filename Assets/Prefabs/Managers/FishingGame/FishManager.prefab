@@ -82,6 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a7703ce04b39fe45886875a78d7eb62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lureBox: {fileID: 2358792064606518953}
   rodPrefab: {fileID: 2561515270032317780, guid: 2f9673ee6e9b0634396da15ed510d475, type: 3}
   rodAttachPoints:
   - {fileID: 845654506506391950}
@@ -472,6 +473,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 393f8996a0b073b4484049669e96b336, type: 3}
+--- !u!114 &2358792064606518953 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4193068553587033431, guid: 393f8996a0b073b4484049669e96b336, type: 3}
+  m_PrefabInstance: {fileID: 1913142813085350910}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e1bdb8331c06d94984b08846defd743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4906045495006849227 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6816513746039657269, guid: 393f8996a0b073b4484049669e96b336, type: 3}

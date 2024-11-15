@@ -11,6 +11,8 @@ public class FishManager : MonoBehaviour
     public bool CanFish { get; set; }
     public bool IsAttachingLure { get; private set; }
 
+    [SerializeField] private PickUpLure lureBox;
+
     // Rod
     [SerializeField] private Rod rodPrefab;                 // Prefab
     [SerializeField] private Transform[] rodAttachPoints;   // Points where rods are attached
@@ -183,6 +185,8 @@ public class FishManager : MonoBehaviour
         backButton.SetActive(true);
         if (displayFish)
             Destroy(displayFish);
+
+        lureBox.OpenLureBox(PersitentManager.Instance.LureCount());
     }
     
 
@@ -192,5 +196,10 @@ public class FishManager : MonoBehaviour
     public void EndFishing()
     {
         GameManager.Instance.SwapModes();
+    }
+
+    public void ActivateFishing()
+    {
+        lureBox.OpenLureBox(PersitentManager.Instance.LureCount());
     }
 }
