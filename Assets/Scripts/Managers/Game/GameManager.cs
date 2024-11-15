@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
 
         // Fish manager
         FishManager.Instance.CanFish = isFishingMode;
+        if (isFishingMode)
+            FishManager.Instance.ActivateFishing();
 
         // Canvas
         fishCanvas.gameObject.SetActive(isFishingMode);

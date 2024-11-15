@@ -188,7 +188,7 @@ public class FishManager : MonoBehaviour
 
         lureBox.OpenLureBox(PersitentManager.Instance.LureCount());
     }
-    
+
 
     /// <summary>
     /// End fishing mode

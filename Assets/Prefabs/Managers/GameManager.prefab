@@ -2816,7 +2816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ba9dc99f1ee8c4a906fb17a5e60363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFishingMode: 1
+  isFishingMode: 0
   mainCam: {fileID: 4666004094657011783}
   overlayCam: {fileID: 4469961686896504200}
   lureCanvas: {fileID: 2667254979297991548}
@@ -5392,6 +5392,22 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3357655671314282751, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3357655671314282751, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3357655671314282751, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3357655671314282751, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3772843918770932171, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -5439,6 +5455,38 @@ PrefabInstance:
     - target: {fileID: 3978554252099637604, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917310046582621541, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917310046582621541, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917310046582621541, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917310046582621541, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736385528102884856, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736385528102884856, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736385528102884856, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736385528102884856, guid: ead88c605879d734b9be1ed159d2b904, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
