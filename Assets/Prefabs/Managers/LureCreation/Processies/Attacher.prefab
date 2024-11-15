@@ -47,6 +47,9 @@ MonoBehaviour:
   blockLayer:
     serializedVersion: 2
     m_Bits: 128
+  attachedLayer:
+    serializedVersion: 2
+    m_Bits: 512
   attachPrefabs:
   - {fileID: 5430767208718756139, guid: 7e66654fc92e75e41b8e420290416a1c, type: 3}
   - {fileID: 2229478228758937181, guid: cf3100aae1cbf6546882019674e4c817, type: 3}

@@ -45,6 +45,9 @@ public class GameManager : MonoBehaviour
         LureCreationManager.Instance.gameObject.SetActive(!isFishingMode);
         LureCreationManager.Instance.SetLureCreation(!isFishingMode);
 
+        // Fish manager
+        FishManager.Instance.CanFish = isFishingMode;
+
         // Canvas
         fishCanvas.gameObject.SetActive(isFishingMode);
         lureCanvas.gameObject.SetActive(!isFishingMode);

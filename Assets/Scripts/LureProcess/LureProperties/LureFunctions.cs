@@ -7,7 +7,7 @@ using UnityEngine;
 public class LureFunctions : MonoBehaviour
 {
     public LureStats Stats { get; private set; }
-    public bool CanCatch { get { return hookCount > 0; } }
+    public bool CanCatch { get { return hookCount > 0 && attachSwim != SwimmingType.None; } }
 
     // SerializeFields
     [SerializeField] private float streamlineMultiplier = 1f;   // Multiplies streamlineRatio to make it more readable
@@ -262,6 +262,10 @@ public class LureFunctions : MonoBehaviour
                     stopChecking = HandleChub(attachProperties as ChubProperties, ref chubCount);
                     break;
 
+                case "Tail":
+                    stopChecking = HandleHook(length, ref hookCount);
+                    break;
+
                 default:
                     // Handle unknown group types if needed
                     break;
@@ -279,9 +283,9 @@ public class LureFunctions : MonoBehaviour
     {
         hookCount++;
 
-        if ((length < minLengthOneHook && hookCount > 1) ||
-            (length < minLengthTwoHook && hookCount > 2) ||
-            hookCount > 3)
+        if ((length < minLengthOneHook && hookCount > 2) ||
+            (length < minLengthTwoHook && hookCount > 3) ||
+            hookCount > 4)
         {
             // Too many hooks
             attachSwim = SwimmingType.Bad;

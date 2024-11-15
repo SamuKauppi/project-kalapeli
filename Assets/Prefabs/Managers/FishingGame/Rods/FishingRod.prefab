@@ -179,8 +179,8 @@ MonoBehaviour:
   sound: {fileID: 3314230698867583592}
   outline: {fileID: 6124600615679987357}
   anim: {fileID: 5303435438112533872}
-  minTimeForFish: 15
-  maxTimeForFish: 70
+  minTimeForFish: 0
+  maxTimeForFish: 0
 --- !u!65 &7472994422790656681
 BoxCollider:
   m_ObjectHideFlags: 0

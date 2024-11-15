@@ -15,9 +15,9 @@ public class PersitentManager : MonoBehaviour
     private readonly HashSet<GameObject> luresUsed = new();
 
     // Fish
-    [SerializeField] private Fish[] everyFishInGame;                // Contains every fish that exists (set in inspector)
-    private List<FishSpecies> fishForThisLevel = new();             // Fishes available for this level (Set before loading to a level)
-    private readonly Dictionary<FishSpecies, Fish> fishDict = new();// Dictionary that is set during runtime
+    [SerializeField] private Fish[] everyFishInGame;                    // Contains every fish that exists (set in inspector)
+    [SerializeField] private List<FishSpecies> fishForThisLevel = new();// Fishes available for this level (Set before loading to a level)
+    private readonly Dictionary<FishSpecies, Fish> fishDict = new();    // Dictionary that is set during runtime
     private readonly HashSet<FishSpecies> fishesCaught = new();
 
     // Score
@@ -42,13 +42,6 @@ public class PersitentManager : MonoBehaviour
     {
         // Temporary way to populate fishForThisLevel
         // TODO: create a function to do this once menu exists
-        fishForThisLevel = new()
-        {
-            FishSpecies.Dipfish,
-            FishSpecies.Bobber,
-            FishSpecies.Pickley,
-            FishSpecies.Fry
-        };
 
         // Populate dictionary
         for (int i = 0; i < everyFishInGame.Length; i++)

@@ -11,8 +11,13 @@ public class MoveAttach : MonoBehaviour
     public bool MatchRotation { get; set; }             // Was the rotation matched
     public bool IsMirrored { get; set; } = false;       // Is this object mirrored
 
-    [SerializeField] private Outline outline;   // Reference to outline component
-    private int shouldHighlight;                // Counts if the object should be highlighted
+    [SerializeField] private Outline outline;           // Reference to outline component
+    [SerializeField] private float minScale = 0.5f;     // Min scale for attached
+    [SerializeField] private float maxScale = 1.5f;     // Max scale for attached
+
+    private int shouldHighlight;                        // Counts if the object should be highlighted
+    private Vector3 attachedScale = Vector3.one;
+    private float scaleFactor;
 
     private void OnMouseDown()
     {
@@ -59,4 +64,20 @@ public class MoveAttach : MonoBehaviour
         AddOutline(value ? 1 : -1);
     }
 
+    public void ScaleAttached(float scale)
+    {
+        scaleFactor = 1 + scale;
+
+        for (int i = 0; i < 3; i++)
+        {
+            attachedScale[i] = Mathf.Clamp(attachedScale[i] * scaleFactor, minScale, maxScale);
+        }
+
+        if (TryGetComponent(out ChubProperties cp))
+        {
+            cp.ScaleChub(attachedScale.x);
+
+        }
+        transform.localScale = attachedScale;
+    }
 }

@@ -143,8 +143,13 @@ public class Fish : MonoBehaviour
     /// </summary>
     /// <param name="lure"></param>
     /// <returns></returns>
-    public int GetCatchChance(LureStats lure)
+    public virtual int GetCatchChance(LureStats lure)
     {
+        if (lure.SwimType == SwimmingType.Bad || lure.SwimType == SwimmingType.None)
+        {
+            return 0;
+        }
+
         // if lures depth does not match the fish swimming depth, return 0 chance
         if (lure.SwimmingDepth < MinSwimDepth || lure.SwimmingDepth > MaxSwimDepth)
         {

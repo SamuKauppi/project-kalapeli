@@ -11,7 +11,7 @@ public class TestMoving : MonoBehaviour
     private void FixedUpdate()
     {
         transform.position += speed * dir * Time.deltaTime * Vector3.right;
-        transform.Rotate(transform.up, rotSpeed * Time.deltaTime);
+        transform.Rotate(Vector3.up, rotSpeed * Time.deltaTime);
 
         if (Mathf.Abs(transform.position.x) > maxMove)
         {

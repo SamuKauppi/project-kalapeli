@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1660729858650980912}
   - component: {fileID: 5764822535924133430}
   - component: {fileID: -3612186551285969589}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Fin_prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: -3612186551285969589}
+  minScale: 0.5
+  maxScale: 1.5
 --- !u!114 &5764822535924133430
 MonoBehaviour:
   m_ObjectHideFlags: 0

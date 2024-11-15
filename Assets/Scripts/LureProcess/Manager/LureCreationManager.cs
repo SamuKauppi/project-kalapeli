@@ -101,12 +101,6 @@ public class LureCreationManager : MonoBehaviour
 
     public void EndCutting()
     {
-        if (lureProperties.Stats.SwimType == SwimmingType.Bad)
-            return;
-
-        SwimmingType type = MeshComparison.Instance.GetMatchingData(blockFilter.sharedMesh);
-        Debug.Log("This mesh matches to: " + type);
-
         _process = LureCreationProcess.Painting;
 
         // Hide cutting buttons and reveal painting buttons
@@ -152,9 +146,7 @@ public class LureCreationManager : MonoBehaviour
     public void EndAttaching()
     {
         // Don't end attaching if swimstyle is not valid
-        if (lureProperties.Stats.SwimType == SwimmingType.Bad ||
-            lureProperties.Stats.SwimType == SwimmingType.None ||
-            !lureProperties.CanCatch)
+        if (!lureProperties.CanCatch)
             return;
 
         _process = LureCreationProcess.Saving;

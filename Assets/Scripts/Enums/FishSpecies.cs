@@ -4,5 +4,8 @@
     Dipfish,
     Bobber,
     Fry,
-    Pickley
+    Pickley,
+    Boot,
+    Muddle,
+    Squid
 }

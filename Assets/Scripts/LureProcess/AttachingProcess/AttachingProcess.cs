@@ -25,16 +25,20 @@ public class AttachingProcess : MonoBehaviour
 
     // Attaching refs
     [SerializeField] private LayerMask blockLayer;
+    [SerializeField] private LayerMask attachedLayer;
     [SerializeField] private AttachProperties[] attachPrefabs;                        // References to prefabs set in inspector
     private readonly Dictionary<AttachingType, AttachProperties> attachDict = new();  // Dictionary set in runtime for faster searches
     private Camera cam;
     private BlockRotation blockRotation;                                            // Script that rotates the block
 
-    // Attachable object currently being attached
     private readonly float attachDistance = 20f;    // Used to raycast while attaching
     private GameObject lureObj;         // Lure object the objects will be attached to
+
+    // Attachable object currently being attached
     private GameObject attachedObject;  // Object being currently attached
+    private MoveAttach moveAttach;      // Reference to MoveAttach script in attachobject
     private GameObject mirrorObj;       // Mirrored object
+    private MoveAttach mirrorAttach;    // Reference to MoveAttach script in mirrorObj
     private AttachPosition attachPos;   // Where the object being currently attached can be placed
     private bool attachBothSides;       // Will the object be attached to both sides
     private bool matchRotation;         // Will the rotation of attached object be matched to face normal
@@ -42,9 +46,9 @@ public class AttachingProcess : MonoBehaviour
     // Positioning
     Vector3 nullPos = new(0f, -1000f, 0f);  // Position where the attachbles are hidden
     private Vector3 mousePos;           // Mouse vector
-    private Vector3 meshOffset;         // Distance from gameobject center to mesh position
     private float mouseHeld;            // Mouse held input detection for fixed update
     private bool mouseUp;               // Mouse up input detection for fixed update
+    private float mouseScroll;          // Mouse scroll input detection
     private bool isValidPos = false;    // Is the attached object at a valid position
     private bool wasRotating = false;   // Checks if the block was rotating and fixes attachable rotaion when needed
 
@@ -78,11 +82,20 @@ public class AttachingProcess : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (!IsAttaching || !attachedObject) { return; }
+        if (!IsAttaching)
+        {
+            return;
+        }
 
+        mouseScroll += Input.GetAxisRaw("Mouse ScrollWheel");
         // Get mouse pos
         mousePos = Input.mousePosition;
         mousePos.z = distanceToLure;
+
+        if (!attachedObject)
+        {
+            return;
+        }
 
         if (Input.GetMouseButton(0))
         {
@@ -113,6 +126,28 @@ public class AttachingProcess : MonoBehaviour
         }
 
         if (blockRotation.IsRotating) { wasRotating = true; return; }
+
+        if (mouseScroll != 0f)
+        {
+            Vector3 direction = cam.ScreenToWorldPoint(mousePos) - cam.transform.position;
+
+            if (Physics.Raycast(cam.transform.position, direction, out RaycastHit hit, attachDistance, attachedLayer))
+            {
+                if (hit.collider.TryGetComponent(out MoveAttach ma))
+                {
+                    ma.ScaleAttached(mouseScroll);
+
+                    if (ma.MirroredObj != null)
+                    {
+                        ma.MirroredObj.GetComponent<MoveAttach>().ScaleAttached(mouseScroll);
+                    }
+                    OnAttach?.Invoke();
+                }
+
+            }
+            mouseScroll = 0f;
+        }
+
         if (!attachedObject) { return; }
 
         // Check if the block was rotating and fix the rotation and position if needed
@@ -146,16 +181,18 @@ public class AttachingProcess : MonoBehaviour
         else
         {
             attachedObject.transform.parent = lureObj.transform;
-            attachedObject.GetComponent<MoveAttach>().EnableOutline(false);
+            moveAttach.EnableOutline(false);
             if (attachBothSides)
             {
                 mirrorObj.transform.parent = lureObj.transform;
-                mirrorObj.GetComponent<MoveAttach>().EnableOutline(false);
+                mirrorAttach.EnableOutline(false);
             }
         }
 
         attachedObject = null;
+        moveAttach = null;
         mirrorObj = null;
+        mirrorAttach = null;
         blockRotation.StopRotating = false;
         OnAttach?.Invoke();
         mouseUp = false;
@@ -289,10 +326,10 @@ public class AttachingProcess : MonoBehaviour
         matchRotation = attachDict[type].MatchRotationToNormal;
 
         // Save data to the object incase it's moved later
-        MoveAttach ma1 = attachedObject.GetComponent<MoveAttach>();
-        ma1.EnableOutline(true);
-        ma1.AttachPosition = attachPos;
-        ma1.MatchRotation = matchRotation;
+        moveAttach = attachedObject.GetComponent<MoveAttach>();
+        moveAttach.EnableOutline(true);
+        moveAttach.AttachPosition = attachPos;
+        moveAttach.MatchRotation = matchRotation;
 
         // Set the possible mirrored object
         if (attachBothSides)
@@ -306,10 +343,10 @@ public class AttachingProcess : MonoBehaviour
             mirrorObj.transform.localScale = flipScale;
 
             // Save data to objects incase both need to be moved
-            ma1.MirroredObj = mirrorObj;
-            MoveAttach ma2 = mirrorObj.GetComponent<MoveAttach>();
-            ma2.EnableOutline(true);
-            ma2.IsMirrored = true;  // Tell the new object that it's a mirror that cannot be moved
+            moveAttach.MirroredObj = mirrorObj;
+            mirrorAttach = mirrorObj.GetComponent<MoveAttach>();
+            mirrorAttach.EnableOutline(true);
+            mirrorAttach.IsMirrored = true;  // Tell the new object that it's a mirror that cannot be moved
             if (mirrorObj.TryGetComponent(out Collider coll))
             {
                 Destroy(coll);
@@ -332,6 +369,7 @@ public class AttachingProcess : MonoBehaviour
         if (!IsAttaching || attachedObject) { return; }
 
         attachedObject = obj;
+        moveAttach = attachedObject.GetComponent<MoveAttach>();
         attachedObject.transform.parent = transform;
         attachedObject.transform.position = cam.ScreenToWorldPoint(mousePos);
         attachPos = pos;
@@ -343,7 +381,8 @@ public class AttachingProcess : MonoBehaviour
             mirrorObj.transform.parent = transform;
             mirrorObj.transform.position = cam.WorldToScreenPoint(mousePos);
             attachBothSides = true;
-            mirrorObj.GetComponent<MoveAttach>().EnableOutline(true);
+            mirrorAttach = mirrorObj.GetComponent<MoveAttach>();
+            mirrorAttach.EnableOutline(true);
         }
         else
         {
