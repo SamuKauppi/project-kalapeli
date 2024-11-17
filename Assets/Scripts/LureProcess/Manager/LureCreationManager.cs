@@ -1,4 +1,7 @@
+using System;
 using System.Collections;
+using System.Diagnostics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -10,6 +13,7 @@ public class LureCreationManager : MonoBehaviour
 
     private enum LureCreationProcess
     {
+        None,
         Cutting,
         Painting,
         Attaching,
@@ -28,6 +32,7 @@ public class LureCreationManager : MonoBehaviour
     [SerializeField] private GameObject paintingButtons;
     [SerializeField] private GameObject attachButtons;
     [SerializeField] private GameObject saveButtons;
+    [SerializeField] private GameObject warningPopUp;
 
     // Mesh reset
     [SerializeField] private Mesh blockMesh;
@@ -38,6 +43,7 @@ public class LureCreationManager : MonoBehaviour
     private MeshFilter blockFilter;
     private LureFunctions lureProperties;
 
+    #region private
     private void Awake()
     {
         if (Instance == null)
@@ -53,27 +59,15 @@ public class LureCreationManager : MonoBehaviour
         lureProperties = BlockRotation.Instance.GetComponent<LureFunctions>();
         Cutter.Instance.RecalculateUvs(blockMesh);
         ResetLureCreation();
+        warningPopUp.SetActive(false);
     }
 
-    public void ResetLureCreation()
+    private void ResetToCuttingBlock()
     {
-        GameManager.Instance.ChangeCameraAngle(0, 0f);
-        BlockRotation.Instance.ResetRotation();
-
-        _process = LureCreationProcess.Cutting;
-
-        // Enable cutting
-        cutProcess.IsCutting = true;
-        cutProcess.gameObject.SetActive(true);
-        cuttingButtons.SetActive(true);
-
         // Reset mesh
         blockFilter.mesh = blockMesh;
 
-        // Reset materials
-        Material[] mats = new Material[1];
-        mats[0] = blockMaterial;
-        blockRend.materials = mats;
+        ResetBlockMaterial();
 
         // Reset collider
         MeshCollider col = lureObject.GetComponent<MeshCollider>();
@@ -83,93 +77,168 @@ public class LureCreationManager : MonoBehaviour
 
         // Reset lure properties (remove children and reset stats)
         lureProperties.ResetLure();
+    }
 
+    private void ResetBlockMaterial()
+    {
+        // Reset materials
+        Material[] mats = new Material[1];
+        mats[0] = blockMaterial;
+        blockRend.materials = mats;
+    }
+
+    private void SetCutting(bool value)
+    {
+        // Enable cutting
+        cutProcess.IsCutting = value;
+        cutProcess.gameObject.SetActive(value);
+        cuttingButtons.SetActive(value);
+    }
+    private void SetPainting(bool value)
+    {
         // Disable painting
-        paintingButtons.SetActive(false);
-
+        paintingButtons.SetActive(value);
+        if (value)
+            paintProcess.Activate();
+    }
+    private void SetAttaching(bool value)
+    {
         // Disable attaching
-        attachButtons.SetActive(false);
-        attachProcess.IsAttaching = false;
-        attachProcess.gameObject.SetActive(true);   // Keep it visible
-
+        attachButtons.SetActive(value);
+        attachProcess.IsAttaching = value;
+        if (value)
+            attachProcess.ActivateAttaching();
+    }
+    private void SetSaving(bool value)
+    {
         // Disable saving
-        saveButtons.SetActive(false);
-
-        // Ensure that the block can be rotated
-        BlockRotation.Instance.StopRotating = false;
+        saveButtons.SetActive(value);
     }
 
-    public void EndCutting()
+    private void ResetBlockRotation(float timeToReset)
     {
-        _process = LureCreationProcess.Painting;
-
-        // Hide cutting buttons and reveal painting buttons
-        cuttingButtons.SetActive(false);
-        paintingButtons.SetActive(true);
-
-        // Disable cutting
-        cutProcess.IsCutting = false;
-        cutProcess.gameObject.SetActive(false);
-
-        // Activate painting
-        paintProcess.Activate();
-
-        // Ensure that the block can be rotated
-        BlockRotation.Instance.StopRotating = false;
+        // Reset rotation
+        BlockRotation.Instance.ResetRotation(timeToReset);
+        BlockRotation.Instance.StopRotating = false;    // Ensure the block can be rotated
+    }
+    private IEnumerator ActivateAfterCameraAngle(int index, float time, Action[] callBacks)
+    {
+        GameManager.Instance.ChangeCameraAngle(index, time);
+        yield return new WaitForSeconds(time);
+        yield return null;
+        foreach (Action action in callBacks)
+        {
+            action?.Invoke();
+        }
     }
 
-    public void EndPainting()
+    private void SetMode(LureCreationProcess process)
     {
-        _process = LureCreationProcess.Attaching;
-
-        // Hide painting buttons and reveal attach buttons
-        paintingButtons.SetActive(false);
-        attachButtons.SetActive(true);
-
-        // Disable painting
-        paintProcess.gameObject.SetActive(false);
-
-        // Ensure that the block can be rotated
-        BlockRotation.Instance.StopRotating = false;
-
-        // Enable attaching
-        StartCoroutine(ActivateAttaching());
+        // Change mode
+        _process = process;
+        SetCutting(process == LureCreationProcess.Cutting);
+        SetPainting(process == LureCreationProcess.Painting);
+        SetAttaching(process == LureCreationProcess.Attaching);
+        SetSaving(process == LureCreationProcess.Saving);
+        BlockRotation.Instance.StopRotating = false;    // Ensure the block can be rotated
     }
 
-    private IEnumerator ActivateAttaching()
-    {
-        GameManager.Instance.ChangeCameraAngle(1, 0.5f);
-        yield return new WaitForSeconds(0.5f);
-        attachProcess.ActivateAttaching();
-    }
+    #endregion
+    #region public
 
-    public void EndAttaching()
+    public void ResetLureCreation()
     {
-        // Don't end attaching if swimstyle is not valid
-        if (!lureProperties.CanCatch)
+        // Change camera angle
+        GameManager.Instance.ChangeCameraAngle(0, 0f);
+
+        // Reset the rotation of block
+        ResetBlockRotation(0f);
+
+        // Reset mesh
+        ResetToCuttingBlock();
+
+        // Set mode to cutting
+        SetMode(LureCreationProcess.Cutting);
+    }
+    public void CancelWarningPopUp()
+    {
+        SetMode(_process);
+        warningPopUp.SetActive(false);
+    }
+    public void ReEnterCutting(bool wasFromWarning)
+    {
+        if (!wasFromWarning && lureProperties.transform.childCount > 1)
+        {
+            // Disable every mode separately as _process should not be changed
+            SetCutting(false);
+            SetPainting(false);
+            SetAttaching(false);
+            SetSaving(false);
+            // Enable popup
+            warningPopUp.SetActive(true);
+            // Diable rotation
+            BlockRotation.Instance.StopRotating = true;
             return;
+        }
 
-        _process = LureCreationProcess.Saving;
+        warningPopUp.SetActive(false);
 
-        // Hide attach buttons and reveal save buttons
-        attachButtons.SetActive(false);
-        saveButtons.SetActive(true);
+        // Change camera angle
+        var callBacks = new Action[] {
+            () => ResetBlockRotation(0.1f)
+        };
 
-        // Disable attaching
-        attachProcess.IsAttaching = false;
-        attachProcess.gameObject.SetActive(false);
+        StartCoroutine(ActivateAfterCameraAngle(0, 0.5f, callBacks));
 
-        // Ensure that the block can be rotated
-        BlockRotation.Instance.StopRotating = false;
-        lureProperties.FinalizeLure();
+        // Reset only material for block
+        ResetBlockMaterial();
 
+        // Reset lure properties
+        lureProperties.ResetLure();
+
+        // Set mode to cutting
+        SetMode(LureCreationProcess.Cutting);
+    }
+
+    public void StartPainting()
+    {
+        // Change Camera angle
         GameManager.Instance.ChangeCameraAngle(0, 0.5f);
+
+        // Set mode to painting
+        SetMode(LureCreationProcess.Painting);
+
+    }
+
+    public void StartAttaching()
+    {
+        // Change Camera angle and after set mode
+        var callBacks = new Action[]
+        {
+            () => ResetBlockRotation(0.15f),
+            () => SetMode(LureCreationProcess.Attaching)
+        };
+        StartCoroutine(ActivateAfterCameraAngle(1, 0.5f, callBacks));
+    }
+
+    public void StartSaving()
+    {
+        if (!lureProperties.CanCatch) { return; }
+
+        // Set camera angle and update mode
+        var callBacks = new Action[]
+        {
+            () => ResetBlockRotation(0.15f)
+        };
+        StartCoroutine(ActivateAfterCameraAngle(0, 0.5f, callBacks));
+        SetMode(LureCreationProcess.Saving);
     }
 
     public void SaveLure()
     {
-        saveButtons.SetActive(false);
-        BlockRotation.Instance.ResetRotation();
+        SetMode(LureCreationProcess.None);
+        BlockRotation.Instance.ResetRotation(0f);
+        lureProperties.FinalizeLure();
         PersitentManager.Instance.AddNewLure(lureObject);
     }
 
@@ -191,4 +260,5 @@ public class LureCreationManager : MonoBehaviour
             attachProcess.GetComponent<AttachingProcess>().IsAttaching = value;
         }
     }
+    #endregion
 }

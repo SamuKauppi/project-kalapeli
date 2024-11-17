@@ -8,7 +8,7 @@ using UnityEngine;
 public class PersitentManager : MonoBehaviour
 {
     public static PersitentManager Instance { get; private set; }
-    public Fish[] EveryFish { get {  return everyFishInGame; } }
+    public Fish[] EveryFish { get { return everyFishInGame; } }
 
     // Lure
     private readonly Queue<GameObject> luresCreated = new();
@@ -90,7 +90,7 @@ public class PersitentManager : MonoBehaviour
             Destroy(func);
         }
 
-        if(newObj.TryGetComponent<Collider>(out var coll))
+        if (newObj.TryGetComponent<Collider>(out var coll))
         {
             Destroy(coll);
         }

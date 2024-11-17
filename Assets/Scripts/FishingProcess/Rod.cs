@@ -67,6 +67,8 @@ public class Rod : MonoBehaviour
         // Wait for a random time
         if (fishCatchChances.Length > 1)
             yield return new WaitForSeconds(Random.Range(minTimeForFish, maxTimeForFish));
+        else
+            yield return new WaitForSeconds(3f);
 
         // Create catch isCatalogOpen
         int catchValue = Random.Range(0, totalCatchScore);

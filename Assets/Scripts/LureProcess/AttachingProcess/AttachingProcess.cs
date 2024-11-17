@@ -44,7 +44,6 @@ public class AttachingProcess : MonoBehaviour
     private bool matchRotation;         // Will the rotation of attached object be matched to face normal
 
     // Positioning
-    Vector3 nullPos = new(0f, -1000f, 0f);  // Position where the attachbles are hidden
     private Vector3 mousePos;           // Mouse vector
     private float mouseHeld;            // Mouse held input detection for fixed update
     private bool mouseUp;               // Mouse up input detection for fixed update
@@ -299,7 +298,7 @@ public class AttachingProcess : MonoBehaviour
     {
         IsAttaching = true;
         UpdateDistance();
-        blockRotation.ResetRotation();
+        blockRotation.ResetRotation(0.15f);
     }
 
 
@@ -317,7 +316,7 @@ public class AttachingProcess : MonoBehaviour
 
         // Set the attached object
         attachedObject = Instantiate(attachDict[type].gameObject,
-                                  nullPos,
+                                  cam.ScreenToWorldPoint(mousePos),
                                   GameManager.Instance.MainCamera.transform.rotation,
                                   transform);
 
@@ -335,7 +334,7 @@ public class AttachingProcess : MonoBehaviour
         if (attachBothSides)
         {
             mirrorObj = Instantiate(attachDict[type].gameObject,
-                                    nullPos,
+                                    cam.ScreenToWorldPoint(mousePos),
                                     GameManager.Instance.MainCamera.transform.rotation,
                                     transform);
             Vector3 flipScale = GetFlippedScale();
@@ -353,7 +352,7 @@ public class AttachingProcess : MonoBehaviour
             }
         }
 
-        blockRotation.ResetRotation();
+        blockRotation.ResetRotation(0.15f);
     }
 
     /// <summary>
@@ -389,6 +388,6 @@ public class AttachingProcess : MonoBehaviour
             attachBothSides = false;
         }
 
-        blockRotation.ResetRotation();
+        blockRotation.ResetRotation(0.15f);
     }
 }

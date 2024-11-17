@@ -4,6 +4,8 @@ public class StartAttachRandomEye : StartAttach
 {
     protected override void OnMouseDown()
     {
+        if (!AttachingProcess.Instance.IsAttaching) return;
+
         int random = Random.Range(0, 5);
         AttachingType type = random switch
         {
@@ -14,7 +16,6 @@ public class StartAttachRandomEye : StartAttach
             4 => AttachingType.Eye5,
             _ => AttachingType.Eye1,
         };
-
         AttachingProcess.Instance.StartAttachingObject(type);
     }
 }

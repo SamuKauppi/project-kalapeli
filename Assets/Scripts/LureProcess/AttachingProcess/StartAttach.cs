@@ -29,6 +29,7 @@ public class StartAttach : MonoBehaviour
 
     virtual protected void OnMouseDown()
     {
-        AttachingProcess.Instance.StartAttachingObject(objectToAttach);
+        if (AttachingProcess.Instance.IsAttaching)
+            AttachingProcess.Instance.StartAttachingObject(objectToAttach);
     }
 }

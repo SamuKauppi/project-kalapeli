@@ -28,8 +28,8 @@ public class BlockPainter : MonoBehaviour
     [SerializeField] private int defaultPaintID;
 
     // Coloring variables
-    private Color baseColor;
-    private Color textureColor;
+    private Color baseColor = Color.white;
+    private Color textureColor = Color.black;
     private int selectedTextureId = 1;
 
     // const
@@ -85,7 +85,7 @@ public class BlockPainter : MonoBehaviour
         }
         selectedTextureId = defaultPaintID;
         blockRenderer.materials = mats;
-        UpdateColoring(Color.white, Color.black, selectedTextureId);
+        UpdateColoring(baseColor, textureColor, selectedTextureId);
     }
 
     public void UpdateBaseColor()

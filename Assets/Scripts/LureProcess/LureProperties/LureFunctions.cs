@@ -173,11 +173,11 @@ public class LureFunctions : MonoBehaviour
             AttachingType.Eye1 or AttachingType.Eye2 or AttachingType.Eye3
             or AttachingType.Eye4 or AttachingType.Eye5 => "Eye",
             AttachingType.Chub1 or AttachingType.Chub2
-            or AttachingType.Chub3 or AttachingType.Chub4 => "Chub",
+            or AttachingType.Chub3 or AttachingType.Chub4 or AttachingType.Propeller => "Chub",
             AttachingType.Fin1 or AttachingType.Fin2
             or AttachingType.Fin3 or AttachingType.Fin4 => "Fin",
             AttachingType.Tail1 or AttachingType.Tail2
-            or AttachingType.Tail3 or AttachingType.Propeller => "Tail",
+            or AttachingType.Tail3 => "Tail",
             _ => "Unknown",
         };
     }

@@ -131,11 +131,11 @@ public class BlockRotation : MonoBehaviour
     /// <summary>
     /// Reset rotation
     /// </summary>
-    public void ResetRotation()
+    public void ResetRotation(float timeToReset)
     {
         sideRotIndex = 0;
         upRotIndex = 0;
-        StartCoroutine(RotateTransform(0, 0, 0f));
+        StartCoroutine(RotateTransform(0, 0, timeToReset));
     }
 }
 
