@@ -77,10 +77,10 @@ public class LureFunctions : MonoBehaviour
         streamlineIndex *= (1 + alignmentFactor);
 
 
-        if(float.IsNaN(streamlineIndex))
+        if (float.IsNaN(streamlineIndex))
         {
-            Debug.Log("streamline calculation error");
-            Debug.Log($"Streamline Ratio: {streamlineRatio}, Volume: {volume}, Surface Area: {surfaceArea}");
+            Debug.Log("streamline calculation error!");
+            Debug.Log($"Streamline Ratio: {streamlineRatio}, Volume: {volume}, Surface Area: {surfaceArea}, AlignmentFactor: {alignmentFactor}");
         }
 
         // Return index as ratio

@@ -115,8 +115,8 @@ public class StatDisplay : MonoBehaviour
 
         if (float.IsNaN(streamlineRatio))
         {
-            Debug.Log(streamlineSlider.minValue);
-            Debug.Log(streamlineSlider.maxValue);
+            Debug.Log("slider min value: " + streamlineSlider.minValue);
+            Debug.Log("slider max value: " + streamlineSlider.maxValue);
         }
     }
 
