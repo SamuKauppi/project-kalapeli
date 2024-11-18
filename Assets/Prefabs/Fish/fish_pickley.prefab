@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
       propertyPath: score
-      value: 400
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
       propertyPath: species
@@ -18,7 +18,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
       propertyPath: catchChance
-      value: 15
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: flavourText
+      value: With scales as slippery as algae, Pickley glides in silence, its elongated
+        snoot always leading the way.
       objectReference: {fileID: 0}
     - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
       propertyPath: maxSwimDepth

@@ -66,7 +66,10 @@ public class Rod : MonoBehaviour
         Debug.Log("waiting for fish");
         // Wait for a random time
         if (fishCatchChances.Length > 1)
+        {
+            PrintCatchChances(fishCatchChances, totalCatchScore);
             yield return new WaitForSeconds(Random.Range(minTimeForFish, maxTimeForFish));
+        }
         else
             yield return new WaitForSeconds(3f);
 
@@ -82,7 +85,6 @@ public class Rod : MonoBehaviour
                 HasFish = true;
                 CaughtFish = fishCatchChances[i].species;
                 timeAttached = fishCatchChances[i].timeAttached;
-                Debug.Log(CaughtFish + " is hooked! Score: " + catchValue);
                 anim.SetBool("Fish", true);
                 sound.Play();
                 break;
@@ -97,6 +99,17 @@ public class Rod : MonoBehaviour
         StartCoroutine(WaitingForFish());
         Debug.Log("Got away");
         anim.SetBool("Fish", false);
+    }
+
+    // Function to calculate and print catch chances
+    private void PrintCatchChances(FishCatchScore[] fishCatchScores, int totalScore)
+    {
+        foreach (var fish in fishCatchScores)
+        {
+            int fishScore = fish.maxScore - fish.minScore;
+            float catchPercentage = (fishScore / (float)totalScore) * 100f;
+            Debug.Log($"Fish: {fish.species}, Catch Chance: {catchPercentage:F2}%");
+        }
     }
 
     /// <summary>

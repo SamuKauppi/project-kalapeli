@@ -241,6 +241,7 @@ public class LureCreationManager : MonoBehaviour
         {
             () => ResetBlockRotation(0.15f)
         };
+        lureProperties.FinalizeLure();
         StartCoroutine(ActivateAfterCameraAngle(0, 0.5f, callBacks));
         SetMode(LureCreationProcess.Saving);
     }
@@ -249,7 +250,6 @@ public class LureCreationManager : MonoBehaviour
     {
         SetMode(LureCreationProcess.None);
         BlockRotation.Instance.ResetRotation(0f);
-        lureProperties.FinalizeLure();
         PersitentManager.Instance.AddNewLure(lureObject);
     }
 

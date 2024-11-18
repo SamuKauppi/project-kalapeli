@@ -120,6 +120,12 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: flavourText
+      value: "Resembling a tiny, golden mozzarella stick with a creamy belly, the
+        Fry may be small, but it\u2019s packed with enough flavor to make any predator
+        take a second glance."
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
       propertyPath: maxSwimDepth
       value: 4
       objectReference: {fileID: 0}

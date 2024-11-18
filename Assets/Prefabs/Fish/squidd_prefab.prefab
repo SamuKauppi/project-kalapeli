@@ -30,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 023ee5d4e1aeeae4c98f125eca2779bc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.0334
+      value: 0.0471
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 023ee5d4e1aeeae4c98f125eca2779bc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -123,6 +123,107 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: score
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: species
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: catchChance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: flavourText
+      value: "Lurking in the depths, Peeper stays hidden, its large blue eyes peering
+        from the cover\u2014always watching, always waiting\u2026"
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: maxSwimDepth
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: minSwimDepth
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: timeAttached
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: colors.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: swimStyles.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: attachables.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: colors.Array.data[0].b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: colors.Array.data[0].g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: colors.Array.data[0].r
+      value: 0.509434
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: colors.Array.data[1].b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: colors.Array.data[1].g
+      value: 0.9734144
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: colors.Array.data[1].r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: swimStyles.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: swimStyles.Array.data[1]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: attachables.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: attachables.Array.data[1]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: attachables.Array.data[2]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: patternIndices.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: patternIndices.Array.data[0]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: patternIndices.Array.data[1]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: patternIndices.Array.data[2]
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 1880618853201548054, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

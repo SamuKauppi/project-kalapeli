@@ -82,6 +82,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   species: 5
+  hintText: 
+  flavourText: Found in the murky depths, this old rubber boot has been soaking in
+    the pond for so long that it might just be evolving into a new species!
   minSwimDepth: 0
   maxSwimDepth: 0
   colors: []
@@ -91,6 +94,7 @@ MonoBehaviour:
   catchChance: 0
   timeAttached: 100000
   score: 0
+  hasBeenCaught: 1
 --- !u!4 &6320715508870836012 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1880618853201548054, guid: 8599e93363ca9e643942749dd2612db6, type: 3}

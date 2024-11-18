@@ -30,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 952e6e0c633294442a7263b05e09eb24, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.0208
+      value: 0.0571
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 952e6e0c633294442a7263b05e09eb24, type: 3}
       propertyPath: m_LocalRotation.w
@@ -123,6 +123,131 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: score
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: species
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: catchChance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: flavourText
+      value: "A bottom dweller at heart, Muddle\u2019s pointed mouth and small feet
+        are perfect for rooting through the muck in search of food."
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: maxSwimDepth
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: minSwimDepth
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: timeAttached
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: hasBeenCaught
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: colors.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: swimStyles.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: attachables.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: colors.Array.data[0].b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: colors.Array.data[0].g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: colors.Array.data[0].r
+      value: 0.09591591
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: colors.Array.data[1].b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: colors.Array.data[1].g
+      value: 0.22767983
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: colors.Array.data[1].r
+      value: 0.5245282
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: colors.Array.data[2].b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: colors.Array.data[2].g
+      value: 0.9067263
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: colors.Array.data[2].r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: swimStyles.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: swimStyles.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: attachables.Array.data[0]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: attachables.Array.data[1]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: attachables.Array.data[2]
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: attachables.Array.data[3]
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: attachables.Array.data[4]
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: patternIndices.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: patternIndices.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: patternIndices.Array.data[1]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: patternIndices.Array.data[2]
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1880618853201548054, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -175,6 +175,7 @@ public class FishManager : MonoBehaviour
                 PersitentManager.Instance.GainScoreFormFish(fish.Species);
                 scoreText.text = SCORE + fish.ScoreGained;
                 CanFish = false;
+                fish.hasBeenCaught = true;
                 break;
             }
         }

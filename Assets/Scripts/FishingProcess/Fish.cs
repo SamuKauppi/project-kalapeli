@@ -35,8 +35,13 @@ public class Fish : MonoBehaviour
     private readonly HashSet<AttachingType> attachTable = new();
     private const float DEPTH_TOLERANCE = 10f;
 
+    // Public
+    public bool hasBeenCaught = false;
+
     // Public getters
     public FishSpecies Species { get { return species; } }
+    public string HintText { get { return hintText; } }
+    public string FlavourText { get { return flavourText; } }
     public float MinSwimDepth { get { return minSwimDepth; } }
     public float MaxSwimDepth { get { return maxSwimDepth; } }
     public Color[] PreferredColors { get { return colors; } }

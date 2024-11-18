@@ -77,10 +77,9 @@ public class MoveAttach : MonoBehaviour
                 attachedScale[i] = Mathf.Clamp(attachedScale[i] * scaleFactor, -maxScale, -minScale);
         }
 
-        if (TryGetComponent(out ChubProperties cp))
+        if (TryGetComponent(out AttachProperties ap))
         {
-            cp.ScaleChub(attachedScale.x);
-
+            ap.ScaleAttached(attachedScale.x);
         }
 
         transform.localScale = attachedScale;

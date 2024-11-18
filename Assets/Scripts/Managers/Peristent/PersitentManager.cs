@@ -18,7 +18,6 @@ public class PersitentManager : MonoBehaviour
     [SerializeField] private Fish[] everyFishInGame;                    // Contains every fish that exists (set in inspector)
     [SerializeField] private List<FishSpecies> fishForThisLevel = new();// Fishes available for this level (Set before loading to a level)
     private readonly Dictionary<FishSpecies, Fish> fishDict = new();    // Dictionary that is set during runtime
-    private readonly HashSet<FishSpecies> fishesCaught = new();
 
     // Score
     [SerializeField] private TMP_Text scoreText;
@@ -40,9 +39,6 @@ public class PersitentManager : MonoBehaviour
 
     private void Start()
     {
-        // Temporary way to populate fishForThisLevel
-        // TODO: create a function to do this once menu exists
-
         // Populate dictionary
         for (int i = 0; i < everyFishInGame.Length; i++)
         {
@@ -132,7 +128,6 @@ public class PersitentManager : MonoBehaviour
         int value = fishDict[fish].ScoreGained;
         score += value;
         scoreText.text = SCORE + score;
-        fishesCaught.Add(fish);
     }
 
     public int LureCount()

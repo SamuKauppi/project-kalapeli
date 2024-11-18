@@ -1,18 +1,18 @@
-using UnityEngine;
-
 public class ChubProperties : AttachProperties
 {
     public SwimmingType swimmingType = SwimmingType.Standard;
     public float swimmingDepthInMeters = 2f;
 
     private float baseDepth;
-    private void Start()
+    protected override void Start()
     {
+        baseWeight = weight;
         baseDepth = swimmingDepthInMeters;
     }
 
-    public void ScaleChub(float scale)
+    public override void ScaleAttached(float scale)
     {
+        weight = baseWeight * scale;
         swimmingDepthInMeters = baseDepth * scale;
     }
 }

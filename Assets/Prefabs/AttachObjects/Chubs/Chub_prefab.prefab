@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outline: {fileID: 2632832261839840480}
   minScale: 0.5
-  maxScale: 2.2
+  maxScale: 2.4
 --- !u!114 &7677517316292408577
 MonoBehaviour:
   m_ObjectHideFlags: 0

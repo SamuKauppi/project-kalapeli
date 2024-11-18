@@ -7,5 +7,5 @@
     Pickley,
     Boot,
     Muddle,
-    Squid
+    Peeper
 }

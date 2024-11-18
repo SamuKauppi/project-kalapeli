@@ -8,8 +8,19 @@ public class FishCatalogDisplayUI : MonoBehaviour
     public TMP_Text fishingStats;
     public TMP_Text flavourText;
 
-    public void ShowFish(Fish fish)
+    public void ShowFish(Fish fish, bool isCaught)
     {
-        nameField.text = fish.Species.ToString();
+        fishingStats.text = fish.HintText;
+        if (!isCaught)
+        {
+            nameField.text = "...";
+            flavourText.text = "";
+        }
+        else
+        {
+            nameField.text = fish.Species.ToString();
+            flavourText.text = fish.FlavourText;
+        }
+
     }
 }

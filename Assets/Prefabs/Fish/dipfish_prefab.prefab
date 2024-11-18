@@ -121,7 +121,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
       propertyPath: score
-      value: 500
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
       propertyPath: species
@@ -130,6 +130,12 @@ PrefabInstance:
     - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
       propertyPath: catchChance
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: flavourText
+      value: "Looking like it took a wrong turn through a paint bucket, the Dipfish
+        might seem a little silly, but don\u2019t be fooled\u2014those tiny teeth
+        are always on the hunt."
       objectReference: {fileID: 0}
     - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
       propertyPath: maxSwimDepth

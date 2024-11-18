@@ -14,6 +14,7 @@ public class FishCatalog : MonoBehaviour
     [SerializeField] private GameObject catalogUI;          // Object moved when opening or closing catalog
     [SerializeField] private Transform cataOnPos;           // When active pos
     [SerializeField] private Transform cataOffPos;          // When closed pos
+    [SerializeField] private GameObject closeButton;        // Button to close catalog
     [SerializeField] private float displaySpeed = 0.35f;    // How fast is the catalog display
     [SerializeField] private LeanTweenType ease1;           // Ease type for the animation when opening
     [SerializeField] private LeanTweenType ease2;           // Ease type for the animation when closing
@@ -90,6 +91,7 @@ public class FishCatalog : MonoBehaviour
 
         GameManager.Instance.SetBothModes(!value);
         ShowCatalog(0);
+        closeButton.SetActive(value);
     }
 
     public void ToggleCatalog()
@@ -143,7 +145,7 @@ public class FishCatalog : MonoBehaviour
             if (everyFish[i].Species == fish)
             {
                 displayer.gameObject.SetActive(true);
-                displayer.ShowFish(everyFish[i]);
+                displayer.ShowFish(everyFish[i], everyFish[i].hasBeenCaught);
                 if (previousEntry != null)
                 {
                     previousEntry.SetSelected(false);

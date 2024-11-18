@@ -22,7 +22,7 @@ public class ScrollContainer : MonoBehaviour
             contentImages[i].arrayIndex = i;
         }
 
-        contentParent.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,
+        contentParent.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,
                                                 contentImages.Length * (contentImages[0].displayImage.rectTransform.rect.height + (padding * 2f)));
 
         showScroll.SetActive(false);
