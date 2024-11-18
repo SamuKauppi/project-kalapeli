@@ -115,7 +115,7 @@ MonoBehaviour:
     m_Value: {x: 0.92202234, y: 0.9872408, z: 1, w: 0.00160611}
   highlights:
     m_OverrideState: 0
-    m_Value: {x: 0.99231505, y: 0.98463315, z: 1, w: 0}
+    m_Value: {x: 1, y: 0.99500465, z: 0.9715071, w: 0}
   shadowsStart:
     m_OverrideState: 0
     m_Value: 0
@@ -146,7 +146,7 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.9
+    m_Value: 3
   intensity:
     m_OverrideState: 1
     m_Value: 0.2
@@ -189,8 +189,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   postExposure:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: -0.2
   contrast:
     m_OverrideState: 1
     m_Value: 5
