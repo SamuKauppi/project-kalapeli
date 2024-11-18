@@ -142,7 +142,6 @@ public class AttachingProcess : MonoBehaviour
                     }
                     OnAttach?.Invoke();
                 }
-
             }
             mouseScroll = 0f;
         }

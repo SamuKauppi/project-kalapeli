@@ -229,6 +229,7 @@ public class LureCreationManager : MonoBehaviour
             () => ResetBlockRotation(0.15f),
             () => SetMode(LureCreationProcess.Attaching)
         };
+        SetMode(LureCreationProcess.None);
         StartCoroutine(ActivateAfterCameraAngle(1, 0.5f, callBacks));
     }
 

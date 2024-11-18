@@ -26,7 +26,7 @@ public class FishManager : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;            // Ui to display score
     [SerializeField] private GameObject backButton;         // Back button for ui
     private GameObject displayFish;                         // Fish being displayed
-    private const string SCORE = "Score: ";
+    private const string SCORE = ", Score: ";
 
     private Fish[] availableFish;   // Fishes for this level
     private Rod[] rods;             // Rods made during runtime
@@ -173,7 +173,7 @@ public class FishManager : MonoBehaviour
                 displayUI.SetActive(true);
                 backButton.SetActive(false);
                 PersitentManager.Instance.GainScoreFormFish(fish.Species);
-                scoreText.text = SCORE + fish.ScoreGained;
+                scoreText.text = caughtFish + SCORE + fish.ScoreGained;
                 CanFish = false;
                 fish.hasBeenCaught = true;
                 break;

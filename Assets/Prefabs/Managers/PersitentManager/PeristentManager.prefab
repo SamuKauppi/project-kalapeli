@@ -1990,7 +1990,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   catchScoreTable:
   - scoreType: 0
-    catchScore: 175
+    catchScore: 225
   - scoreType: 1
     catchScore: 85
   - scoreType: 2

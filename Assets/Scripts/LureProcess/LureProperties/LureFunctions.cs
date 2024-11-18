@@ -146,6 +146,12 @@ public class LureFunctions : MonoBehaviour
         float b = Vector3.Distance(v2, v3);
         float c = Vector3.Distance(v3, v1);
 
+        // Check for degenerate triangle
+        if (a <= 0 || b <= 0 || c <= 0 || (a + b <= c) || (a + c <= b) || (b + c <= a))
+        {
+            return 0f; // Treat degenerate triangle as having zero area
+        }
+
         float s = (a + b + c) / 2; // Semi-perimeter
         return Mathf.Sqrt(s * (s - a) * (s - b) * (s - c)); // Heron's formula
     }
