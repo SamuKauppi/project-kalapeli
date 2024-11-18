@@ -1992,13 +1992,13 @@ MonoBehaviour:
   - scoreType: 0
     catchScore: 175
   - scoreType: 1
-    catchScore: 125
+    catchScore: 85
   - scoreType: 2
-    catchScore: 20
+    catchScore: 30
   - scoreType: 3
     catchScore: 150
   - scoreType: 4
-    catchScore: 75
+    catchScore: 150
 --- !u!1 &8797660526973798924
 GameObject:
   m_ObjectHideFlags: 0

@@ -76,6 +76,13 @@ public class LureFunctions : MonoBehaviour
         // Adjust streamline index based on alignment
         streamlineIndex *= (1 + alignmentFactor);
 
+
+        if(float.IsNaN(streamlineIndex))
+        {
+            Debug.Log("streamline calculation error");
+            Debug.Log($"Streamline Ratio: {streamlineRatio}, Volume: {volume}, Surface Area: {surfaceArea}");
+        }
+
         // Return index as ratio
         // Increase the streamlineIndex to make it more readable
         return streamlineIndex * streamlineMultiplier;
@@ -206,12 +213,6 @@ public class LureFunctions : MonoBehaviour
 
         // Lerp streamline ratio
         streamlineRatio = Mathf.InverseLerp(0, worstStreamlineRatio, streamlineRatio);
-
-        if (streamlineRatio == float.NaN)
-        {
-            Debug.Log("Why does this happen?");
-
-        }
 
         // Set mesh swiming style to bad if not streamlined enough
         meshSwim = streamlineRatio > thresholdStreamlineRatio ? SwimmingType.Bad : SwimmingType.None;

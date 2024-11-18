@@ -99,6 +99,10 @@ PrefabInstance:
       value: Eye5_prefab
       objectReference: {fileID: 0}
     - target: {fileID: 7863017974253153847, guid: 62d20838cd693c94880bd76fd98ed8c5, type: 3}
+      propertyPath: weight
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863017974253153847, guid: 62d20838cd693c94880bd76fd98ed8c5, type: 3}
       propertyPath: attachingType
       value: 7
       objectReference: {fileID: 0}

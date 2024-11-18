@@ -63,7 +63,6 @@ public class Rod : MonoBehaviour
     /// <returns></returns>
     private IEnumerator WaitingForFish()
     {
-        Debug.Log("waiting for fish");
         // Wait for a random time
         if (fishCatchChances.Length > 1)
         {

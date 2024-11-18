@@ -53,6 +53,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7677517316292408577, guid: 25b5c2b1ea2ac20408d772b1ac5c342e, type: 3}
+      propertyPath: weight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677517316292408577, guid: 25b5c2b1ea2ac20408d772b1ac5c342e, type: 3}
       propertyPath: swimmingType
       value: 6
       objectReference: {fileID: 0}
@@ -62,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7677517316292408577, guid: 25b5c2b1ea2ac20408d772b1ac5c342e, type: 3}
       propertyPath: attachBothSides
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

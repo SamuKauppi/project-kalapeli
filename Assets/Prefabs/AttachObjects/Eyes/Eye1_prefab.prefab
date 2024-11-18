@@ -98,6 +98,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Eye1_prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 7863017974253153847, guid: 62d20838cd693c94880bd76fd98ed8c5, type: 3}
+      propertyPath: weight
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 8459508088282936204, guid: 62d20838cd693c94880bd76fd98ed8c5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
