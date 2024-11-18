@@ -8,7 +8,6 @@ public class SoundPlayer : MonoBehaviour
     [SerializeField] private SoundClipPlayOrder playOrder;
 
     private AudioClip[] clips;
-    private int clipIndex = 0;
     private int playIndex;
 
     public SoundClipType[] SoundTypes { get { return soundTypes; } }
@@ -17,19 +16,30 @@ public class SoundPlayer : MonoBehaviour
     private void Start()
     {
         clips = new AudioClip[soundTypes.Length];
+        for (int i = 0; i < clips.Length; i++)
+        {
+            clips[i] = SoundManager.Instance.GetClip(soundTypes[i]);
+        }
     }
 
-    public void AddSoundClip(AudioClip clip)
+    private void OnEnable()
     {
-        clips[playIndex] = clip;
-        clipIndex = (clipIndex + 1) % clips.Length;
+        SoundManager.OnPlaySound += PlaySound;
     }
 
-    public void PlaySound()
+    private void OnDisable()
     {
-        int index = playOrder == SoundClipPlayOrder.Random ? Random.Range(0, clips.Length) : playIndex % clips.Length;
-        source.clip = clips[index];
-        source.Play();
-        playIndex++;
+        SoundManager.OnPlaySound -= PlaySound;
+    }
+
+    public void PlaySound(SoundClipTrigger trigger)
+    {
+        if (trigger == Trigger)
+        {
+            int index = playOrder == SoundClipPlayOrder.Random ? Random.Range(0, clips.Length) : playIndex % clips.Length;
+            source.clip = clips[index];
+            source.Play();
+            playIndex++;
+        }
     }
 }

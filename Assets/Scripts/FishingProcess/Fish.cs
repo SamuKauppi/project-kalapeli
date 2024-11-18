@@ -8,6 +8,12 @@ using UnityEngine;
 public class Fish : MonoBehaviour
 {
     [SerializeField] private FishSpecies species;
+
+    [TextArea(3, 15)]
+    [SerializeField] private string hintText;
+    [TextArea(3, 15)]
+    [SerializeField] private string flavourText;
+
     // Swimming depth
     [SerializeField] private float minSwimDepth;
     [SerializeField] private float maxSwimDepth;

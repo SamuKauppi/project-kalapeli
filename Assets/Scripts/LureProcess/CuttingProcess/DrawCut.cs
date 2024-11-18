@@ -69,6 +69,7 @@ public class DrawCut : MonoBehaviour
         // Once this script is enabled, update line distance
         if (wasRotating)
         {
+            ResetLineRender();
             UpdateLineDistance();
             wasRotating = false;
         }

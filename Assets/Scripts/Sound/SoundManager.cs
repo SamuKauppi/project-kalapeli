@@ -8,7 +8,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private SoundClipPair[] sounds;
     private readonly Dictionary<SoundClipType, AudioClip> soundDict = new();
 
-    private SoundPlayer[] soundPlayers;
+    public delegate void PlaySoundEvent(SoundClipTrigger type);
+    public static event PlaySoundEvent OnPlaySound;
 
     private void Awake()
     {
@@ -24,26 +25,15 @@ public class SoundManager : MonoBehaviour
         {
             soundDict.Add(sounds[i].type, sounds[i].clip);
         }
-
-        soundPlayers = new SoundPlayer[transform.childCount];
-        for (int i = 0; i < soundPlayers.Length; i++)
-        {
-            SoundClipType[] clipTypes = soundPlayers[i].SoundTypes;
-            for (int j = 0; j < clipTypes.Length; j++)
-            {
-                soundPlayers[i].AddSoundClip(soundDict[clipTypes[j]]);
-            }
-        }
     }
 
-    public void PlaySounds(SoundClipTrigger triggerType)
+    public AudioClip GetClip(SoundClipType type)
     {
-        foreach (SoundPlayer player in soundPlayers)
-        {
-            if (player.Trigger == triggerType)
-            {
-                player.PlaySound();
-            }
-        }
+        return soundDict[type];
+    }
+
+    public void PlaySound(SoundClipTrigger triggerType)
+    {
+        OnPlaySound?.Invoke(triggerType);
     }
 }
