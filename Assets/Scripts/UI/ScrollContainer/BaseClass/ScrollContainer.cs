@@ -21,9 +21,8 @@ public class ScrollContainer : MonoBehaviour
 
             contentImages[i].arrayIndex = i;
         }
-
         contentParent.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,
-                                                contentImages.Length * (contentImages[0].displayImage.rectTransform.rect.height + (padding * 2f)));
+                                                (contentImages.Length - 1) * (contentImages[0].SelectionButton.image.rectTransform.rect.width + (padding * 2f)));
 
         showScroll.SetActive(false);
     }
