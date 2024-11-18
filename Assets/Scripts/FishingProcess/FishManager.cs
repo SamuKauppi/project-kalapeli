@@ -174,6 +174,7 @@ public class FishManager : MonoBehaviour
                 backButton.SetActive(false);
                 PersitentManager.Instance.GainScoreFormFish(fish.Species);
                 scoreText.text = SCORE + fish.ScoreGained;
+                CanFish = false;
                 break;
             }
         }
@@ -184,6 +185,7 @@ public class FishManager : MonoBehaviour
     {
         displayUI.SetActive(false);
         backButton.SetActive(true);
+        CanFish = true;
         if (displayFish)
             Destroy(displayFish);
 

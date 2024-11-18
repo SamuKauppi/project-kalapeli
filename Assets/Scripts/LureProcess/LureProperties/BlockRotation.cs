@@ -28,7 +28,7 @@ public class BlockRotation : MonoBehaviour
     {
         Up,
         Middle,
-        Down
+        Down,
     }
     private UpRotation currentRotDir = UpRotation.Middle;
 
@@ -137,6 +137,30 @@ public class BlockRotation : MonoBehaviour
         upRotIndex = 0;
         StartCoroutine(RotateTransform(0, 0, timeToReset));
     }
-}
 
+    public void RotateBlockSide(int dir)
+    {
+        if (IsRotating) StopAllCoroutines();
+        StartCoroutine(RotateTransform(dir * (upRotIndex == 0 ? 1 : upRotIndex), 0, rotationTime));
+    }
+
+    public void RotateBlockUp(int dir)
+    {
+
+        if ((dir == 1 && currentRotDir == UpRotation.Down) ||
+            (dir == -1 && currentRotDir == UpRotation.Up))
+        {
+            return;
+        }
+
+        if (IsRotating) StopAllCoroutines();
+
+        if (upRotIndex == 0)
+        {
+            currentRotDir = dir > 0 ? UpRotation.Down : UpRotation.Up;
+        }
+
+        StartCoroutine(RotateTransform(0, dir, rotationTime));
+    }
+}
 

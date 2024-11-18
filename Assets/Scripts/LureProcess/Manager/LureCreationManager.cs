@@ -31,6 +31,9 @@ public class LureCreationManager : MonoBehaviour
     [SerializeField] private GameObject attachButtons;
     [SerializeField] private GameObject saveButtons;
     [SerializeField] private GameObject warningPopUp;
+    [SerializeField] private GameObject backToFish;
+    [SerializeField] private GameObject rotateButtons1;
+    [SerializeField] private GameObject rotateButtons2;
 
     // Mesh reset
     [SerializeField] private Mesh blockMesh;
@@ -139,6 +142,11 @@ public class LureCreationManager : MonoBehaviour
         SetAttaching(process == LureCreationProcess.Attaching);
         SetSaving(process == LureCreationProcess.Saving);
         BlockRotation.Instance.StopRotating = false;    // Ensure the block can be rotated
+
+        // Set rotate buttons
+        rotateButtons1.SetActive(_process != LureCreationProcess.Attaching);
+        rotateButtons2.SetActive(_process == LureCreationProcess.Attaching);
+
     }
 
     #endregion
@@ -162,6 +170,7 @@ public class LureCreationManager : MonoBehaviour
     {
         SetMode(_process);
         warningPopUp.SetActive(false);
+        backToFish.SetActive(true);
     }
     public void ReEnterCutting(bool wasFromWarning)
     {
@@ -172,6 +181,9 @@ public class LureCreationManager : MonoBehaviour
             SetPainting(false);
             SetAttaching(false);
             SetSaving(false);
+            backToFish.SetActive(false);
+            rotateButtons1.SetActive(false);
+            rotateButtons2.SetActive(false);
             // Enable popup
             warningPopUp.SetActive(true);
             // Diable rotation
@@ -180,6 +192,7 @@ public class LureCreationManager : MonoBehaviour
         }
 
         warningPopUp.SetActive(false);
+        backToFish.SetActive(true);
 
         // Change camera angle
         var callBacks = new Action[] {
