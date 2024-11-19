@@ -68,6 +68,8 @@ Transform:
   - {fileID: 5655265401048825127}
   - {fileID: 7415735936268305139}
   - {fileID: 4906045495006849227}
+  - {fileID: 3225435356577821412}
+  - {fileID: 8023579937068980012}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9042969560797647509
@@ -84,6 +86,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lureBox: {fileID: 2358792064606518953}
   rodPrefab: {fileID: 2561515270032317780, guid: 2f9673ee6e9b0634396da15ed510d475, type: 3}
+  lineEndPointNoFish: {fileID: 3225435356577821412}
+  lineEndPointFish: {fileID: 8023579937068980012}
   rodAttachPoints:
   - {fileID: 845654506506391950}
   - {fileID: 4760031263229817587}
@@ -159,6 +163,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5655265401048825127}
   m_LocalEulerAnglesHint: {x: 62.97, y: 0, z: 0}
+--- !u!1 &6350899499606006577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8023579937068980012}
+  m_Layer: 0
+  m_Name: FishLinePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8023579937068980012
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6350899499606006577}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -6.61, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8889848562612108899}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6377130529626780861
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,6 +272,37 @@ MonoBehaviour:
   maxMove: 0
   speed: 0
   rotSpeed: 35
+--- !u!1 &8566036794252059268
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3225435356577821412}
+  m_Layer: 0
+  m_Name: NoFishLinePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3225435356577821412
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8566036794252059268}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -6.61, z: 25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8889848562612108899}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1543886875604259350
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -245,17 +311,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8889848562612108899}
     m_Modifications:
-    - target: {fileID: 1385313501023968722, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2075705680089211039, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
       propertyPath: m_Name
       value: FishCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 2075705680089211039, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3618581826491945486, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
       propertyPath: m_Pivot.x
@@ -337,73 +395,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4430982408283119524, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4430982408283119524, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4430982408283119524, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4430982408283119524, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4430982408283119524, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4430982408283119524, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -20
-      objectReference: {fileID: 0}
-    - target: {fileID: 5485056526138070361, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
-      propertyPath: m_Name
-      value: ScoreImage
-      objectReference: {fileID: 0}
     - target: {fileID: 7189135825976469830, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 9042969560797647509}
     - target: {fileID: 7560810745915056311, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7560810745915056311, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7560810745915056311, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7560810745915056311, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 9042969560797647509}
-    - target: {fileID: 7560810745915056311, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7560810745915056311, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AcceptFish
-      objectReference: {fileID: 0}
-    - target: {fileID: 7560810745915056311, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: FishManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7560810745915056311, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 7191970898914201247, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}

@@ -16,6 +16,14 @@ public class Rod : MonoBehaviour
     [SerializeField] private Outline outline;
     [SerializeField] private Animator anim;
 
+    // Line Renderer
+    [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] private Transform lineStartPoint;
+    private Vector3 noFishLinePoint;
+    private Vector3 fishLinePoint;
+    [SerializeField] private float lineStartWidth;
+    [SerializeField] private float lineEndWidth;
+
     // Min & Max time to wait for fish to be caught
     [SerializeField] private float minTimeForFish;
     [SerializeField] private float maxTimeForFish;
@@ -28,6 +36,10 @@ public class Rod : MonoBehaviour
 
     private void Start()
     {
+        lineRenderer.startWidth = lineStartWidth;
+        lineRenderer.endWidth = lineEndWidth;
+        lineRenderer.enabled = false;
+        lineRenderer.material.renderQueue = 3001;
         outline.enabled = false;
     }
 
@@ -54,6 +66,20 @@ public class Rod : MonoBehaviour
             HasFish = false;
             DetachLure();
             StopAllCoroutines();
+            lineRenderer.enabled = false;
+        }
+    }
+
+    private void Update()
+    {
+        if (IsAttached)
+        {
+            lineRenderer.SetPosition(0, lineStartPoint.position);
+
+            if (HasFish)
+            {
+                lineRenderer.SetPosition(1, fishLinePoint);
+            }
         }
     }
 
@@ -126,6 +152,7 @@ public class Rod : MonoBehaviour
         fishCatchChances = catchScores;
         StartCoroutine(WaitingForFish());
         anim.SetBool("Water", true);
+        lineRenderer.enabled = true;
     }
 
     /// <summary>
@@ -140,5 +167,12 @@ public class Rod : MonoBehaviour
         StopAllCoroutines();
         anim.SetBool("Water", false);
         anim.SetBool("Fish", false);
+    }
+
+    public void SetLineEndPoint(Vector3 noFishEndPoint, Vector3 fishEndPoint)
+    {
+        noFishLinePoint = noFishEndPoint;
+        fishLinePoint = fishEndPoint;
+        lineRenderer.SetPosition(1, noFishEndPoint);
     }
 }

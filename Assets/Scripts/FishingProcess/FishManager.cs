@@ -15,6 +15,8 @@ public class FishManager : MonoBehaviour
 
     // Rod
     [SerializeField] private Rod rodPrefab;                 // Prefab
+    [SerializeField] private Transform lineEndPointNoFish;  // Point where every line ends when no fish
+    [SerializeField] private Transform lineEndPointFish;    // Point where every line ends when fish
     [SerializeField] private Transform[] rodAttachPoints;   // Points where rods are attached
     [SerializeField] private LayerMask rodLayer;            // Layer Mask for rods
     [SerializeField] private float raycastDistance;         // How far does the ray check
@@ -56,6 +58,7 @@ public class FishManager : MonoBehaviour
         for (int i = 0; i < rodAttachPoints.Length; i++)
         {
             rods[i] = Instantiate(rodPrefab, rodAttachPoints[i].position, rodAttachPoints[i].rotation, rodAttachPoints[i]);
+            rods[i].SetLineEndPoint(lineEndPointNoFish.position, lineEndPointFish.position);
         }
 
         cam = GameManager.Instance.MainCamera;

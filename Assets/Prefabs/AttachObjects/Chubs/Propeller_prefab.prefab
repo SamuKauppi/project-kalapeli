@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: attachBothSides
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7677517316292408577, guid: 25b5c2b1ea2ac20408d772b1ac5c342e, type: 3}
+      propertyPath: swimmingDepthInMeters
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

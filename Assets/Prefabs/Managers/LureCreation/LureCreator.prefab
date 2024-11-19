@@ -839,10 +839,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2554366414789347751}
-    - target: {fileID: 2417783817081980569, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RotateBlockSide
-      objectReference: {fileID: 0}
     - target: {fileID: 2723164806220700427, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -875,10 +871,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2554366414789347751}
-    - target: {fileID: 3429740723672908796, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RotateBlockUp
-      objectReference: {fileID: 0}
     - target: {fileID: 3566946802915054787, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -927,10 +919,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2554366414789347751}
-    - target: {fileID: 6636919007835895541, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RotateBlockSide
-      objectReference: {fileID: 0}
     - target: {fileID: 6906742949468472812, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -947,10 +935,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2554366414789347751}
-    - target: {fileID: 7402360597354519899, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RotateBlockUp
-      objectReference: {fileID: 0}
     - target: {fileID: 7425040610398334479, guid: aa7f053bc331aff4cb81e79070e02a30, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

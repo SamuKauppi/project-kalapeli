@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -67,6 +68,7 @@ public class LureFunctions : MonoBehaviour
     {
         // Calculate streamline index
         float surfaceArea = CalculateSurfaceArea(vertices, triangles);  // Calculate surface area
+
         // The higher the surface area is compared to volume, the less streamlined the mesh is
         float streamlineIndex = volume / surfaceArea;
 
@@ -75,13 +77,6 @@ public class LureFunctions : MonoBehaviour
 
         // Adjust streamline index based on alignment
         streamlineIndex *= (1 + alignmentFactor);
-
-
-        if (float.IsNaN(streamlineIndex))
-        {
-            Debug.Log("streamline calculation error!");
-            Debug.Log($"Streamline Ratio: {streamlineRatio}, Volume: {volume}, Surface Area: {surfaceArea}, AlignmentFactor: {alignmentFactor}");
-        }
 
         // Return index as ratio
         // Increase the streamlineIndex to make it more readable
@@ -110,6 +105,29 @@ public class LureFunctions : MonoBehaviour
     }
 
     /// <summary>
+    /// Uses Heron's formula to calculate triangle area
+    /// </summary>
+    /// <param name="v1">vertex 1</param>
+    /// <param name="v2">vertex 2</param>
+    /// <param name="v3">vertex 3</param>
+    /// <returns>Area of triangle</returns>
+    private float CalculateTriangleArea(Vector3 v1, Vector3 v2, Vector3 v3)
+    {
+        float a = Vector3.Distance(v1, v2);
+        float b = Vector3.Distance(v2, v3);
+        float c = Vector3.Distance(v3, v1);
+
+        float s = (a + b + c) / 2; // Semi-perimeter
+
+        // Use Heron's formula for area 
+        float herons = s * (s - a) * (s - b) * (s - c);
+
+        // Confirm that Heron's is positive before taking squareroot
+        return herons > 0 ? Mathf.Sqrt(herons) : 0f; 
+    }
+
+
+    /// <summary>
     /// Calculates the volume of mesh
     /// </summary>
     /// <param name="vertices"></param>
@@ -128,34 +146,9 @@ public class LureFunctions : MonoBehaviour
 
             volume += Vector3.Dot(v1, Vector3.Cross(v2, v3)) / 6f; // Tetrahedron volume formula
         }
-
         // Multiply with unitconverter^3 since it's cubic meters
         return Mathf.Abs(volume) * Mathf.Pow(unitConverter, 3);
     }
-
-    /// <summary>
-    /// Uses Heron's formula to calculate triangle area
-    /// </summary>
-    /// <param name="v1">vertex 1</param>
-    /// <param name="v2">vertex 2</param>
-    /// <param name="v3">vertex 3</param>
-    /// <returns>Area of triangle</returns>
-    private float CalculateTriangleArea(Vector3 v1, Vector3 v2, Vector3 v3)
-    {
-        float a = Vector3.Distance(v1, v2);
-        float b = Vector3.Distance(v2, v3);
-        float c = Vector3.Distance(v3, v1);
-
-        // Check for degenerate triangle
-        if (a <= 0 || b <= 0 || c <= 0 || (a + b <= c) || (a + c <= b) || (b + c <= a))
-        {
-            return 0f; // Treat degenerate triangle as having zero area
-        }
-
-        float s = (a + b + c) / 2; // Semi-perimeter
-        return Mathf.Sqrt(s * (s - a) * (s - b) * (s - c)); // Heron's formula
-    }
-
     /// <summary>
     /// Calculates the the normal alignment with transform.forward
     /// </summary>
@@ -319,7 +312,7 @@ public class LureFunctions : MonoBehaviour
             return true;
         }
 
-        if (chubCount > 0)
+        if ((chubCount > 0 && cp.AttachingType != AttachingType.Propeller) || chubCount > 2)
         {
             // Too many chubs
             attachSwim = SwimmingType.Bad;

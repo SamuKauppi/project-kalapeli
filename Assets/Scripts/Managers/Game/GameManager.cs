@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
             LeanTween.cancel(mainCam.gameObject);
         }
 
-        if (changeTime > 0)
+        if (changeTime > 0 && mainCam.transform.position != angle.posAndRot.position && mainCam.transform.eulerAngles != angle.posAndRot.eulerAngles)
         {
             LeanTween.move(mainCam.gameObject, angle.posAndRot.position, changeTime);
             LeanTween.rotate(mainCam.gameObject, angle.posAndRot.eulerAngles, changeTime);

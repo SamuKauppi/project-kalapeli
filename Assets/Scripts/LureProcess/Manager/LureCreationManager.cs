@@ -43,6 +43,7 @@ public class LureCreationManager : MonoBehaviour
     private MeshRenderer blockRend;
     private MeshFilter blockFilter;
     private LureFunctions lureProperties;
+    private int currentCameraAngle;
 
     #region private
     private void Awake()
@@ -125,12 +126,17 @@ public class LureCreationManager : MonoBehaviour
     private IEnumerator ActivateAfterCameraAngle(int index, float time, Action[] callBacks)
     {
         GameManager.Instance.ChangeCameraAngle(index, time);
-        yield return new WaitForSeconds(time);
-        yield return null;
+        if (index != currentCameraAngle)
+        {
+            yield return new WaitForSeconds(time);
+            yield return null;
+        }
+
         foreach (Action action in callBacks)
         {
             action?.Invoke();
         }
+        currentCameraAngle = index;
     }
 
     private void SetMode(LureCreationProcess process)
@@ -144,7 +150,9 @@ public class LureCreationManager : MonoBehaviour
         BlockRotation.Instance.StopRotating = false;    // Ensure the block can be rotated
 
         // Set rotate buttons
-        rotateButtons1.SetActive(_process != LureCreationProcess.Attaching);
+        rotateButtons1.SetActive(_process == LureCreationProcess.Cutting
+                                 || _process == LureCreationProcess.Painting
+                                 || _process == LureCreationProcess.Saving);
         rotateButtons2.SetActive(_process == LureCreationProcess.Attaching);
 
     }
@@ -156,6 +164,7 @@ public class LureCreationManager : MonoBehaviour
     {
         // Change camera angle
         GameManager.Instance.ChangeCameraAngle(0, 0f);
+        currentCameraAngle = 0;
 
         // Reset the rotation of block
         ResetBlockRotation(0f);
@@ -194,9 +203,11 @@ public class LureCreationManager : MonoBehaviour
         warningPopUp.SetActive(false);
         backToFish.SetActive(true);
 
-        // Change camera angle
+        // Change Camera angle and set correct mode after
+        SetMode(LureCreationProcess.None);
         var callBacks = new Action[] {
-            () => ResetBlockRotation(0.1f)
+            () => ResetBlockRotation(0.1f),
+            () => SetMode(LureCreationProcess.Cutting)
         };
 
         StartCoroutine(ActivateAfterCameraAngle(0, 0.5f, callBacks));
@@ -206,30 +217,29 @@ public class LureCreationManager : MonoBehaviour
 
         // Reset lure properties
         lureProperties.ResetLure();
-
-        // Set mode to cutting
-        SetMode(LureCreationProcess.Cutting);
     }
 
     public void StartPainting()
     {
-        // Change Camera angle
-        GameManager.Instance.ChangeCameraAngle(0, 0.5f);
-
-        // Set mode to painting
-        SetMode(LureCreationProcess.Painting);
+        // Change Camera angle and set correct mode after
+        SetMode(LureCreationProcess.None);
+        var callBacks = new Action[] {
+            () => ResetBlockRotation(0.1f),
+            () => SetMode(LureCreationProcess.Painting)
+        };
+        StartCoroutine(ActivateAfterCameraAngle(0, 0.5f, callBacks));
 
     }
 
     public void StartAttaching()
     {
-        // Change Camera angle and after set mode
+        // Change Camera angle and set correct mode after
+        SetMode(LureCreationProcess.None);
         var callBacks = new Action[]
         {
             () => ResetBlockRotation(0.15f),
             () => SetMode(LureCreationProcess.Attaching)
         };
-        SetMode(LureCreationProcess.None);
         StartCoroutine(ActivateAfterCameraAngle(1, 0.5f, callBacks));
     }
 
@@ -238,13 +248,14 @@ public class LureCreationManager : MonoBehaviour
         if (!lureProperties.CanCatch) { return; }
 
         // Set camera angle and update mode
+        SetMode(LureCreationProcess.None);
         var callBacks = new Action[]
         {
-            () => ResetBlockRotation(0.15f)
+            () => ResetBlockRotation(0.15f),
+            () => SetMode(LureCreationProcess.Saving)
         };
-        lureProperties.FinalizeLure();
         StartCoroutine(ActivateAfterCameraAngle(0, 0.5f, callBacks));
-        SetMode(LureCreationProcess.Saving);
+        lureProperties.FinalizeLure();
     }
 
     public void SaveLure()
@@ -266,6 +277,7 @@ public class LureCreationManager : MonoBehaviour
         if (_process == LureCreationProcess.Cutting)
         {
             cutProcess.GetComponent<DrawCut>().IsCutting = value;
+            cutProcess.ResetLineRender();
         }
         else if (_process == LureCreationProcess.Attaching)
         {
