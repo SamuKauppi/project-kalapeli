@@ -91,6 +91,10 @@ public class AttachingProcess : MonoBehaviour
         mousePos = Input.mousePosition;
         mousePos.z = distanceToLure;
 
+        if (attachedObject == null)
+            return;
+
+
         if (Input.GetMouseButton(0))
         {
             blockRotation.StopRotating = true;
