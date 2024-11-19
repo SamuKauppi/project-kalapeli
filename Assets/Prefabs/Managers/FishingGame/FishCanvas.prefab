@@ -473,8 +473,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Accept
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4899f78eea5971944a3e41c00f994a5c, type: 2}
-  m_sharedMaterial: {fileID: 8926519877200857593, guid: 4899f78eea5971944a3e41c00f994a5c, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -607,8 +607,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Score: XXX'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4899f78eea5971944a3e41c00f994a5c, type: 2}
-  m_sharedMaterial: {fileID: 8926519877200857593, guid: 4899f78eea5971944a3e41c00f994a5c, type: 2}
+  m_fontAsset: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
