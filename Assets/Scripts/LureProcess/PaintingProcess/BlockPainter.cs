@@ -47,7 +47,8 @@ public class BlockPainter : MonoBehaviour
     private void Start()
     {
         scrollContainer.CreateTextureContentToSprite(lureTextures);
-        blockRenderer = BlockRotation.Instance.GetComponent<MeshRenderer>();    
+        blockRenderer = BlockRotation.Instance.GetComponent<MeshRenderer>();
+        selectedTextureId = defaultPaintID;
     }
 
     private void UpdateColoring(Color baseC, Color textC, int selectedId)
@@ -83,7 +84,6 @@ public class BlockPainter : MonoBehaviour
         {
             mats[i] = coloredBlockMaterial;
         }
-        selectedTextureId = defaultPaintID;
         blockRenderer.materials = mats;
         UpdateColoring(baseColor, textureColor, selectedTextureId);
     }

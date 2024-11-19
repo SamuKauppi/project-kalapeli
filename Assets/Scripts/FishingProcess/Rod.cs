@@ -45,7 +45,7 @@ public class Rod : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if ((!IsAttached || HasFish) && FishManager.Instance.CanFish)
+        if ((!IsAttached || HasFish) && FishManager.Instance.CanFish && !FishManager.Instance.IsAttachingLure)
         {
             outline.enabled = true;
         }
@@ -59,9 +59,9 @@ public class Rod : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (HasFish && FishManager.Instance.CanFish) // Check first if there is a fish
+        if (HasFish && FishManager.Instance.CanFish && !FishManager.Instance.IsAttachingLure) // Check first if there is a fish
         {
-            FishManager.Instance.CatchFish(CaughtFish);
+            FishManager.Instance.CatchFish(CaughtFish, LureAttached);
             CaughtFish = FishSpecies.None;
             HasFish = false;
             DetachLure();
@@ -72,14 +72,20 @@ public class Rod : MonoBehaviour
 
     private void Update()
     {
-        if (IsAttached)
+        if (!IsAttached)
         {
-            lineRenderer.SetPosition(0, lineStartPoint.position);
+            return;
+        }
 
-            if (HasFish)
-            {
-                lineRenderer.SetPosition(1, fishLinePoint);
-            }
+        lineRenderer.SetPosition(0, lineStartPoint.position);
+
+        if (HasFish && lineRenderer.GetPosition(0) != fishLinePoint)
+        {
+            lineRenderer.SetPosition(1, fishLinePoint);
+        }
+        else if(lineRenderer.GetPosition(0) != noFishLinePoint)
+        {
+            lineRenderer.SetPosition(1, noFishLinePoint);
         }
     }
 

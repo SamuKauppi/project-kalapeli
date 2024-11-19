@@ -11,8 +11,7 @@ public class PersitentManager : MonoBehaviour
     public Fish[] EveryFish { get { return everyFishInGame; } }
 
     // Lure
-    private readonly Queue<GameObject> luresCreated = new();
-    private readonly HashSet<GameObject> luresUsed = new();
+    private readonly List<LureStats> luresCreated = new();
 
     // Fish
     [SerializeField] private Fish[] everyFishInGame;                    // Contains every fish that exists (set in inspector)
@@ -91,7 +90,7 @@ public class PersitentManager : MonoBehaviour
             Destroy(coll);
         }
 
-        luresCreated.Enqueue(newObj);
+        luresCreated.Add(newObj.GetComponent<LureStats>());
         oriObj.SetActive(true);
     }
 
@@ -99,28 +98,19 @@ public class PersitentManager : MonoBehaviour
     /// Adds lure back to queue if it was not used properly
     /// </summary>
     /// <param name="lure"></param>
-    public void ReaddLure(GameObject lure)
+    public void AddLure(LureStats lure)
     {
-        luresCreated.Enqueue(lure);
-        luresUsed.Remove(lure);
-        lure.SetActive(false);
+        luresCreated.Add(lure);
     }
 
-    /// <summary>
-    /// Returns next available lure
-    /// </summary>
-    /// <returns></returns>
-    public GameObject GetLure()
+    public void TakeLure(LureStats lure)
     {
-        if (luresCreated.Count <= 0)
-        {
-            return null;
-        }
+        luresCreated.Remove(lure);
+    }
 
-        GameObject lure = luresCreated.Dequeue();
-        lure.SetActive(true);
-        luresUsed.Add(lure);
-        return lure;
+    public LureStats[] GetLureArray()
+    {
+        return luresCreated.ToArray();
     }
 
     public void GainScoreFormFish(FishSpecies fish)

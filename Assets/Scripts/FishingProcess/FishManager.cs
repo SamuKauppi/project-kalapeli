@@ -11,8 +11,6 @@ public class FishManager : MonoBehaviour
     public bool CanFish { get; set; }
     public bool IsAttachingLure { get; private set; }
 
-    [SerializeField] private PickUpLure lureBox;
-
     // Rod
     [SerializeField] private Rod rodPrefab;                 // Prefab
     [SerializeField] private Transform lineEndPointNoFish;  // Point where every line ends when no fish
@@ -72,12 +70,9 @@ public class FishManager : MonoBehaviour
         mousePos = Input.mousePosition;
         mousePos.z = lurePositionFromCam;
 
-        if (Input.GetMouseButton(0))
-        {
-            attachedLure.transform.position = cam.ScreenToWorldPoint(mousePos);
-        }
+        attachedLure.transform.position = cam.ScreenToWorldPoint(mousePos); 
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = new(cam.transform.position, (cam.ScreenToWorldPoint(mousePos) - cam.transform.position).normalized);
 
@@ -98,16 +93,21 @@ public class FishManager : MonoBehaviour
     private void DropLure()
     {
         if (attachedLure != null)
-            PersitentManager.Instance.ReaddLure(attachedLure);
+        {
+            attachedLure.SetActive(false);
+            PersitentManager.Instance.AddLure(attachedLure.GetComponent<LureStats>());
+        }
+
         IsAttachingLure = false;
         attachedLure = null;
     }
 
-    public void PickUpLure()
+    public void PickUpLure(GameObject lureObj)
     {
-        GameObject lureObj = PersitentManager.Instance.GetLure();
         if (lureObj == null) { return; }
         attachedLure = lureObj;
+        attachedLure.SetActive(true);
+        PersitentManager.Instance.TakeLure(lureObj.GetComponent<LureStats>());
         IsAttachingLure = true;
     }
 
@@ -153,7 +153,8 @@ public class FishManager : MonoBehaviour
             attachedLure.SetActive(false);
             attachedLure = null;
             IsAttachingLure = false;
-            lureBox.OpenLureBox(PersitentManager.Instance.LureCount());
+            FishingLureBox.Instance.SetLureBoxActive(PersitentManager.Instance.LureCount());
+            PersitentManager.Instance.TakeLure(nextLure);
         }
         else
         {
@@ -165,7 +166,7 @@ public class FishManager : MonoBehaviour
     /// Catch and display given fish species
     /// </summary>
     /// <param name="caughtFish"></param>
-    public void CatchFish(FishSpecies caughtFish)
+    public void CatchFish(FishSpecies caughtFish, LureStats lureUsed)
     {
         // TODO: display fish properly after catching
         foreach (Fish fish in availableFish)
@@ -176,6 +177,8 @@ public class FishManager : MonoBehaviour
                 displayUI.SetActive(true);
                 backButton.SetActive(false);
                 PersitentManager.Instance.GainScoreFormFish(fish.Species);
+                PersitentManager.Instance.AddLure(lureUsed);
+                FishingLureBox.Instance.SetLureBoxActive(PersitentManager.Instance.LureCount());
                 scoreText.text = caughtFish + SCORE + fish.ScoreGained;
                 CanFish = false;
                 fish.hasBeenCaught = true;
@@ -206,6 +209,6 @@ public class FishManager : MonoBehaviour
 
     public void ActivateFishing()
     {
-        lureBox.OpenLureBox(PersitentManager.Instance.LureCount());
+        FishingLureBox.Instance.SetLureBoxActive(PersitentManager.Instance.LureCount());
     }
 }

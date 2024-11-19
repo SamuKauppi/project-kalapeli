@@ -5,7 +5,7 @@
 /// </summary>
 public class LureStats : MonoBehaviour
 {
-    public string lureName;
+    public string lureName = "Fishing Lure";
     // Stats
     public float Mass = 0f;                 // Is determined by volume of mesh and attachables (grams)
     public SwimmingType SwimType;           // Is determined by chub and how streamlined is the mesh

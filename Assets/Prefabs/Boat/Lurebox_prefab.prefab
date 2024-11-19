@@ -102,6 +102,11 @@ MonoBehaviour:
   - {fileID: 282325311287665220}
   - {fileID: 1120857625990645449}
   - {fileID: 4786962766465746731}
+  selectorEntryCount: 20
+  padding: 0.01
+  lureSelector: {fileID: 0}
+  selectorParent: {fileID: 0}
+  lureSelectorEntryPrefab: {fileID: -2718100350966037247, guid: 7595a06626c93034d88ea6f7184cf626, type: 3}
 --- !u!1001 &9062940505825429686
 PrefabInstance:
   m_ObjectHideFlags: 0

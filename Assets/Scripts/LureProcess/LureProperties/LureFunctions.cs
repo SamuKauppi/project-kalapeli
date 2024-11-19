@@ -384,6 +384,11 @@ public class LureFunctions : MonoBehaviour
         }
     }
 
+    public void RenameLure(string name)
+    {
+        Stats.lureName = name;
+    }
+
     /// <summary>
     /// Calculates stats gained from mesh
     /// </summary>
