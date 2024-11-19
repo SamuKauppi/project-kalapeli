@@ -105,7 +105,7 @@ Material:
     - _FoamColor2: 0
     - _FoamCutOff: 1.05
     - _FoamCutOff2: 0
-    - _FoamScale: 300
+    - _FoamScale: 200
     - _FoamScale2: 90
     - _FoamSpeed: 0.2
     - _FoamSpeed2: 0.05
