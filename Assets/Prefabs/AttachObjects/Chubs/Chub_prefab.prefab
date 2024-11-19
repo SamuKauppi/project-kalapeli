@@ -67,7 +67,7 @@ MonoBehaviour:
   matchRotationToNormal: 0
   weight: 0.5
   swimmingType: 2
-  swimmingDepthInMeters: 3
+  swimmingDepthInMeters: 4.5
 --- !u!114 &2632832261839840480
 MonoBehaviour:
   m_ObjectHideFlags: 0

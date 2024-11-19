@@ -174,22 +174,22 @@ public class DrawCut : MonoBehaviour
         lureProperties.CalculateMeshStatsOnly();
     }
 
+    private void UpdateLineDistance()
+    {
+        Collider blockColl = blockRotation.GetComponent<Collider>();
+        Vector3 camPos = cam.transform.position;
+        lineDist = Vector3.Distance(camPos, blockColl.ClosestPoint(camPos));
+    }
+
     /// <summary>
     /// Resets line renderer
     /// </summary>
-    private void ResetLineRender()
+    public void ResetLineRender()
     {
         pointA = Vector3.zero;
         pointB = Vector3.zero;
         cutRender.positionCount = 2;
         cutRender.SetPosition(0, pointA);
         cutRender.SetPosition(1, pointB);
-    }
-
-    private void UpdateLineDistance()
-    {
-        Collider blockColl = blockRotation.GetComponent<Collider>();
-        Vector3 camPos = cam.transform.position;
-        lineDist = Vector3.Distance(camPos, blockColl.ClosestPoint(camPos));
     }
 }

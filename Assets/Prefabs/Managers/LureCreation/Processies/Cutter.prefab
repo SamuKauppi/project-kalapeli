@@ -49,8 +49,8 @@ MonoBehaviour:
   blockLayer:
     serializedVersion: 2
     m_Bits: 128
-  lineWidth: 0.005
-  minCutDist: 0.02
+  lineWidth: 0.0025
+  minCutDist: 0.01
 --- !u!114 &8894856769942991990
 MonoBehaviour:
   m_ObjectHideFlags: 0

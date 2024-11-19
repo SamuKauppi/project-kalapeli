@@ -112,12 +112,6 @@ public class StatDisplay : MonoBehaviour
             texColorImage.sprite = BlockPainter.Instance.GetTextureSprites(textureId);
         }
         lastID = textureId;
-
-        if (float.IsNaN(streamlineRatio))
-        {
-            Debug.Log("slider min value: " + streamlineSlider.minValue);
-            Debug.Log("slider max value: " + streamlineSlider.maxValue);
-        }
     }
 
     public void DisplayColors(bool value)

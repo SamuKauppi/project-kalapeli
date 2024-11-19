@@ -2816,7 +2816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ba9dc99f1ee8c4a906fb17a5e60363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFishingMode: 0
+  isFishingMode: 1
   mainCam: {fileID: 4666004094657011783}
   overlayCam: {fileID: 4469961686896504200}
   lureCanvas: {fileID: 2667254979297991548}
