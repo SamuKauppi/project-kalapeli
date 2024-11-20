@@ -8,7 +8,7 @@ using UnityEngine;
 public class LureFunctions : MonoBehaviour
 {
     public LureStats Stats { get; private set; }
-    public bool CanCatch { get { return hookCount > 0 && attachSwim != SwimmingType.None; } }
+    public bool CanCatch { get { return hookCount > 0; } }
 
     // SerializeFields
     [SerializeField] private float streamlineMultiplier = 1f;   // Multiplies streamlineRatio to make it more readable

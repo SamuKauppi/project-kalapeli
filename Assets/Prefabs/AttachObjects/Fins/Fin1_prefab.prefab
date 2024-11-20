@@ -12,10 +12,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fin1_prefab
       objectReference: {fileID: 0}
-    - target: {fileID: 5764822535924133430, guid: ad7b536f058e425409494e0a3cc71b3c, type: 3}
-      propertyPath: weight
-      value: 0.8
-      objectReference: {fileID: 0}
     - target: {fileID: 7090887547642658852, guid: ad7b536f058e425409494e0a3cc71b3c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

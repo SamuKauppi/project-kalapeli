@@ -120,9 +120,13 @@ public class Fish : MonoBehaviour
 
         foreach (T value in values)
         {
+            if (set.Count <= 0)
+                break;
+
             if (set.Contains(value))
             {
                 score += CatchScoreTable.Instance.GetCatchScoreForType(type);
+                set.Remove(value);
             }
         }
         return score;
@@ -171,7 +175,9 @@ public class Fish : MonoBehaviour
         int catchScore = catchChance;
         catchScore += GetDepthScore(lure.SwimmingDepth);                                                // Depth score
         catchScore += GetColorScore(lure.BaseColor, lure.TexColor, lure.PatternID);                     // Color score
-        catchScore += GetScoreFromSet(lure.AttachedTypes, attachTable, CatchScoreType.Attachment);      // Attachment score
+        catchScore += GetScoreFromSet(lure.AttachedTypes,
+                                      new HashSet<AttachingType>(attachTable),
+                                      CatchScoreType.Attachment);                                       // Attachment score
         catchScore += GetScoreFromValue(lure.SwimType, PreferredSwimStyle, CatchScoreType.SwimStyle);   // Swim score
         catchScore += GetScoreFromValue(lure.PatternID, PreferredPatternIndex, CatchScoreType.Pattern); // Patthern score
 

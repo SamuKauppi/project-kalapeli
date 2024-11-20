@@ -32,6 +32,7 @@ public class AttachingProcess : MonoBehaviour
     private BlockRotation blockRotation;                                            // Script that rotates the block
 
     [SerializeField] private float attachDistance = 20f;    // Used to raycast while attaching
+    [SerializeField] private float scaleAttachRayDist;      // Distance raycast checks when you can scaling
     private GameObject lureObj;         // Lure object the objects will be attached to
 
     // Attachable object currently being attached
@@ -129,7 +130,7 @@ public class AttachingProcess : MonoBehaviour
         {
             Vector3 direction = cam.ScreenToWorldPoint(mousePos) - cam.transform.position;
 
-            if (Physics.Raycast(cam.transform.position, direction, out RaycastHit hit, attachDistance, attachedLayer))
+            if (Physics.Raycast(cam.transform.position, direction, out RaycastHit hit, scaleAttachRayDist, attachedLayer))
             {
                 if (hit.collider.TryGetComponent(out MoveAttach ma))
                 {
@@ -296,7 +297,6 @@ public class AttachingProcess : MonoBehaviour
     {
         IsAttaching = true;
         UpdateDistance();
-        blockRotation.ResetRotation(0.15f);
     }
 
 
@@ -368,7 +368,6 @@ public class AttachingProcess : MonoBehaviour
         attachedObject = obj;
         moveAttach = attachedObject.GetComponent<MoveAttach>();
         attachedObject.transform.parent = transform;
-        attachedObject.transform.position = cam.ScreenToWorldPoint(mousePos);
         attachPos = pos;
         matchRotation = matchRot;
         mirrorObj = mirror;
@@ -376,7 +375,6 @@ public class AttachingProcess : MonoBehaviour
         if (mirrorObj != null)
         {
             mirrorObj.transform.parent = transform;
-            mirrorObj.transform.position = cam.WorldToScreenPoint(mousePos);
             attachBothSides = true;
             mirrorAttach = mirrorObj.GetComponent<MoveAttach>();
             mirrorAttach.EnableOutline(true);

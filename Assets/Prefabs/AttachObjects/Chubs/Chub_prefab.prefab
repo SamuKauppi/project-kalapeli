@@ -65,7 +65,7 @@ MonoBehaviour:
   attachPosition: 3
   attachBothSides: 0
   matchRotationToNormal: 0
-  weight: 0.5
+  weight: 0.15
   swimmingType: 2
   swimmingDepthInMeters: 4.5
 --- !u!114 &2632832261839840480

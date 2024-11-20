@@ -65,7 +65,7 @@ MonoBehaviour:
   attachPosition: 2
   attachBothSides: 0
   matchRotationToNormal: 0
-  weight: 0.8
+  weight: 0.65
 --- !u!114 &-3612186551285969589
 MonoBehaviour:
   m_ObjectHideFlags: 0

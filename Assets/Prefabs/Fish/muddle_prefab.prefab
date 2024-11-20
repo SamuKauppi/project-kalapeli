@@ -230,7 +230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
       propertyPath: attachables.Array.data[4]
-      value: 17
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
       propertyPath: patternIndices.Array.size

@@ -1994,7 +1994,7 @@ MonoBehaviour:
   - scoreType: 1
     catchScore: 85
   - scoreType: 2
-    catchScore: 30
+    catchScore: 100
   - scoreType: 3
     catchScore: 150
   - scoreType: 4

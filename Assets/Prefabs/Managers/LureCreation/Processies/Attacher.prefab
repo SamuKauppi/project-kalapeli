@@ -70,4 +70,5 @@ MonoBehaviour:
   - {fileID: 9103423044851506039, guid: a7cca2722dfa2b04ea5a0d5d2c5ce88a, type: 3}
   - {fileID: 8060919233799928139, guid: 23c1c820672428e488a10abd4ca22c3d, type: 3}
   - {fileID: 7760416618795103223, guid: 30fa2a5864eecb64380b4235352ae940, type: 3}
-  attachDistance: 0.5
+  attachDistance: 0.3
+  scaleAttachRayDist: 20

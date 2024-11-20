@@ -45,7 +45,7 @@ public class Rod : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if ((!IsAttached || HasFish) && FishManager.Instance.CanFish && !FishManager.Instance.IsAttachingLure)
+        if ((!IsAttached || HasFish) && FishManager.Instance.CanFish)
         {
             outline.enabled = true;
         }
