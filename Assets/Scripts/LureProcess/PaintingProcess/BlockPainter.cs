@@ -101,6 +101,7 @@ public class BlockPainter : MonoBehaviour
     public void AcceptColoring()
     {
         UpdateColoring(baseColorButton.color, textureColorButton.color, selectedTextureId);
+        SoundManager.Instance.PlaySound(SoundClipTrigger.OnPaint);
     }
 
     public void DeclineColoring()

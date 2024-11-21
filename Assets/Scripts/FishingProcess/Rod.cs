@@ -161,6 +161,7 @@ public class Rod : MonoBehaviour
         StartCoroutine(WaitingForFish());
         anim.SetBool("Water", true);
         lineRenderer.enabled = true;
+        SoundManager.Instance.PlaySound(SoundClipTrigger.OnCastThrow);
     }
 
     /// <summary>

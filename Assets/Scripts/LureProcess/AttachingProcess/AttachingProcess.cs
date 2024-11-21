@@ -185,6 +185,7 @@ public class AttachingProcess : MonoBehaviour
                 mirrorObj.transform.parent = lureObj.transform;
                 mirrorAttach.EnableOutline(false);
             }
+            SoundManager.Instance.PlaySound(SoundClipTrigger.OnBlockHit);
         }
 
         attachedObject = null;
@@ -290,6 +291,20 @@ public class AttachingProcess : MonoBehaviour
         distanceToLure = Vector3.Dot(lureDirection, cam.transform.forward);
     }
 
+
+    private void PlayAttachSound(AttachingType type)
+    {
+        SoundClipTrigger sound = type switch
+        {
+            AttachingType.Hook1 or AttachingType.Hook2 => SoundClipTrigger.OnPickHooks,
+            AttachingType.Eye1 or AttachingType.Eye2 or AttachingType.Eye3 or AttachingType.Eye4 or AttachingType.Eye5 => SoundClipTrigger.OnPickEyes,
+            _ => SoundClipTrigger.OnPickChubs
+        };
+
+        SoundManager.Instance.PlaySound(sound);
+    }
+
+
     /// <summary>
     /// Activates the attaching related variables and stuff
     /// </summary>
@@ -311,6 +326,9 @@ public class AttachingProcess : MonoBehaviour
 
         // Check if the object is determined
         if (!attachDict.ContainsKey(type)) { Debug.LogWarning("key " + type + " was not found."); return; }
+
+        PlayAttachSound(type);
+
 
         // Set the attached object
         attachedObject = Instantiate(attachDict[type].gameObject,
@@ -366,6 +384,7 @@ public class AttachingProcess : MonoBehaviour
         if (!IsAttaching || attachedObject) { return; }
 
         attachedObject = obj;
+        PlayAttachSound(attachedObject.GetComponent<AttachProperties>().AttachingType);
         moveAttach = attachedObject.GetComponent<MoveAttach>();
         attachedObject.transform.parent = transform;
         attachPos = pos;

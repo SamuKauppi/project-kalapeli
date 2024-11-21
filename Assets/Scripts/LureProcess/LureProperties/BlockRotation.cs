@@ -92,6 +92,10 @@ public class BlockRotation : MonoBehaviour
     {
         IsRotating = true;
         GetTargetRotation(sideRotDir, upRotDir, out Quaternion currentRot, out Quaternion targetRot);
+        if (rotTime > 0)
+        {
+            SoundManager.Instance.PlaySound(SoundClipTrigger.OnLureTurn);
+        }
 
         OnRotationStart?.Invoke(sideRotIndex, upRotIndex);
         if (currentRot != targetRot)

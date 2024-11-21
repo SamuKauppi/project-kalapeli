@@ -40,6 +40,7 @@ public class SoundPlayer : MonoBehaviour
     {
         if (trigger == Trigger)
         {
+            source.Stop();
             int index = playOrder == SoundClipPlayOrder.Random ? Random.Range(0, clips.Length) : playIndex % clips.Length;
             source.clip = clips[index];
             source.Play();

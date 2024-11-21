@@ -172,6 +172,7 @@ public class DrawCut : MonoBehaviour
         }
 
         lureProperties.CalculateMeshStatsOnly();
+        SoundManager.Instance.PlaySound(SoundClipTrigger.OnBlockCarve);
     }
 
     private void UpdateLineDistance()

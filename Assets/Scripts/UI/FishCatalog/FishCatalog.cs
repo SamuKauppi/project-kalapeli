@@ -84,6 +84,9 @@ public class FishCatalog : MonoBehaviour
         GameManager.Instance.SetBothModes(!value);
         ShowCatalog(0);
         closeButton.SetActive(value);
+
+        if (time > 0)
+            SoundManager.Instance.PlaySound(value ? SoundClipTrigger.OnOpenBook : SoundClipTrigger.OnCloseBook);
     }
 
     public void ToggleCatalog()
