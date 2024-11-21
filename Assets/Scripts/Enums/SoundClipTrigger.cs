@@ -1,4 +1,14 @@
 public enum SoundClipTrigger
 {
-    None
+    OnOpenBook,
+    OnCloseBook,
+    OnCastThrow,
+    OnPickEyes,
+    OnPickHooks,
+    OnPickChubs,
+    OnPaint,
+    OnLureTurn,
+    OnBlockCarve,
+    OnBlockHit,
+    OnSeagulls
 }

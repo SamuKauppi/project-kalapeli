@@ -22,6 +22,14 @@ public class UIColorAnimation : MonoBehaviour
             baseTextColor = targetText.color;
     }
 
+    public void SetImageActive(bool active)
+    {
+        if (targetImage != null)
+            targetImage.gameObject.SetActive(active);
+        if (targetText != null)
+            targetText.gameObject.SetActive(active);
+    }
+
     public void StartEffect()
     {
         StopAllCoroutines();

@@ -2,11 +2,13 @@
 
 public class SoundPlayer : MonoBehaviour
 {
-    [SerializeField] private AudioSource source;
+    [Range(0f, 1f)]
+    [SerializeField] private float volume;
     [SerializeField] private SoundClipType[] soundTypes;
     [SerializeField] private SoundClipTrigger trigger;
     [SerializeField] private SoundClipPlayOrder playOrder;
 
+    private AudioSource source;
     private AudioClip[] clips;
     private int playIndex;
 
@@ -15,11 +17,13 @@ public class SoundPlayer : MonoBehaviour
 
     private void Start()
     {
+        source = GetComponent<AudioSource>();
         clips = new AudioClip[soundTypes.Length];
         for (int i = 0; i < clips.Length; i++)
         {
             clips[i] = SoundManager.Instance.GetClip(soundTypes[i]);
         }
+        source.volume = volume;
     }
 
     private void OnEnable()

@@ -5,7 +5,9 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance { get; private set; }
 
-    [SerializeField] private SoundClipPair[] sounds;
+    [SerializeField] private SoundClipType[] types;
+    [SerializeField] private AudioClip[] clips;
+
     private readonly Dictionary<SoundClipType, AudioClip> soundDict = new();
 
     public delegate void PlaySoundEvent(SoundClipTrigger type);
@@ -21,9 +23,9 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < sounds.Length; i++)
+        for (int i = 0; i < types.Length; i++)
         {
-            soundDict.Add(sounds[i].type, sounds[i].clip);
+            soundDict.Add(types[i], clips[i]);
         }
     }
 

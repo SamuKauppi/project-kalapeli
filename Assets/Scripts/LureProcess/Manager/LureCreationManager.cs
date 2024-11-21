@@ -162,7 +162,7 @@ public class LureCreationManager : MonoBehaviour
                                  || _process == LureCreationProcess.Saving);
         rotateButtons2.SetActive(_process == LureCreationProcess.Attaching);
 
-        requirementEff.gameObject.SetActive(process == LureCreationProcess.Attaching);
+        requirementEff.SetImageActive(_process == LureCreationProcess.Attaching);
     }
 
     #endregion
