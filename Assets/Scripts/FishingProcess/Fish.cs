@@ -35,9 +35,6 @@ public class Fish : MonoBehaviour
     private readonly HashSet<AttachingType> attachTable = new();
     private const float DEPTH_TOLERANCE = 10f;
 
-    // Public
-    public bool hasBeenCaught = false;
-
     // Public getters
     public FishSpecies Species { get { return species; } }
     public string HintText { get { return hintText; } }

@@ -9,7 +9,7 @@ public class FishManager : MonoBehaviour
 {
     public static FishManager Instance { get; private set; }
     public bool CanFish { get; set; }
-    public bool IsAttachingLure { get; private set; }
+    public bool IsHoldingLure { get; private set; }
 
     // Rod
     [SerializeField] private Rod rodPrefab;                 // Prefab
@@ -66,11 +66,11 @@ public class FishManager : MonoBehaviour
 
     private void Update()
     {
-        if (!IsAttachingLure || !CanFish) { return; }
+        if (!IsHoldingLure || !CanFish) { return; }
         mousePos = Input.mousePosition;
         mousePos.z = lurePositionFromCam;
 
-        attachedLure.transform.position = cam.ScreenToWorldPoint(mousePos); 
+        attachedLure.transform.position = cam.ScreenToWorldPoint(mousePos);
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -98,7 +98,7 @@ public class FishManager : MonoBehaviour
             PersitentManager.Instance.AddLure(attachedLure.GetComponent<LureStats>());
         }
 
-        IsAttachingLure = false;
+        IsHoldingLure = false;
         attachedLure = null;
     }
 
@@ -108,7 +108,16 @@ public class FishManager : MonoBehaviour
         attachedLure = lureObj;
         attachedLure.SetActive(true);
         PersitentManager.Instance.TakeLure(lureObj.GetComponent<LureStats>());
-        IsAttachingLure = true;
+        IsHoldingLure = true;
+    }
+
+    public void DeleteLure()
+    {
+        if (attachedLure == null) { return; }
+        Destroy(attachedLure);
+        IsHoldingLure = false;
+        attachedLure = null;
+        FishingLureBox.Instance.SetLureBoxActive(PersitentManager.Instance.LureCount());
     }
 
     /// <summary>
@@ -143,7 +152,7 @@ public class FishManager : MonoBehaviour
                     fcs.maxScore = totalScore;
                     fishCatchScores.Add(fcs);
                 }
-                //Debug.Log("Fish: " + availableFish[i].Species + ", Score: " + score);
+                Debug.Log("Fish: " + availableFish[i].Species + ", Score: " + score);
             }
 
             // Attach lure and it's catch chances to rod
@@ -152,9 +161,8 @@ public class FishManager : MonoBehaviour
             // Hide lure and enable taking a new lure
             attachedLure.SetActive(false);
             attachedLure = null;
-            IsAttachingLure = false;
+            IsHoldingLure = false;
             FishingLureBox.Instance.SetLureBoxActive(PersitentManager.Instance.LureCount());
-            PersitentManager.Instance.TakeLure(nextLure);
         }
         else
         {
@@ -181,7 +189,6 @@ public class FishManager : MonoBehaviour
                 FishingLureBox.Instance.SetLureBoxActive(PersitentManager.Instance.LureCount());
                 scoreText.text = caughtFish + SCORE + fish.ScoreGained;
                 CanFish = false;
-                fish.hasBeenCaught = true;
                 break;
             }
         }
@@ -195,7 +202,6 @@ public class FishManager : MonoBehaviour
         CanFish = true;
         if (displayFish)
             Destroy(displayFish);
-
     }
 
 

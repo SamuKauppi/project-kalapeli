@@ -23,7 +23,12 @@ public class BlockRotation : MonoBehaviour
     private int sideRotIndex = 0;   // Which side rotation is used
     private int upRotIndex = 0;     // Which up rotation is used
 
-    // Used to avoid restart same up rotation corountine
+    [SerializeField] private float mouseRotationSpeed = 10f;
+    private bool isRotatingByMouse; // Is the block rotated by mouse
+    private Vector3 mousePos;
+    private Vector3 lastMousePos;
+
+    // Used to avoid restart same up-rotation corountine
     private enum UpRotation
     {
         Up,
@@ -44,6 +49,23 @@ public class BlockRotation : MonoBehaviour
     {
         if (StopRotating) { return; }
 
+        if (isRotatingByMouse && Input.GetMouseButtonUp(1))
+        {
+            isRotatingByMouse = false;
+            IsRotating = false;
+            StartCoroutine(RotateTransform(0, 0, 0.1f));
+        }
+
+        RotateByMouse();
+
+        if (!isRotatingByMouse)
+        {
+            RotateByKeys();
+        }
+    }
+
+    private void RotateByKeys()
+    {
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) &&
             currentRotDir != UpRotation.Up)
         {
@@ -73,6 +95,25 @@ public class BlockRotation : MonoBehaviour
             if (IsRotating) StopAllCoroutines();
             StartCoroutine(RotateTransform(1 * (upRotIndex == 0 ? 1 : upRotIndex), 0, rotationTime));
         }
+    }
+
+    private void RotateByMouse()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            isRotatingByMouse = true;
+            lastMousePos = Input.mousePosition;
+            IsRotating = true;
+        }
+
+        if (isRotatingByMouse)
+        {
+            mousePos = Input.mousePosition;
+            Vector3 deltaPos = mousePos - lastMousePos;
+            transform.Rotate(-deltaPos.y * mouseRotationSpeed, deltaPos.x * mouseRotationSpeed, 0f, Space.Self);
+            lastMousePos = mousePos;
+        }
+
     }
 
     /// <summary>

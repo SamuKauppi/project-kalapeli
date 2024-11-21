@@ -17,6 +17,7 @@ public class PersitentManager : MonoBehaviour
     [SerializeField] private Fish[] everyFishInGame;                    // Contains every fish that exists (set in inspector)
     [SerializeField] private List<FishSpecies> fishForThisLevel = new();// Fishes available for this level (Set before loading to a level)
     private readonly Dictionary<FishSpecies, Fish> fishDict = new();    // Dictionary that is set during runtime
+    private readonly HashSet<FishSpecies> fishesCaught = new();
 
     // Score
     [SerializeField] private TMP_Text scoreText;
@@ -47,6 +48,15 @@ public class PersitentManager : MonoBehaviour
         scoreText.text = SCORE + score;
     }
 
+    private void SetLayerRecursively(GameObject obj, int layer)
+    {
+        obj.layer = layer;
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursively(child.gameObject, layer);
+        }
+    }
+
     /// <summary>
     /// Returns the fishes available for this level
     /// </summary>
@@ -74,6 +84,7 @@ public class PersitentManager : MonoBehaviour
     {
         oriObj.SetActive(false);
         GameObject newObj = Instantiate(oriObj, transform);
+        SetLayerRecursively(newObj, 31);
 
         if (newObj.TryGetComponent<BlockRotation>(out var rot))
         {
@@ -113,15 +124,22 @@ public class PersitentManager : MonoBehaviour
         return luresCreated.ToArray();
     }
 
-    public void GainScoreFormFish(FishSpecies fish)
-    {
-        int value = fishDict[fish].ScoreGained;
-        score += value;
-        scoreText.text = SCORE + score;
-    }
-
     public int LureCount()
     {
         return luresCreated.Count;
+    }
+
+
+    public void GainScoreFormFish(FishSpecies fish)
+    {
+        int value = fishesCaught.Contains(fish) ? fishDict[fish].ScoreGained : fishDict[fish].ScoreGained / 2;
+        score += value;
+        scoreText.text = SCORE + score;
+        fishesCaught.Add(fish);
+    }
+
+    public bool IsFishCaught(FishSpecies fish)
+    {
+        return fishesCaught.Contains(fish);
     }
 }

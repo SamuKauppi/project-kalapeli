@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// Handles switching from cutting to attaching process
+/// Handles switching between different parts of the lure creation process
+/// (Does maybe a bit too much?)
 /// </summary>
 public class LureCreationManager : MonoBehaviour
 {
@@ -25,7 +27,12 @@ public class LureCreationManager : MonoBehaviour
     [SerializeField] private AttachingProcess attachProcess;    // Attach process
     [SerializeField] private GameObject lureObject;             // Ref to lure object
 
+    // UI Animation
+    [SerializeField] private UIColorAnimation nameWarningEff;// Flashes name field red
+    [SerializeField] private UIColorAnimation requirementEff;// Flashes requirement when not met during attaching
+
     // Buttons
+    [SerializeField] private TMP_InputField nameField;
     [SerializeField] private GameObject cuttingButtons;
     [SerializeField] private GameObject paintingButtons;
     [SerializeField] private GameObject attachButtons;
@@ -155,6 +162,7 @@ public class LureCreationManager : MonoBehaviour
                                  || _process == LureCreationProcess.Saving);
         rotateButtons2.SetActive(_process == LureCreationProcess.Attaching);
 
+        requirementEff.gameObject.SetActive(process == LureCreationProcess.Attaching);
     }
 
     #endregion
@@ -174,6 +182,9 @@ public class LureCreationManager : MonoBehaviour
 
         // Set mode to cutting
         SetMode(LureCreationProcess.Cutting);
+
+        // Reset name
+        nameField.text = "";
     }
     public void CancelWarningPopUp()
     {
@@ -245,7 +256,11 @@ public class LureCreationManager : MonoBehaviour
 
     public void StartSaving()
     {
-        if (!lureProperties.CanCatch) { return; }
+        if (!lureProperties.CanCatch) 
+        {
+            requirementEff.StartEffect();
+            return;
+        }
 
         // Set camera angle and update mode
         SetMode(LureCreationProcess.None);
@@ -260,9 +275,28 @@ public class LureCreationManager : MonoBehaviour
 
     public void SaveLure()
     {
+        if (lureProperties.Stats.lureName.Equals(""))
+        {
+            nameWarningEff.StartEffect();
+            return;
+        }
+
         SetMode(LureCreationProcess.None);
         BlockRotation.Instance.ResetRotation(0f);
         PersitentManager.Instance.AddNewLure(lureObject);
+        ResetLureCreation();
+    }
+
+    public void SaveAndUseLure()
+    {
+        if (lureProperties.Stats.lureName.Equals(""))
+        {
+            nameWarningEff.StartEffect();
+            return;
+        }
+
+        SaveLure();
+        EndLureCreation();
     }
 
     public void EndLureCreation()

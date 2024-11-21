@@ -475,6 +475,7 @@ public class LureFunctions : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);
+
             if (child.TryGetComponent<MoveAttach>(out var moveAttach))
             {
                 Destroy(moveAttach);

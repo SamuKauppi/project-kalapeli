@@ -243,10 +243,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water_Cube_prefab
       objectReference: {fileID: 0}
-    - target: {fileID: 3161982208256555094, guid: 805bbb98fe136e14da688e484b734f19, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -304,13 +300,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enviroment_prefab
       objectReference: {fileID: 0}
-    - target: {fileID: 2636891572191389201, guid: 451e0dccd925aca4b96045ab47b287b9, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 5579062380613436038, guid: 451e0dccd925aca4b96045ab47b287b9, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 451e0dccd925aca4b96045ab47b287b9, type: 3}
@@ -422,10 +413,6 @@ PrefabInstance:
     - target: {fileID: 7162033270674027269, guid: 4340ed92aa9768f48989b5f55d52bce9, type: 3}
       propertyPath: m_Name
       value: Terrain
-      objectReference: {fileID: 0}
-    - target: {fileID: 7162033270674027269, guid: 4340ed92aa9768f48989b5f55d52bce9, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

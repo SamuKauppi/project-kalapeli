@@ -64,14 +64,6 @@ public class FishCatalog : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ToggleCatalog();
-        }
-    }
-
     /// <summary>
     /// Sets catalog open or closed
     /// </summary>
@@ -145,7 +137,7 @@ public class FishCatalog : MonoBehaviour
             if (everyFish[i].Species == fish)
             {
                 displayer.gameObject.SetActive(true);
-                displayer.ShowFish(everyFish[i], everyFish[i].hasBeenCaught);
+                displayer.ShowFish(everyFish[i], PersitentManager.Instance.IsFishCaught(everyFish[i].Species));
                 if (previousEntry != null)
                 {
                     previousEntry.SetSelected(false);

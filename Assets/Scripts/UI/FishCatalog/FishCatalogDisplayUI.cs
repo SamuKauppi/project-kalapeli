@@ -13,7 +13,7 @@ public class FishCatalogDisplayUI : MonoBehaviour
         fishingStats.text = fish.HintText;
         if (!isCaught)
         {
-            nameField.text = "...";
+            nameField.text = "Unknown Fish";
             flavourText.text = "";
         }
         else

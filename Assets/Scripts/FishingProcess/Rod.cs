@@ -59,7 +59,7 @@ public class Rod : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (HasFish && FishManager.Instance.CanFish && !FishManager.Instance.IsAttachingLure) // Check first if there is a fish
+        if (HasFish && FishManager.Instance.CanFish && !FishManager.Instance.IsHoldingLure) // Check first if there is a fish
         {
             FishManager.Instance.CatchFish(CaughtFish, LureAttached);
             CaughtFish = FishSpecies.None;
@@ -118,6 +118,7 @@ public class Rod : MonoBehaviour
                 timeAttached = fishCatchChances[i].timeAttached;
                 anim.SetBool("Fish", true);
                 sound.Play();
+                outline.enabled = true;
                 break;
             }
         }
@@ -130,6 +131,7 @@ public class Rod : MonoBehaviour
         StartCoroutine(WaitingForFish());
         Debug.Log("Got away");
         anim.SetBool("Fish", false);
+        outline.enabled = false;
     }
 
     // Function to calculate and print catch chances
