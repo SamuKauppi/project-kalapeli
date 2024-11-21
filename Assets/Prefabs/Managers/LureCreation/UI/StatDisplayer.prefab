@@ -44,6 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceff8afe7c65d64fac217e0ec989194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  displayWindow: {fileID: 0}
+  displayArrow: {fileID: 0}
+  onPos: {fileID: 0}
+  offPos: {fileID: 0}
   swimmingTypeText: {fileID: 0}
   badSwimImage: {fileID: 0}
   streamlineSlider: {fileID: 0}
