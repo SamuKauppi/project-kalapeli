@@ -5,10 +5,13 @@ public enum SoundClipTrigger
     OnCastThrow,
     OnPickEyes,
     OnPickHooks,
-    OnPickChubs,
+    OnPickPlastic,
     OnPaint,
     OnLureTurn,
     OnBlockCarve,
     OnBlockHit,
-    OnSeagulls
+    OnSeagulls,
+    OnDiscardEye,
+    OnDiscardHook,
+    OnDiscardPlastic,
 }

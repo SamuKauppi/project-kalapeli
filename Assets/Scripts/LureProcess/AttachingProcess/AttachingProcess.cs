@@ -172,6 +172,7 @@ public class AttachingProcess : MonoBehaviour
     {
         if (!isValidPos)
         {
+            PlayDetachSound(attachedObject.GetComponent<AttachProperties>().AttachingType);
             Destroy(attachedObject);
             if (attachBothSides)
                 Destroy(mirrorObj);
@@ -298,7 +299,19 @@ public class AttachingProcess : MonoBehaviour
         {
             AttachingType.Hook1 or AttachingType.Hook2 => SoundClipTrigger.OnPickHooks,
             AttachingType.Eye1 or AttachingType.Eye2 or AttachingType.Eye3 or AttachingType.Eye4 or AttachingType.Eye5 => SoundClipTrigger.OnPickEyes,
-            _ => SoundClipTrigger.OnPickChubs
+            _ => SoundClipTrigger.OnPickPlastic
+        };
+
+        SoundManager.Instance.PlaySound(sound);
+    }
+
+    private void PlayDetachSound(AttachingType type)
+    {
+        SoundClipTrigger sound = type switch
+        {
+            AttachingType.Hook1 or AttachingType.Hook2 => SoundClipTrigger.OnDiscardHook,
+            AttachingType.Eye1 or AttachingType.Eye2 or AttachingType.Eye3 or AttachingType.Eye4 or AttachingType.Eye5 => SoundClipTrigger.OnDiscardEye,
+            _ => SoundClipTrigger.OnDiscardPlastic
         };
 
         SoundManager.Instance.PlaySound(sound);
