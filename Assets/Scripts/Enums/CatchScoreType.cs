@@ -4,5 +4,6 @@
     Color,
     Attachment,
     SwimStyle,
-    Pattern
+    Pattern,
+    Hook
 }

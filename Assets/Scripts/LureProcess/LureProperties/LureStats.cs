@@ -20,6 +20,7 @@ public class LureStats : MonoBehaviour
     public int PatternID = 1;               // Index of paint pattern (0 = no pattern)
     public AttachingType[] AttachedTypes =  // Is set by the player
         new AttachingType[0];
+    public int HookCount;
 
     /// <summary>
     /// Resets all lure stats to their default values.
@@ -27,6 +28,7 @@ public class LureStats : MonoBehaviour
     public void ResetStats()
     {
         lureName = string.Empty;
+        HookCount = 0;
         Mass = 0f;
         SwimType = SwimmingType.None;
         SwimmingDepth = 0f;

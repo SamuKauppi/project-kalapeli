@@ -8,7 +8,7 @@ using UnityEngine;
 public class LureFunctions : MonoBehaviour
 {
     public LureStats Stats { get; private set; }
-    public bool CanCatch { get { return hookCount > 0; } }
+    public bool CanCatch { get { return Stats.HookCount > 0; } }
 
     // SerializeFields
     [SerializeField] private float streamlineMultiplier = 1f;   // Multiplies streamlineRatio to make it more readable
@@ -34,7 +34,6 @@ public class LureFunctions : MonoBehaviour
     private SwimmingType attachSwim;    // The swimming style gained from attachments
     private float attachWeight;         // Total weight of all attachments
     private float chubDepth;            // How much depth is gained from the chub
-    private int hookCount;              // Sets swim bad if there are too many
 
     // Flags
     private bool isDisplayingColor;     // Prevents multiple functions calls when no color should be shown
@@ -123,7 +122,7 @@ public class LureFunctions : MonoBehaviour
         float herons = s * (s - a) * (s - b) * (s - c);
 
         // Confirm that Heron's is positive before taking squareroot
-        return herons > 0 ? Mathf.Sqrt(herons) : 0f; 
+        return herons > 0 ? Mathf.Sqrt(herons) : 0f;
     }
 
 
@@ -225,10 +224,9 @@ public class LureFunctions : MonoBehaviour
     private void CalculateAttachStats()
     {
         // Initialize local variabes
-        bool stopChecking = false;
         float length = _filter.mesh.bounds.size.x * unitConverter;  // Convert units
         int chubCount = 0;
-        hookCount = 0;
+        Stats.HookCount = 0;
 
         // Initialize class variables
         attachWeight = 0.0f;
@@ -240,8 +238,6 @@ public class LureFunctions : MonoBehaviour
 
         for (int i = 0; i < transform.childCount; i++)
         {
-            if (stopChecking) break;
-
             if (!transform.GetChild(i).TryGetComponent(out AttachProperties attachProperties))
             {
                 continue;
@@ -258,15 +254,15 @@ public class LureFunctions : MonoBehaviour
             switch (groupType)
             {
                 case "Hook":
-                    stopChecking = HandleHook(length, ref hookCount);
+                    HandleHook(length, ref Stats.HookCount);
                     break;
 
                 case "Chub":
-                    stopChecking = HandleChub(attachProperties as ChubProperties, ref chubCount);
+                    HandleChub(attachProperties as ChubProperties, ref chubCount);
                     break;
 
                 case "Tail":
-                    stopChecking = HandleHook(length, ref hookCount);
+                    HandleHook(length, ref Stats.HookCount);
                     break;
 
                 default:
@@ -282,7 +278,7 @@ public class LureFunctions : MonoBehaviour
     /// <param name="length"></param>
     /// <param name="hookCount"></param>
     /// <returns></returns>
-    private bool HandleHook(float length, ref int hookCount)
+    private void HandleHook(float length, ref int hookCount)
     {
         hookCount++;
 
@@ -292,10 +288,7 @@ public class LureFunctions : MonoBehaviour
         {
             // Too many hooks
             attachSwim = SwimmingType.Bad;
-            return true; // Indicate that checking should stop
         }
-
-        return false; // Continue checking
     }
 
     /// <summary>
@@ -304,26 +297,25 @@ public class LureFunctions : MonoBehaviour
     /// <param name="cp"></param>
     /// <param name="chubCount"></param>
     /// <returns></returns>
-    private bool HandleChub(ChubProperties cp, ref int chubCount)
+    private void HandleChub(ChubProperties cp, ref int chubCount)
     {
         // Chub was not found
         if (!cp)
         {
-            return true;
+            return;
         }
 
-        if ((chubCount > 0 && cp.AttachingType != AttachingType.Propeller) || chubCount > 2)
+        if (chubCount > 1)
         {
             // Too many chubs
             attachSwim = SwimmingType.Bad;
-            return true; // Indicate that checking should stop
         }
-
-        chubDepth = cp.swimmingDepthInMeters;
-        attachSwim = cp.swimmingType;
-        chubCount++;
-
-        return false; // Continue checking
+        else if (attachSwim != SwimmingType.Bad)
+        {
+            chubDepth = cp.swimmingDepthInMeters;
+            attachSwim = cp.swimmingType;
+            chubCount++;
+        }
     }
 
     /// <summary>
@@ -436,7 +428,6 @@ public class LureFunctions : MonoBehaviour
         attachSwim = SwimmingType.None;
         attachWeight = 0f;
         chubDepth = 0f;
-        hookCount = 0;
 
         // Destroy children, but set arrow object active
         arrowObj.SetActive(true);

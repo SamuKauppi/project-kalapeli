@@ -178,6 +178,11 @@ public class Fish : MonoBehaviour
         catchScore += GetScoreFromValue(lure.SwimType, PreferredSwimStyle, CatchScoreType.SwimStyle);   // Swim score
         catchScore += GetScoreFromValue(lure.PatternID, PreferredPatternIndex, CatchScoreType.Pattern); // Patthern score
 
+        for (int i = 0; i < lure.HookCount; i++)
+        {
+            catchScore += CatchScoreTable.Instance.GetCatchScoreForType(CatchScoreType.Hook);   // Score for each hook
+        }
+
         // return score
         return catchScore;
     }

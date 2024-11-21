@@ -25,6 +25,7 @@ public class FishManager : MonoBehaviour
     [SerializeField] private GameObject displayUI;          // For displaying UI when fish is caught
     [SerializeField] private TMP_Text scoreText;            // Ui to display score
     [SerializeField] private GameObject backButton;         // Back button for ui
+    [SerializeField] private int noFishScore = 500;
     private GameObject displayFish;                         // Fish being displayed
     private const string SCORE = ", Score: ";
 
@@ -132,7 +133,17 @@ public class FishManager : MonoBehaviour
         {
             // Create a list of fishes that can be caught
             List<FishCatchScore> fishCatchScores = new();
-            int totalScore = 0;
+            int totalScore = noFishScore;
+
+            // Add miss chance
+            FishCatchScore none = new()
+            {
+                species = FishSpecies.None,
+                minScore = 0,
+                maxScore = noFishScore,
+                timeAttached = 0
+            };
+            fishCatchScores.Add(none);
 
             for (int i = 0; i < availableFish.Length; i++)
             {
@@ -152,7 +163,7 @@ public class FishManager : MonoBehaviour
                     fcs.maxScore = totalScore;
                     fishCatchScores.Add(fcs);
                 }
-                Debug.Log("Fish: " + availableFish[i].Species + ", Score: " + score);
+                // Debug.Log("Fish: " + availableFish[i].Species + ", Score: " + score);
             }
 
             // Attach lure and it's catch chances to rod

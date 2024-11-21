@@ -20,18 +20,13 @@ public class BlockRotation : MonoBehaviour
 
     // Rotations
     [SerializeField] private float rotationTime = 0.5f; // How fast the block rotates
+    [SerializeField] private RotationButtons[] rotationButtons;
     private int sideRotIndex = 0;   // Which side rotation is used
     private int upRotIndex = 0;     // Which up rotation is used
 
 
-    // Used to avoid restart same up-rotation corountine
-    private enum UpRotation
-    {
-        Up,
-        Middle,
-        Down,
-    }
-    private UpRotation currentRotDir = UpRotation.Middle;
+    // Used to avoid restart same up-rotation corountine and simlating button press
+    private RotationDirection currentRotDir = RotationDirection.Middle;
 
     private void Awake()
     {
@@ -51,20 +46,20 @@ public class BlockRotation : MonoBehaviour
     private void RotateByKeys()
     {
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) &&
-            currentRotDir != UpRotation.Up)
+            currentRotDir != RotationDirection.Up)
         {
             if (IsRotating) StopAllCoroutines();
             if (upRotIndex == 0)
-                currentRotDir = UpRotation.Up;
+                currentRotDir = RotationDirection.Up;
             StartCoroutine(RotateTransform(0, -1, rotationTime));
         }
 
         if ((Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) &&
-            currentRotDir != UpRotation.Down)
+            currentRotDir != RotationDirection.Down)
         {
             if (IsRotating) StopAllCoroutines();
             if (upRotIndex == 0)
-                currentRotDir = UpRotation.Down;
+                currentRotDir = RotationDirection.Down;
             StartCoroutine(RotateTransform(0, 1, rotationTime));
         }
 
@@ -95,6 +90,14 @@ public class BlockRotation : MonoBehaviour
         if (rotTime > 0)
         {
             SoundManager.Instance.PlaySound(SoundClipTrigger.OnLureTurn);
+
+            if (Mathf.Abs(sideRotDir) + Mathf.Abs(upRotDir) > 0)
+            {
+                foreach (RotationButtons rot in rotationButtons)
+                {
+                    rot.ShowButtonClick(sideRotDir, upRotDir);
+                }
+            }
         }
 
         OnRotationStart?.Invoke(sideRotIndex, upRotIndex);
@@ -115,7 +118,7 @@ public class BlockRotation : MonoBehaviour
         IsRotating = false;
         OnRotationEnd?.Invoke(sideRotIndex, upRotIndex);
         // This sets rotation for up or down to max preventing jittering
-        currentRotDir = upRotIndex < 0 ? UpRotation.Up : upRotIndex > 0 ? UpRotation.Down : UpRotation.Middle;
+        currentRotDir = upRotIndex < 0 ? RotationDirection.Up : upRotIndex > 0 ? RotationDirection.Down : RotationDirection.Middle;
     }
 
     private void GetTargetRotation(int sideRotDir, int upRotDir, out Quaternion currentRot, out Quaternion targetRot)
@@ -157,8 +160,8 @@ public class BlockRotation : MonoBehaviour
     public void RotateBlockUp(int dir)
     {
 
-        if ((dir == 1 && currentRotDir == UpRotation.Down) ||
-            (dir == -1 && currentRotDir == UpRotation.Up))
+        if ((dir == 1 && currentRotDir == RotationDirection.Down) ||
+            (dir == -1 && currentRotDir == RotationDirection.Up))
         {
             return;
         }
@@ -167,10 +170,9 @@ public class BlockRotation : MonoBehaviour
 
         if (upRotIndex == 0)
         {
-            currentRotDir = dir > 0 ? UpRotation.Down : UpRotation.Up;
+            currentRotDir = dir > 0 ? RotationDirection.Down : RotationDirection.Up;
         }
 
         StartCoroutine(RotateTransform(0, dir, rotationTime));
     }
 }
-

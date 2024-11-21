@@ -12,7 +12,6 @@ public class Rod : MonoBehaviour
     public FishSpecies CaughtFish { get; private set; } = FishSpecies.None; // Fish species attached
 
     // References
-    [SerializeField] private AudioSource sound;
     [SerializeField] private Outline outline;
     [SerializeField] private Animator anim;
 
@@ -104,23 +103,30 @@ public class Rod : MonoBehaviour
         else
             yield return new WaitForSeconds(3f);
 
-        // Create catch isCatalogOpen
+        // Create catch score
         int catchValue = Random.Range(0, totalCatchScore);
         float timeAttached = 0;
 
         // Catch fish
         for (int i = 0; i < fishCatchChances.Length; i++)
         {
-            if (catchValue >= fishCatchChances[i].minScore && catchValue < fishCatchChances[i].maxScore)
+            if (catchValue < fishCatchChances[i].minScore
+                || catchValue >= fishCatchChances[i].maxScore)
             {
-                HasFish = true;
-                CaughtFish = fishCatchChances[i].species;
-                timeAttached = fishCatchChances[i].timeAttached;
-                anim.SetBool("Fish", true);
-                sound.Play();
-                outline.enabled = true;
+                continue;
+            }
+
+            if (fishCatchChances[i].species == FishSpecies.None)
+            {
                 break;
             }
+
+            HasFish = true;
+            CaughtFish = fishCatchChances[i].species;
+            timeAttached = fishCatchChances[i].timeAttached;
+            anim.SetBool("Fish", true);
+            outline.enabled = true;
+            break;
         }
 
         yield return new WaitForSeconds(timeAttached);
@@ -128,10 +134,13 @@ public class Rod : MonoBehaviour
         // TODO: give a chance to lose lure
         HasFish = false;
         CaughtFish = FishSpecies.None;
-        StartCoroutine(WaitingForFish());
-        Debug.Log("Got away");
         anim.SetBool("Fish", false);
         outline.enabled = false;
+
+        if (Random.Range(0, 4) == 0)
+            DestroyLure();
+        else
+            StartCoroutine(WaitingForFish());
     }
 
     // Function to calculate and print catch chances
@@ -169,13 +178,18 @@ public class Rod : MonoBehaviour
     /// </summary>
     public void DetachLure()
     {
-        // TODO: display fish and lure before destroying lure
         LureAttached = null;
         IsAttached = false;
         outline.enabled = false;
         StopAllCoroutines();
         anim.SetBool("Water", false);
         anim.SetBool("Fish", false);
+    }
+
+    public void DestroyLure()
+    {
+        Destroy(LureAttached.gameObject);
+        DetachLure();
     }
 
     public void SetLineEndPoint(Vector3 noFishEndPoint, Vector3 fishEndPoint)
