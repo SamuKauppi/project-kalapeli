@@ -39,8 +39,7 @@ public class LureCreationManager : MonoBehaviour
     [SerializeField] private GameObject saveButtons;
     [SerializeField] private GameObject warningPopUp;
     [SerializeField] private GameObject backToFish;
-    [SerializeField] private GameObject rotateButtons1;
-    [SerializeField] private GameObject rotateButtons2;
+    [SerializeField] private GameObject rotateButtons;
 
     // Mesh reset
     [SerializeField] private Mesh blockMesh;
@@ -157,10 +156,7 @@ public class LureCreationManager : MonoBehaviour
         BlockRotation.Instance.StopRotating = false;    // Ensure the block can be rotated
 
         // Set rotate buttons
-        rotateButtons1.SetActive(_process == LureCreationProcess.Cutting
-                                 || _process == LureCreationProcess.Painting
-                                 || _process == LureCreationProcess.Saving);
-        rotateButtons2.SetActive(_process == LureCreationProcess.Attaching);
+        rotateButtons.SetActive(_process != LureCreationProcess.None);
 
         requirementEff.SetImageActive(_process == LureCreationProcess.Attaching);
     }
@@ -202,8 +198,7 @@ public class LureCreationManager : MonoBehaviour
             SetAttaching(false);
             SetSaving(false);
             backToFish.SetActive(false);
-            rotateButtons1.SetActive(false);
-            rotateButtons2.SetActive(false);
+            rotateButtons.SetActive(false);
             // Enable popup
             warningPopUp.SetActive(true);
             // Diable rotation

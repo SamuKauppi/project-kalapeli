@@ -41,7 +41,7 @@ public class RotationButtons
         }
         else
         {
-            direction = sideDir > 0 ? RotationDirection.Left : RotationDirection.Right;
+            direction = sideDir < 0 ? RotationDirection.Left : RotationDirection.Right;
         }
 
         Button targetButton = direction switch

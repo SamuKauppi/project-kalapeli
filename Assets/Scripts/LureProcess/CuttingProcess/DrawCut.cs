@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Handles the cutting process of the block
@@ -47,7 +48,7 @@ public class DrawCut : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         // Stop the ability to cut when the block is rotatig
         if (blockRotation.IsRotating)
@@ -56,7 +57,7 @@ public class DrawCut : MonoBehaviour
             return;
         }
 
-        if (!IsCutting) 
+        if (!IsCutting || EventSystem.current.IsPointerOverGameObject()) 
         {
             cancelCut = true;
             return; 
@@ -104,23 +105,7 @@ public class DrawCut : MonoBehaviour
         // Make the cut
         if (Input.GetMouseButtonUp(0))
         {
-            blockRotation.StopRotating = false;
-            if (cancelCut)
-            {
-                cancelCut = false;
-                ResetLineRender();
-                return;
-            }
-
-            pointB = cam.ScreenToWorldPoint(mouse);
-            if (Vector3.Distance(pointA, pointB) > minCutDist)
-            {
-                CreateSlicePlane();
-            }
-            cutRender.positionCount = 2;
-            cutRender.SetPosition(0, pointA);
-            cutRender.SetPosition(1, pointB);
-            animateCut = true;
+            PerformCut();
         }
 
         // Animate line renderer
@@ -128,6 +113,27 @@ public class DrawCut : MonoBehaviour
         {
             cutRender.SetPosition(0, Vector3.Lerp(pointA, pointB, 1f));
         }
+    }
+
+    private void PerformCut()
+    {
+        blockRotation.StopRotating = false;
+        if (cancelCut)
+        {
+            cancelCut = false;
+            ResetLineRender();
+            return;
+        }
+
+        pointB = cam.ScreenToWorldPoint(mouse);
+        if (Vector3.Distance(pointA, pointB) > minCutDist)
+        {
+            CreateSlicePlane();
+        }
+        cutRender.positionCount = 2;
+        cutRender.SetPosition(0, pointA);
+        cutRender.SetPosition(1, pointB);
+        animateCut = true;
     }
 
     /// <summary>

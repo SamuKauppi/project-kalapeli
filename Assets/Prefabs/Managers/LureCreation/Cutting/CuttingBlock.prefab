@@ -185,22 +185,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationTime: 0.25
   rotationButtons:
-  - normalColor: {r: 1, g: 1, b: 1, a: 1}
+    normalColor: {r: 1, g: 1, b: 1, a: 1}
     pressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     buttons:
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
-    transitionDuration: 0.15
-  - normalColor: {r: 1, g: 1, b: 1, a: 1}
-    pressedColor: {r: 0.7843138, g: 0.7843138, b: 0.7843138, a: 1}
-    buttons:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    transitionDuration: 0.15
+    transitionDuration: 0.1
 --- !u!114 &1744438499120138163
 MonoBehaviour:
   m_ObjectHideFlags: 0

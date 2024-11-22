@@ -20,7 +20,7 @@ public class BlockRotation : MonoBehaviour
 
     // Rotations
     [SerializeField] private float rotationTime = 0.5f; // How fast the block rotates
-    [SerializeField] private RotationButtons[] rotationButtons;
+    [SerializeField] private RotationButtons rotationButtons;
     private int sideRotIndex = 0;   // Which side rotation is used
     private int upRotIndex = 0;     // Which up rotation is used
 
@@ -52,6 +52,7 @@ public class BlockRotation : MonoBehaviour
             if (upRotIndex == 0)
                 currentRotDir = RotationDirection.Up;
             StartCoroutine(RotateTransform(0, -1, rotationTime));
+            rotationButtons.ShowButtonClick(0, -1);
         }
 
         if ((Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) &&
@@ -61,18 +62,21 @@ public class BlockRotation : MonoBehaviour
             if (upRotIndex == 0)
                 currentRotDir = RotationDirection.Down;
             StartCoroutine(RotateTransform(0, 1, rotationTime));
+            rotationButtons.ShowButtonClick(0, 1);
         }
 
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             if (IsRotating) StopAllCoroutines();
-            StartCoroutine(RotateTransform(-1 * (upRotIndex == 0 ? 1 : upRotIndex), 0, rotationTime));
+            StartCoroutine(RotateTransform(1 * (upRotIndex == 0 ? 1 : upRotIndex), 0, rotationTime));
+            rotationButtons.ShowButtonClick(1, 0);
         }
 
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (IsRotating) StopAllCoroutines();
-            StartCoroutine(RotateTransform(1 * (upRotIndex == 0 ? 1 : upRotIndex), 0, rotationTime));
+            StartCoroutine(RotateTransform(-1 * (upRotIndex == 0 ? 1 : upRotIndex), 0, rotationTime));
+            rotationButtons.ShowButtonClick(-1, 0);
         }
     }
 
@@ -90,14 +94,6 @@ public class BlockRotation : MonoBehaviour
         if (rotTime > 0)
         {
             SoundManager.Instance.PlaySound(SoundClipTrigger.OnLureTurn);
-
-            if (Mathf.Abs(sideRotDir) + Mathf.Abs(upRotDir) > 0)
-            {
-                foreach (RotationButtons rot in rotationButtons)
-                {
-                    rot.ShowButtonClick(sideRotDir, upRotDir);
-                }
-            }
         }
 
         OnRotationStart?.Invoke(sideRotIndex, upRotIndex);
