@@ -211,7 +211,7 @@ MonoBehaviour:
   thresholdStreamlineRatio: 0.8
   minLengthOneHook: 0.05
   minLengthTwoHook: 0.08
-  depthFromMassM: 0.04
+  depthFromMassM: 0.025
 --- !u!114 &9213585019420134121
 MonoBehaviour:
   m_ObjectHideFlags: 0

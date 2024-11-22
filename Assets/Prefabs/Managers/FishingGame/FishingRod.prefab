@@ -54,7 +54,7 @@ MonoBehaviour:
   lineStartWidth: 0.005
   lineEndWidth: 0.001
   minTimeForFish: 2
-  maxTimeForFish: 100
+  maxTimeForFish: 120
 --- !u!65 &7472994422790656681
 BoxCollider:
   m_ObjectHideFlags: 0

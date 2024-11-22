@@ -1990,17 +1990,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   catchScoreTable:
   - scoreType: 0
-    catchScore: 225
+    catchScore: 500
   - scoreType: 1
-    catchScore: 85
+    catchScore: 5000
   - scoreType: 2
-    catchScore: 100
+    catchScore: 2000
   - scoreType: 3
-    catchScore: 150
+    catchScore: 10000
   - scoreType: 4
-    catchScore: 150
+    catchScore: 1500
   - scoreType: 5
-    catchScore: 50
+    catchScore: 500
 --- !u!1 &8797660526973798924
 GameObject:
   m_ObjectHideFlags: 0

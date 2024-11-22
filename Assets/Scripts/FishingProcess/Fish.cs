@@ -34,6 +34,7 @@ public class Fish : MonoBehaviour
     // Private
     private readonly HashSet<AttachingType> attachTable = new();
     private const float DEPTH_TOLERANCE = 10f;
+    private readonly float maxColorDiff = Mathf.Sqrt(3) * 0.5f;
 
     // Public getters
     public FishSpecies Species { get { return species; } }
@@ -49,13 +50,6 @@ public class Fish : MonoBehaviour
     public float TimeAttached { get { return timeAttached; } }
     public int ScoreGained { get { return score; } }
 
-    private void Start()
-    {
-        foreach (var attachable in PreferredAttachables)
-        {
-            attachTable.Add(attachable);
-        }
-    }
 
     /// <summary>
     /// Returns score isCatalogOpen based on how close the colors are to fish desired colors
@@ -68,7 +62,6 @@ public class Fish : MonoBehaviour
     {
         int score = 0;
         int baseCatch = CatchScoreTable.Instance.GetCatchScoreForType(CatchScoreType.Color);
-        float maxColorDistance = Mathf.Sqrt(3); // Precomputed max distance for normalized RGB
         foreach (Color c in PreferredColors)
         {
             float baseDiff = Mathf.Sqrt(Mathf.Pow(baseC.r - c.r, 2) + Mathf.Pow(baseC.g - c.g, 2) + Mathf.Pow(baseC.b - c.b, 2));
@@ -77,7 +70,9 @@ public class Fish : MonoBehaviour
                 float texDiff = Mathf.Sqrt(Mathf.Pow(texC.r - c.r, 2) + Mathf.Pow(texC.g - c.g, 2) + Mathf.Pow(texC.b - c.b, 2));
                 baseDiff = (baseDiff + texDiff) * 0.5f;
             }
-            score += Mathf.RoundToInt(Mathf.Lerp(baseCatch, 0f, baseDiff / maxColorDistance));
+
+            baseDiff = baseDiff > maxColorDiff ? maxColorDiff : baseDiff;
+            score += Mathf.RoundToInt(Mathf.Lerp(baseCatch, 0f, baseDiff / maxColorDiff));
         }
 
         return score;
@@ -140,14 +135,24 @@ public class Fish : MonoBehaviour
     private int GetScoreFromValue<T>(T value, T[] array, CatchScoreType type)
     {
         int score = 0;
+        var comparer = EqualityComparer<T>.Default;
         foreach (T v in array)
         {
-            if (v.Equals(value))
+            if (comparer.Equals(v, value))
             {
                 score += CatchScoreTable.Instance.GetCatchScoreForType(type);
             }
         }
         return score;
+    }
+
+    public void InitializeFish()
+    {
+        attachTable.Clear();
+        foreach (var attachable in PreferredAttachables)
+        {
+            attachTable.Add(attachable);
+        }
     }
 
     /// <summary>
@@ -157,7 +162,7 @@ public class Fish : MonoBehaviour
     /// <returns></returns>
     public virtual int GetCatchChance(LureStats lure)
     {
-        if (lure.SwimType == SwimmingType.Bad || lure.SwimType == SwimmingType.None)
+        if (lure.SwimType == SwimmingType.Bad)
         {
             return 0;
         }
@@ -177,7 +182,6 @@ public class Fish : MonoBehaviour
                                       CatchScoreType.Attachment);                                       // Attachment score
         catchScore += GetScoreFromValue(lure.SwimType, PreferredSwimStyle, CatchScoreType.SwimStyle);   // Swim score
         catchScore += GetScoreFromValue(lure.PatternID, PreferredPatternIndex, CatchScoreType.Pattern); // Patthern score
-
         for (int i = 0; i < lure.HookCount; i++)
         {
             catchScore += CatchScoreTable.Instance.GetCatchScoreForType(CatchScoreType.Hook);   // Score for each hook

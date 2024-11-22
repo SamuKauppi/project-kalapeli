@@ -791,6 +791,10 @@ PrefabInstance:
       propertyPath: backButton
       value: 
       objectReference: {fileID: 2791450352268328217}
+    - target: {fileID: 9042969560797647509, guid: f0e72de8cf1ef0142a41a19f5d6c2007, type: 3}
+      propertyPath: noFishScore
+      value: 3000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -42,6 +42,7 @@ public class PersitentManager : MonoBehaviour
         // Populate dictionary
         for (int i = 0; i < everyFishInGame.Length; i++)
         {
+            everyFishInGame[i].InitializeFish();
             fishDict.Add(everyFishInGame[i].Species, everyFishInGame[i]);
         }
 
@@ -130,14 +131,20 @@ public class PersitentManager : MonoBehaviour
     }
 
 
-    public void GainScoreFormFish(FishSpecies fish)
+    public void GainScoreFormFish(FishSpecies fish, Vector3 particlePos)
     {
         int value = fishesCaught.Contains(fish) ? fishDict[fish].ScoreGained : fishDict[fish].ScoreGained / 2;
         score += value;
         scoreText.text = SCORE + score;
-        fishesCaught.Add(fish);
 
-        ParticleEffectManager.Instance.PlayParticleEffect(ParticleType.DisplayFish, Vector3.zero);
+        ParticleEffectManager.Instance.PlayParticleEffect(ParticleType.DisplayFish, particlePos);
+
+        if (!fishesCaught.Contains(fish))
+        {
+            ParticleEffectManager.Instance.PlayParticleEffect(ParticleType.DisplayNewFish, particlePos);
+        }
+
+        fishesCaught.Add(fish);
     }
 
     public bool IsFishCaught(FishSpecies fish)

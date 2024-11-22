@@ -18,8 +18,8 @@ public class Rod : MonoBehaviour
     // Line Renderer
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private Transform lineStartPoint;
-    private Vector3 noFishLinePoint;
-    private Vector3 fishLinePoint;
+    private Transform noFishLinePoint;
+    private Transform fishLinePoint;
     [SerializeField] private float lineStartWidth;
     [SerializeField] private float lineEndWidth;
 
@@ -78,13 +78,13 @@ public class Rod : MonoBehaviour
 
         lineRenderer.SetPosition(0, lineStartPoint.position);
 
-        if (HasFish && lineRenderer.GetPosition(0) != fishLinePoint)
+        if (HasFish)
         {
-            lineRenderer.SetPosition(1, fishLinePoint);
+            lineRenderer.SetPosition(1, fishLinePoint.position);
         }
-        else if(lineRenderer.GetPosition(0) != noFishLinePoint)
+        else
         {
-            lineRenderer.SetPosition(1, noFishLinePoint);
+            lineRenderer.SetPosition(1, noFishLinePoint.position);
         }
     }
 
@@ -95,7 +95,7 @@ public class Rod : MonoBehaviour
     private IEnumerator WaitingForFish()
     {
         // Wait for a random time
-        if (fishCatchChances[0].species != FishSpecies.Boot)
+        if (fishCatchChances.Length > 0 && fishCatchChances[0].species != FishSpecies.Boot)
         {
             PrintCatchChances(fishCatchChances, totalCatchScore);
             yield return new WaitForSeconds(Random.Range(minTimeForFish, maxTimeForFish));
@@ -131,7 +131,6 @@ public class Rod : MonoBehaviour
 
         yield return new WaitForSeconds(timeAttached);
 
-        // TODO: give a chance to lose lure
         HasFish = false;
         CaughtFish = FishSpecies.None;
         anim.SetBool("Fish", false);
@@ -192,10 +191,10 @@ public class Rod : MonoBehaviour
         DetachLure();
     }
 
-    public void SetLineEndPoint(Vector3 noFishEndPoint, Vector3 fishEndPoint)
+    public void SetLineEndPoint(Transform noFishEndPoint, Transform fishEndPoint)
     {
         noFishLinePoint = noFishEndPoint;
         fishLinePoint = fishEndPoint;
-        lineRenderer.SetPosition(1, noFishEndPoint);
+        lineRenderer.SetPosition(1, noFishEndPoint.position);
     }
 }

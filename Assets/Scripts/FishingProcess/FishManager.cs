@@ -57,7 +57,7 @@ public class FishManager : MonoBehaviour
         for (int i = 0; i < rodAttachPoints.Length; i++)
         {
             rods[i] = Instantiate(rodPrefab, rodAttachPoints[i].position, rodAttachPoints[i].rotation, rodAttachPoints[i]);
-            rods[i].SetLineEndPoint(lineEndPointNoFish.position, lineEndPointFish.position);
+            rods[i].SetLineEndPoint(lineEndPointNoFish, lineEndPointFish);
         }
 
         cam = GameManager.Instance.MainCamera;
@@ -135,16 +135,6 @@ public class FishManager : MonoBehaviour
             List<FishCatchScore> fishCatchScores = new();
             int totalScore = noFishScore;
 
-            // Add miss chance
-            FishCatchScore none = new()
-            {
-                species = FishSpecies.None,
-                minScore = 0,
-                maxScore = noFishScore,
-                timeAttached = 0
-            };
-            fishCatchScores.Add(none);
-
             for (int i = 0; i < availableFish.Length; i++)
             {
                 int score = availableFish[i].GetCatchChance(nextLure);
@@ -164,6 +154,19 @@ public class FishManager : MonoBehaviour
                     fishCatchScores.Add(fcs);
                 }
                 // Debug.Log("Fish: " + availableFish[i].Species + ", Score: " + score);
+            }
+
+            // Add miss chance
+            if (fishCatchScores.Count > 0)
+            {
+                FishCatchScore none = new()
+                {
+                    species = FishSpecies.None,
+                    minScore = totalScore,
+                    maxScore = totalScore + noFishScore * (nextLure.SwimType == SwimmingType.None ? 2 : 1),
+                    timeAttached = 0
+                };
+                fishCatchScores.Add(none);
             }
 
             // Attach lure and it's catch chances to rod
@@ -195,7 +198,7 @@ public class FishManager : MonoBehaviour
                 displayFish = Instantiate(fish.gameObject, displayParent.transform.position, displayParent.transform.rotation, displayParent);
                 displayUI.SetActive(true);
                 backButton.SetActive(false);
-                PersitentManager.Instance.GainScoreFormFish(fish.Species);
+                PersitentManager.Instance.GainScoreFormFish(fish.Species, displayParent.position);
                 PersitentManager.Instance.AddLure(lureUsed);
                 FishingLureBox.Instance.SetLureBoxActive(PersitentManager.Instance.LureCount());
                 scoreText.text = caughtFish + SCORE + fish.ScoreGained;

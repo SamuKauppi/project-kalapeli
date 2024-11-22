@@ -944,6 +944,7 @@ MonoBehaviour:
   displayUI: {fileID: 0}
   scoreText: {fileID: 0}
   backButton: {fileID: 0}
+  noFishScore: 5000
 --- !u!1 &3339965429506539050
 GameObject:
   m_ObjectHideFlags: 0

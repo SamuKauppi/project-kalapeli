@@ -48,7 +48,7 @@ public class DrawCut : MonoBehaviour
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    void Update()
     {
         // Stop the ability to cut when the block is rotatig
         if (blockRotation.IsRotating)
@@ -57,10 +57,15 @@ public class DrawCut : MonoBehaviour
             return;
         }
 
-        if (!IsCutting || EventSystem.current.IsPointerOverGameObject()) 
+        if (!IsCutting) 
         {
             cancelCut = true;
             return; 
+        }
+
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
         }
 
         // Find mouse pos
