@@ -4,7 +4,7 @@ using UnityEngine;
 public class ParticleEffectPlayer : MonoBehaviour
 {
     [SerializeField] private ParticleSystem player;
-    public ParticleType type;
+    public ParticleType particleType;
 
     private IEnumerator DestroyWhenEnd()
     {
@@ -13,9 +13,8 @@ public class ParticleEffectPlayer : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void PlayEffect(Vector3 position)
+    public void PlayEffect()
     {
-        transform.position = position;
         player.Play();
         StartCoroutine(DestroyWhenEnd());
     }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,8 +5,8 @@ public class ParticleEffectManager : MonoBehaviour
 {
     public static ParticleEffectManager Instance { get; private set; }
 
-    [SerializeField] private ParticleEffectPlayer[] players;
-    private Dictionary<ParticleType, ParticleEffectPlayer> playersDict = new();
+    [SerializeField] private ParticleEffectPlayer[] playersPrefabs;
+    private readonly Dictionary<ParticleType, ParticleEffectPlayer> playersDict = new();
 
     private void Awake()
     {
@@ -19,17 +18,18 @@ public class ParticleEffectManager : MonoBehaviour
 
     private void Start()
     {
-        foreach (ParticleEffectPlayer player in players)
+        for (int i = 0; i < playersPrefabs.Length; i++)
         {
-            playersDict[player.type] = player;
+            playersDict.Add(playersPrefabs[i].particleType, playersPrefabs[i]);
         }
     }
 
-    public void PlayParticleEffect(ParticleType type, Vector3 position)
+    public void PlayParticleEffect(ParticleType type, Vector3 position, Transform parent = null)
     {
         if (playersDict.TryGetValue(type, out ParticleEffectPlayer player))
         {
-            player.PlayEffect(position);
+            ParticleEffectPlayer effect = Instantiate(player, position, Quaternion.identity, parent);
+            effect.PlayEffect();
         }
     }
 }
