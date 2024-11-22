@@ -130,12 +130,14 @@ public class PersitentManager : MonoBehaviour
     }
 
 
-    public void GainScoreFormFish(FishSpecies fish)
+    public void GainScoreFormFish(FishSpecies fish, Vector3 position)
     {
         int value = fishesCaught.Contains(fish) ? fishDict[fish].ScoreGained : fishDict[fish].ScoreGained / 2;
         score += value;
         scoreText.text = SCORE + score;
         fishesCaught.Add(fish);
+
+        ParticleEffectManager.Instance.PlayParticleEffect(ParticleType.DisplayFish, position);
     }
 
     public bool IsFishCaught(FishSpecies fish)
