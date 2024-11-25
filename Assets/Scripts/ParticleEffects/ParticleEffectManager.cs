@@ -7,6 +7,7 @@ public class ParticleEffectManager : MonoBehaviour
 
     [SerializeField] private ParticleEffectPlayer[] playersPrefabs;
     private readonly Dictionary<ParticleType, ParticleEffectPlayer> playersDict = new();
+    private readonly List<ParticleEffectPlayer> activePlayers = new();
 
     private void Awake()
     {
@@ -30,6 +31,19 @@ public class ParticleEffectManager : MonoBehaviour
         {
             ParticleEffectPlayer effect = Instantiate(player, position, Quaternion.identity, parent);
             effect.PlayEffect();
+            activePlayers.Add(effect);
+        }
+    }
+
+    public void DeletePartilceEffect(ParticleType type)
+    {
+        for (int i = activePlayers.Count - 1; i >= 0; i--)
+        {
+            if (activePlayers[i].particleType == type)
+            {
+                Destroy(activePlayers[i].gameObject);
+                activePlayers.RemoveAt(i);
+            }
         }
     }
 }

@@ -157,7 +157,7 @@ public class FishManager : MonoBehaviour
             }
 
             // Add miss chance
-            if (fishCatchScores.Count > 0)
+            if (fishCatchScores.Count > 0 && nextLure.baseCatchChance < 3)
             {
                 FishCatchScore none = new()
                 {
@@ -216,6 +216,7 @@ public class FishManager : MonoBehaviour
         CanFish = true;
         if (displayFish)
             Destroy(displayFish);
+        ParticleEffectManager.Instance.DeletePartilceEffect(ParticleType.DisplayFish);
     }
 
 

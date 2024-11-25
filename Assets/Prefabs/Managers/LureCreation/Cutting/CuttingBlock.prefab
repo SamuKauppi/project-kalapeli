@@ -212,6 +212,7 @@ MonoBehaviour:
   minLengthOneHook: 0.05
   minLengthTwoHook: 0.08
   depthFromMassM: 0.025
+  correctnessScore: 500
 --- !u!114 &9213585019420134121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,7 +233,7 @@ MonoBehaviour:
   TexColor: {r: 0, g: 0, b: 0, a: 1}
   PatternID: 1
   AttachedTypes: 
-  HookCount: 0
+  baseCatchChance: 0
 --- !u!64 &8350681727507843981
 MeshCollider:
   m_ObjectHideFlags: 0

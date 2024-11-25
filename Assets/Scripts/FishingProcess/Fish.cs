@@ -174,7 +174,7 @@ public class Fish : MonoBehaviour
         }
 
         // Otherwise calculate score
-        int catchScore = catchChance;
+        int catchScore = catchChance + lure.baseCatchChance;
         catchScore += GetDepthScore(lure.SwimmingDepth);                                                // Depth score
         catchScore += GetColorScore(lure.BaseColor, lure.TexColor, lure.PatternID);                     // Color score
         catchScore += GetScoreFromSet(lure.AttachedTypes,
@@ -182,10 +182,6 @@ public class Fish : MonoBehaviour
                                       CatchScoreType.Attachment);                                       // Attachment score
         catchScore += GetScoreFromValue(lure.SwimType, PreferredSwimStyle, CatchScoreType.SwimStyle);   // Swim score
         catchScore += GetScoreFromValue(lure.PatternID, PreferredPatternIndex, CatchScoreType.Pattern); // Patthern score
-        for (int i = 0; i < lure.HookCount; i++)
-        {
-            catchScore += CatchScoreTable.Instance.GetCatchScoreForType(CatchScoreType.Hook);   // Score for each hook
-        }
 
         // return score
         return catchScore;

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 /// <summary>
@@ -8,7 +7,7 @@ using UnityEngine;
 public class LureFunctions : MonoBehaviour
 {
     public LureStats Stats { get; private set; }
-    public bool CanCatch { get { return Stats.HookCount > 0; } }
+    public bool CanCatch { get { return hookCount > 0; } }
 
     // SerializeFields
     [SerializeField] private float streamlineMultiplier = 1f;   // Multiplies streamlineRatio to make it more readable
@@ -18,7 +17,7 @@ public class LureFunctions : MonoBehaviour
     [SerializeField] private float minLengthOneHook = 1;        // Min length with one hook to maintain proper swimming
     [SerializeField] private float minLengthTwoHook = 2.5f;     // Min length with two hooks to maintain proper swimming
     [SerializeField] private float depthFromMassM = 0.1f;       // How much depth is added for each gram (default 10cm)
-
+   
     // private variables
     private MeshFilter _filter;         // Reference to filter  
     private GameObject arrowObj;        // Arrow used to display direction
@@ -34,6 +33,8 @@ public class LureFunctions : MonoBehaviour
     private SwimmingType attachSwim;    // The swimming style gained from attachments
     private float attachWeight;         // Total weight of all attachments
     private float chubDepth;            // How much depth is gained from the chub
+    private int hookCount;
+    private int eyeCount;
 
     // Flags
     private bool isDisplayingColor;     // Prevents multiple functions calls when no color should be shown
@@ -226,12 +227,13 @@ public class LureFunctions : MonoBehaviour
         // Initialize local variabes
         float length = _filter.mesh.bounds.size.x * unitConverter;  // Convert units
         int chubCount = 0;
-        Stats.HookCount = 0;
 
         // Initialize class variables
         attachWeight = 0.0f;
         attachSwim = SwimmingType.None;
         chubDepth = 0.0f;
+        hookCount = 0;
+        eyeCount = 0;
 
         // Reset attachments
         Stats.AttachedTypes = new AttachingType[transform.childCount - 1];
@@ -254,7 +256,7 @@ public class LureFunctions : MonoBehaviour
             switch (groupType)
             {
                 case "Hook":
-                    HandleHook(length, ref Stats.HookCount);
+                    HandleHook(length, ref hookCount);
                     break;
 
                 case "Chub":
@@ -262,7 +264,11 @@ public class LureFunctions : MonoBehaviour
                     break;
 
                 case "Tail":
-                    HandleHook(length, ref Stats.HookCount);
+                    HandleHook(length, ref hookCount);
+                    break;
+
+                case "Eye":
+                    eyeCount++;
                     break;
 
                 default:
@@ -376,6 +382,14 @@ public class LureFunctions : MonoBehaviour
         }
     }
 
+    private void CalculateBaseCatchChance()
+    {
+        Stats.baseCatchChance = 0;
+        Stats.baseCatchChance += attachSwim != SwimmingType.None && attachSwim != SwimmingType.Bad ? 1 : 0;
+        Stats.baseCatchChance += hookCount > 0 ? 1 : 0;
+        Stats.baseCatchChance += eyeCount == 2 ? 1 : 0;
+    }
+
     public void RenameLure(string name)
     {
         Stats.lureName = name;
@@ -460,6 +474,8 @@ public class LureFunctions : MonoBehaviour
     public void FinalizeLure()
     {
         if (transform.childCount == 0) return;
+
+        CalculateBaseCatchChance();
 
         arrowObj.SetActive(false);
 

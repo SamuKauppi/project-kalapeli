@@ -2001,8 +2001,6 @@ MonoBehaviour:
     catchScore: 10000
   - scoreType: 4
     catchScore: 1500
-  - scoreType: 5
-    catchScore: 500
 --- !u!1 &8797660526973798924
 GameObject:
   m_ObjectHideFlags: 0
