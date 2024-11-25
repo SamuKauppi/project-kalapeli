@@ -101,7 +101,6 @@ MonoBehaviour:
     - {fileID: -205734380, guid: fba52205514e7204bae424e03819b731, type: 3}
     - {fileID: 1969926992, guid: fba52205514e7204bae424e03819b731, type: 3}
     - {fileID: -509500914, guid: fba52205514e7204bae424e03819b731, type: 3}
-  - sprites: []
   scrollContainer: {fileID: 6936073206823553141}
 --- !u!114 &6936073206823553141
 MonoBehaviour:
