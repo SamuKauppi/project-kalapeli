@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public Camera MainCamera { get { return mainCam; } }
 
+    public delegate void ChangeMode(bool isFishing);
+    public static event ChangeMode OnModeChange;
+
     [SerializeField] private bool isFishingMode;
 
     // References
@@ -53,6 +56,8 @@ public class GameManager : MonoBehaviour
         // Canvas
         fishCanvas.gameObject.SetActive(isFishingMode);
         lureCanvas.gameObject.SetActive(!isFishingMode);
+
+        OnModeChange?.Invoke(isFishingMode);
     }
 
     private IEnumerator ChangeFov(float targetFov, float changeTime)

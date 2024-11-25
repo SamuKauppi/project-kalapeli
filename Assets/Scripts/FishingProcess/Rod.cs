@@ -89,7 +89,7 @@ public class Rod : MonoBehaviour
     }
 
     /// <summary>
-    /// Wait for a fish to be caugth
+    /// Wait for a fish to be caught
     /// </summary>
     /// <returns></returns>
     private IEnumerator WaitingForFish()
@@ -98,7 +98,9 @@ public class Rod : MonoBehaviour
         if (fishCatchChances.Length > 0 && fishCatchChances[0].species != FishSpecies.Boot)
         {
             PrintCatchChances(fishCatchChances, totalCatchScore);
-            yield return new WaitForSeconds(Random.Range(minTimeForFish, maxTimeForFish));
+            float waitTime = maxTimeForFish;
+            Debug.Log("Total value: " + totalCatchScore);
+            yield return new WaitForSeconds(Random.Range(minTimeForFish, waitTime));
         }
         else
             yield return new WaitForSeconds(3f);

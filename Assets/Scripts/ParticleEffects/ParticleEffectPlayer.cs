@@ -7,20 +7,47 @@ public class ParticleEffectPlayer : MonoBehaviour
     [SerializeField] private float duration = 0f;
     public ParticleType particleType;
 
-    private IEnumerator DestroyWhenEnd()
+    private bool isDestroyWhenNotPlayingRunning = false;
+
+    private IEnumerator DisableWhenComplete()
     {
         yield return new WaitForSeconds(duration);
-        yield return null;
 
-        if (duration > 0f)
+        // Notify the manager to delete the effect
+        ParticleEffectManager.Instance.DeleteParticleEffect(particleType);
+    }
+
+    private IEnumerator DestroyWhenNotPlaying()
+    {
+        isDestroyWhenNotPlayingRunning = true;
+
+        // Wait until the particle system stops emitting
+        while (player.isEmitting || player.isPlaying)
         {
-            ParticleEffectManager.Instance.DeletePartilceEffect(particleType);
+            yield return null;
         }
+
+        // Destroy the GameObject after the particle system is done
+        Destroy(gameObject);
+
+        isDestroyWhenNotPlayingRunning = false;
     }
 
     public void PlayEffect()
     {
         player.Play();
-        StartCoroutine(DestroyWhenEnd());
+        if (duration > 0f)
+        {
+            StartCoroutine(DisableWhenComplete());
+        }
+    }
+
+    public void StopEffect()
+    {
+        player.Stop();
+        if (!isDestroyWhenNotPlayingRunning)
+        {
+            StartCoroutine(DestroyWhenNotPlaying());
+        }
     }
 }

@@ -133,7 +133,7 @@ public class FishManager : MonoBehaviour
         {
             // Create a list of fishes that can be caught
             List<FishCatchScore> fishCatchScores = new();
-            int totalScore = noFishScore;
+            int totalScore = 0;
 
             for (int i = 0; i < availableFish.Length; i++)
             {
@@ -157,13 +157,17 @@ public class FishManager : MonoBehaviour
             }
 
             // Add miss chance
-            if (fishCatchScores.Count > 0 && nextLure.baseCatchChance < 3)
+            // If lureRealism is not good enough add a miss chance
+            if (nextLure.lureRealismValue < 4)
             {
                 FishCatchScore none = new()
                 {
                     species = FishSpecies.None,
                     minScore = totalScore,
-                    maxScore = totalScore + noFishScore * (nextLure.SwimType == SwimmingType.None ? 2 : 1),
+                    maxScore = totalScore
+                               + noFishScore
+                               * nextLure.lureRealismValue
+                               * (nextLure.SwimType == SwimmingType.None ? 2 : 1),
                     timeAttached = 0
                 };
                 fishCatchScores.Add(none);
@@ -216,7 +220,7 @@ public class FishManager : MonoBehaviour
         CanFish = true;
         if (displayFish)
             Destroy(displayFish);
-        ParticleEffectManager.Instance.DeletePartilceEffect(ParticleType.DisplayFish);
+        ParticleEffectManager.Instance.DeleteParticleEffect(ParticleType.DisplayFish);
     }
 
 

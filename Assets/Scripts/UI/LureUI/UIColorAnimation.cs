@@ -10,6 +10,7 @@ public class UIColorAnimation : MonoBehaviour
     [SerializeField] private Color warningColor = Color.red;
     [SerializeField] private Color textWarningColor = Color.black;
     [SerializeField] private float transitionTime = 0.5f;
+    [SerializeField] private bool looping = false;
 
     private Color baseImageColor;
     private Color baseTextColor;
@@ -24,13 +25,18 @@ public class UIColorAnimation : MonoBehaviour
 
     public void SetImageActive(bool active)
     {
+        if (!active)
+            StopAllCoroutines();
+        else
+            StartEffect();
+
         if (targetImage != null)
             targetImage.gameObject.SetActive(active);
         if (targetText != null)
             targetText.gameObject.SetActive(active);
     }
 
-    public void StartEffect()
+    private void StartEffect()
     {
         StopAllCoroutines();
         StartCoroutine(AnimateWarning());
@@ -72,5 +78,8 @@ public class UIColorAnimation : MonoBehaviour
 
         if (targetText != null)
             targetText.color = baseTextColor;
+
+        if (looping)
+            StartEffect();
     }
 }

@@ -35,13 +35,13 @@ public class ParticleEffectManager : MonoBehaviour
         }
     }
 
-    public void DeletePartilceEffect(ParticleType type)
+    public void DeleteParticleEffect(ParticleType type)
     {
         for (int i = activePlayers.Count - 1; i >= 0; i--)
         {
             if (activePlayers[i].particleType == type)
             {
-                Destroy(activePlayers[i].gameObject);
+                activePlayers[i].StopEffect();
                 activePlayers.RemoveAt(i);
             }
         }

@@ -97,21 +97,24 @@ public class LureCreationManager : MonoBehaviour
 
     private void SetCutting(bool value)
     {
-        // Enable cutting
+        // Set cutting
         cutProcess.IsCutting = value;
         cutProcess.gameObject.SetActive(value);
         cuttingButtons.SetActive(value);
     }
     private void SetPainting(bool value)
     {
-        // Disable painting
+        // Set painting
         paintingButtons.SetActive(value);
         if (value)
+        {
             paintProcess.Activate();
+            Tutorial.Instance.EndCuttingTutorial();
+        }
     }
     private void SetAttaching(bool value)
     {
-        // Disable attaching
+        // Set attaching
         attachButtons.SetActive(value);
         attachProcess.IsAttaching = value;
         if (value)
@@ -119,7 +122,7 @@ public class LureCreationManager : MonoBehaviour
     }
     private void SetSaving(bool value)
     {
-        // Disable saving
+        // Set saving
         saveButtons.SetActive(value);
     }
 
@@ -158,6 +161,7 @@ public class LureCreationManager : MonoBehaviour
         // Set rotate buttons
         rotateButtons.SetActive(_process != LureCreationProcess.None);
 
+        // Set requirement effect
         requirementEff.SetImageActive(_process == LureCreationProcess.Attaching);
     }
 
@@ -251,9 +255,9 @@ public class LureCreationManager : MonoBehaviour
 
     public void StartSaving()
     {
-        if (!lureProperties.CanCatch) 
+        if (!lureProperties.CanCatch)
         {
-            requirementEff.StartEffect();
+            requirementEff.SetImageActive(true);
             return;
         }
 
@@ -272,7 +276,7 @@ public class LureCreationManager : MonoBehaviour
     {
         if (lureProperties.Stats.lureName.Equals(""))
         {
-            nameWarningEff.StartEffect();
+            nameWarningEff.SetImageActive(true);
             return;
         }
 
@@ -286,7 +290,7 @@ public class LureCreationManager : MonoBehaviour
     {
         if (lureProperties.Stats.lureName.Equals(""))
         {
-            nameWarningEff.StartEffect();
+            nameWarningEff.SetImageActive(true);
             return;
         }
 
@@ -307,6 +311,8 @@ public class LureCreationManager : MonoBehaviour
         {
             cutProcess.GetComponent<DrawCut>().IsCutting = value;
             cutProcess.ResetLineRender();
+            if (!value)
+                Tutorial.Instance.EndCuttingTutorial();
         }
         else if (_process == LureCreationProcess.Attaching)
         {

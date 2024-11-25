@@ -130,6 +130,7 @@ public class DrawCut : MonoBehaviour
             return;
         }
 
+        Tutorial.Instance.EndCuttingTutorial();
         pointB = cam.ScreenToWorldPoint(mouse);
         if (Vector3.Distance(pointA, pointB) > minCutDist)
         {

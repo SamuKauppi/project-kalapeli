@@ -174,7 +174,7 @@ public class Fish : MonoBehaviour
         }
 
         // Otherwise calculate score
-        int catchScore = catchChance + lure.baseCatchChance;
+        int catchScore = catchChance;
         catchScore += GetDepthScore(lure.SwimmingDepth);                                                // Depth score
         catchScore += GetColorScore(lure.BaseColor, lure.TexColor, lure.PatternID);                     // Color score
         catchScore += GetScoreFromSet(lure.AttachedTypes,

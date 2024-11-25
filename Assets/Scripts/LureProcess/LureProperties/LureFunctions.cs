@@ -382,12 +382,13 @@ public class LureFunctions : MonoBehaviour
         }
     }
 
-    private void CalculateBaseCatchChance()
+    private void SetRealismValue()
     {
-        Stats.baseCatchChance = 0;
-        Stats.baseCatchChance += attachSwim != SwimmingType.None && attachSwim != SwimmingType.Bad ? 1 : 0;
-        Stats.baseCatchChance += hookCount > 0 ? 1 : 0;
-        Stats.baseCatchChance += eyeCount == 2 ? 1 : 0;
+        Stats.lureRealismValue = 0;
+        Stats.lureRealismValue += attachSwim != SwimmingType.None && attachSwim != SwimmingType.Bad ? 1 : 0;
+        Stats.lureRealismValue += hookCount > 0 ? 1 : 0;
+        Stats.lureRealismValue += eyeCount == 2 ? 1 : 0;
+        Stats.lureRealismValue += streamlineRatio < worstStreamlineRatio ? 1 : 0;
     }
 
     public void RenameLure(string name)
@@ -475,7 +476,7 @@ public class LureFunctions : MonoBehaviour
     {
         if (transform.childCount == 0) return;
 
-        CalculateBaseCatchChance();
+        SetRealismValue();
 
         arrowObj.SetActive(false);
 
