@@ -8,7 +8,6 @@ using UnityEngine;
 public class Fish : MonoBehaviour
 {
     [SerializeField] private FishSpecies species;
-
     [TextArea(3, 15)]
     [SerializeField] private string hintText;
     [TextArea(3, 15)]
@@ -49,6 +48,9 @@ public class Fish : MonoBehaviour
     public float BaseCatchChance { get { return catchChance; } }
     public float TimeAttached { get { return timeAttached; } }
     public int ScoreGained { get { return score; } }
+
+    public Sprite miniIcon;
+    public Sprite bigIcon;
 
 
     /// <summary>

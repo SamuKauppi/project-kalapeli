@@ -26,6 +26,7 @@ public class FishCatalog : MonoBehaviour
     private bool isCatalogOpen = false;                     // Is catalog open or closed
 
     // Entry display
+    [SerializeField] private Sprite defaultMiniSprite;
     [SerializeField] private FishCatalogUIEntry[] entries;  // Fish entries
     [SerializeField] private Button pageForward;            // Next page
     [SerializeField] private Button pageBackward;           // Previous page
@@ -137,7 +138,10 @@ public class FishCatalog : MonoBehaviour
 
             if (isEntryActive)
             {
-                entries[i].DefineFishToDisplay(currentPage[i].Species);
+                Sprite sprite = PersitentManager.Instance.IsFishCaught(currentPage[i].Species) ?
+                    currentPage[i].miniIcon : defaultMiniSprite;
+
+                entries[i].DefineFishToDisplay(currentPage[i].Species, sprite);
             }
         }
 

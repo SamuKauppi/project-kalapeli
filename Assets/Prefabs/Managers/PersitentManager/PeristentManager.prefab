@@ -545,6 +545,10 @@ MonoBehaviour:
     floatValue: 0
     intValue: 0
     stringValue: 
+  - keyValue: 12
+    floatValue: 0
+    intValue: 0
+    stringValue: 
 --- !u!1 &863204248386603418
 GameObject:
   m_ObjectHideFlags: 0
@@ -2038,7 +2042,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4272321637658634604
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2649,7 +2653,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9066419419019727344
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6115,6 +6119,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6391520973114639958, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_Name
       value: FishCatalogEntry
@@ -6227,6 +6239,14 @@ PrefabInstance:
     - target: {fileID: 2929138087552528356, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6391520973114639958, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_Name
@@ -6341,6 +6361,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6391520973114639958, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_Name
       value: FishCatalogEntry
@@ -6453,6 +6481,14 @@ PrefabInstance:
     - target: {fileID: 2929138087552528356, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6391520973114639958, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_Name
@@ -6567,6 +6603,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6391520973114639958, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_Name
       value: FishCatalogEntry
@@ -6679,6 +6723,14 @@ PrefabInstance:
     - target: {fileID: 2929138087552528356, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6391520973114639958, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_Name
@@ -6793,6 +6845,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6391520973114639958, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_Name
       value: FishCatalogEntry
@@ -6905,6 +6965,14 @@ PrefabInstance:
     - target: {fileID: 2929138087552528356, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6391520973114639958, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_Name
@@ -7080,6 +7148,14 @@ PrefabInstance:
     - target: {fileID: 2929138087552528356, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6391520973114639958, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_Name

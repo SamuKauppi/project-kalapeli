@@ -58,6 +58,7 @@ public class ScorePage : MonoBehaviour
             FishSpecies.Boot => "Boots",
             FishSpecies.Muddle => "Muddles",
             FishSpecies.Peeper => "Peepers",
+            FishSpecies.Grouchy => "Gourchies",
             _ => "",
         };
     }
@@ -93,7 +94,7 @@ public class ScorePage : MonoBehaviour
         // Update UI elements based on new value
         if (newValue > 0)
         {
-            fishNames[index].text = $"{species} caught:";
+            fishNames[index].text = $"{GetFishPluralName(species)} caught:";
             fishNames[index].gameObject.SetActive(true);
             fishScores[index].text = newValue.ToString();
             fishScores[index].gameObject.SetActive(true);
