@@ -13,9 +13,17 @@ PrefabInstance:
       value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: bigIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 350814de5f87bff459a88c828e7397cf, type: 3}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
       propertyPath: species
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: miniIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: f41f963cc0e254a44aac7036959296e4, type: 3}
     - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
       propertyPath: catchChance
       value: 5
