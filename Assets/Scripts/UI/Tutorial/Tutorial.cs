@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Tutorial : MonoBehaviour
 {
@@ -25,7 +24,7 @@ public class Tutorial : MonoBehaviour
 
     private void Start()
     {
-        tutorialStep = PlayerPrefManager.Instance.GetValue("tutorial", 0);
+        tutorialStep = PlayerPrefManager.Instance.GetPrefValue(SaveValue.tutorial, 0);
         noticeMe.SetImageActive(false);
 
         // Temp
@@ -60,7 +59,12 @@ public class Tutorial : MonoBehaviour
                 cuttingAnim.ScaleTowards();
                 noticeMe.SetImageActive(false);
                 break;
-
+            case 2:
+                break;
+            case 3:
+                noticeMe.SetImageActive(false);
+                AddToTutorial();
+                break;
             default:
                 break;
         }
@@ -73,13 +77,14 @@ public class Tutorial : MonoBehaviour
         if (noticeMeTransform.anchoredPosition == noticeMePositions[1].anchoredPosition && tutorialStep > 1)
         {
             noticeMe.SetImageActive(false);
+            AddToTutorial();
         }
     }
 
-    public void AddToTutorial(int value = 1)
+    private void AddToTutorial(int value = 1)
     {
         tutorialStep += value;
-        PlayerPrefManager.Instance.SaveValue("tutorial", tutorialStep);
+        PlayerPrefManager.Instance.SavePrefValue(SaveValue.tutorial, tutorialStep);
     }
 
     public void EndCuttingTutorial()
@@ -91,5 +96,16 @@ public class Tutorial : MonoBehaviour
             noticeMe.SetImageActive(true);
             noticeMeTransform.anchoredPosition = noticeMePositions[1].anchoredPosition;
         }
+    }
+
+    public void CatchNewFish()
+    {
+        noticeMe.SetImageActive(true);
+        noticeMeTransform.position = noticeMePositions[2].position;
+    }
+
+    public void AcceptFish()
+    {
+        noticeMe.SetImageActive(false);
     }
 }

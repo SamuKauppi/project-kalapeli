@@ -20,7 +20,6 @@ public class StatDisplay : MonoBehaviour
 
     // Streamline
     [SerializeField] private Slider streamlineSlider;
-    [SerializeField] private TMP_Text streamlineText;
 
     // Depth
     [SerializeField] private Slider depthSilder;
@@ -99,7 +98,6 @@ public class StatDisplay : MonoBehaviour
         {
             badSwimImage.gameObject.SetActive(false);
         }
-        streamlineText.text = MathF.Round(streamlineRatio, 2).ToString();
         streamlineSlider.value = -streamlineRatio;
         depthText.text = MathF.Round(depth, 2).ToString() + "m";
         depthSilder.value = depth;

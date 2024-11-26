@@ -7836,7 +7836,7 @@ GameObject:
   - component: {fileID: 1667822292858926191}
   - component: {fileID: 6869447262694824330}
   m_Layer: 5
-  m_Name: ScrollBackground
+  m_Name: TextureScroll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11783,7 +11783,7 @@ GameObject:
   - component: {fileID: 508021343860821550}
   - component: {fileID: 8392555270101738265}
   m_Layer: 5
-  m_Name: ScrollBackground
+  m_Name: TemplateScroll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11859,7 +11859,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Content: {fileID: 306134490107693170}
+  m_Content: {fileID: 5975357704423202812}
   m_Horizontal: 1
   m_Vertical: 0
   m_MovementType: 1
