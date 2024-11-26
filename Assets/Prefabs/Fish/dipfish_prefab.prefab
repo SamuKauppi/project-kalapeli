@@ -64,9 +64,45 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -4247347017524932621, guid: 2be5fbbbeabe61c4abcf5ce5da467cce, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: -1154192016893049915, guid: 2be5fbbbeabe61c4abcf5ce5da467cce, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 301356686138493326, guid: 2be5fbbbeabe61c4abcf5ce5da467cce, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2be5fbbbeabe61c4abcf5ce5da467cce, type: 3}
       propertyPath: m_Name
       value: fish_dipfish
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2be5fbbbeabe61c4abcf5ce5da467cce, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392593970973917154, guid: 2be5fbbbeabe61c4abcf5ce5da467cce, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 2907401056199230960, guid: 2be5fbbbeabe61c4abcf5ce5da467cce, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 5564456602368784877, guid: 2be5fbbbeabe61c4abcf5ce5da467cce, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271691936732325043, guid: 2be5fbbbeabe61c4abcf5ce5da467cce, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 8331734458027157726, guid: 2be5fbbbeabe61c4abcf5ce5da467cce, type: 3}
+      propertyPath: m_Layer
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 8874226208910769278, guid: 2be5fbbbeabe61c4abcf5ce5da467cce, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -304,6 +340,10 @@ PrefabInstance:
     - target: {fileID: 7456944162743981831, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
       propertyPath: m_Name
       value: dipfish_prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 7456944162743981831, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: m_Layer
+      value: 31
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

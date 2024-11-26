@@ -94,12 +94,12 @@ public class Rod : MonoBehaviour
     /// <returns></returns>
     private IEnumerator WaitingForFish()
     {
+        
         // Wait for a random time
         if (fishCatchChances.Length > 0 && fishCatchChances[0].species != FishSpecies.Boot)
         {
             PrintCatchChances(fishCatchChances, totalCatchScore);
             float waitTime = maxTimeForFish;
-            Debug.Log("Total value: " + totalCatchScore);
             yield return new WaitForSeconds(Random.Range(minTimeForFish, waitTime));
         }
         else

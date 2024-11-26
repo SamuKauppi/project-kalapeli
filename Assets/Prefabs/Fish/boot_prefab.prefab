@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: boot_prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 7456944162743981831, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
     m_RemovedGameObjects: []
@@ -109,6 +113,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6320715508870836012}
     m_Modifications:
+    - target: {fileID: -8739165346813539236, guid: 4f5ea457249e2ab4fa693f70f52f686d, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: -8707351284412814757, guid: 4f5ea457249e2ab4fa693f70f52f686d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -185,6 +193,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c2f209e6db7f88e4ea36537b982f39d5, type: 2}
+    - target: {fileID: -6487423251658878377, guid: 4f5ea457249e2ab4fa693f70f52f686d, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: -5612131422931489612, guid: 4f5ea457249e2ab4fa693f70f52f686d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -8.454144
@@ -197,9 +209,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: -3665965625121417220, guid: 4f5ea457249e2ab4fa693f70f52f686d, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: -2631061741006782005, guid: 4f5ea457249e2ab4fa693f70f52f686d, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4f5ea457249e2ab4fa693f70f52f686d, type: 3}
       propertyPath: m_Name
       value: fish_boot
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4f5ea457249e2ab4fa693f70f52f686d, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 6406162409764759837, guid: 4f5ea457249e2ab4fa693f70f52f686d, type: 3}
+      propertyPath: m_Layer
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 8812915121893292909, guid: 4f5ea457249e2ab4fa693f70f52f686d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

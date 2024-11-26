@@ -944,7 +944,7 @@ MonoBehaviour:
   displayUI: {fileID: 0}
   scoreText: {fileID: 0}
   backButton: {fileID: 0}
-  noFishScore: 5000
+  noFishScore: 1000
 --- !u!1 &3339965429506539050
 GameObject:
   m_ObjectHideFlags: 0
@@ -1284,9 +1284,9 @@ Transform:
   m_GameObject: {fileID: 3789878083906549820}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.93224466, z: -0, w: -0.36182863}
-  m_LocalPosition: {x: -0.8, y: 0.59, z: 1.582}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -0.494, y: 0.529, z: 1.929}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6971686996272944291}
   m_Father: {fileID: 8889848562612108899}

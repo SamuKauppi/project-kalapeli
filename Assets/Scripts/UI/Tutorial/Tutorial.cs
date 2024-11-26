@@ -27,8 +27,10 @@ public class Tutorial : MonoBehaviour
         tutorialStep = PlayerPrefManager.Instance.GetPrefValue(SaveValue.tutorial, 0);
         noticeMe.SetImageActive(false);
 
-        // Temp
-        tutorialStep = 0;
+//        // Set tutorialStep to 0 only in the editor
+//#if UNITY_EDITOR
+//        tutorialStep = 0;
+//#endif
 
         if (tutorialStep == 0)
         {
@@ -37,6 +39,7 @@ public class Tutorial : MonoBehaviour
             AddToTutorial();
         }
     }
+
 
     private void OnEnable()
     {

@@ -148,7 +148,7 @@ public class PersitentManager : MonoBehaviour
 
     public void GainScoreFormFish(FishSpecies fish, Vector3 particlePos)
     {
-        int value = fishesCaught.ContainsKey(fish) ? fishDict[fish].ScoreGained : fishDict[fish].ScoreGained / 2;
+        int value = !fishesCaught.ContainsKey(fish) ? fishDict[fish].ScoreGained : fishDict[fish].ScoreGained / 2;
         score += value;
         scoreText.text = SCORE + score;
 
@@ -158,10 +158,11 @@ public class PersitentManager : MonoBehaviour
         {
             ParticleEffectManager.Instance.PlayParticleEffect(ParticleType.DisplayNewFish, particlePos);
             Tutorial.Instance.CatchNewFish();
+            fishesCaught.Add(fish, 0);
         }
 
         fishesCaught[fish]++;
-        ScorePage.Instance.UpdateNonFishValue(SaveValue.score, score);
+        ScorePage.Instance.UpdateNonFishValue(SaveValue.score, value);
         ScorePage.Instance.UpdateFishValue(fish, 1);
     }
 

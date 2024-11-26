@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 3050743840274664325}
   - component: {fileID: 2014349026352181075}
   m_Layer: 0
-  m_Name: Dipfish
+  m_Name: Fry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -549,6 +549,14 @@ MonoBehaviour:
     floatValue: 0
     intValue: 0
     stringValue: 
+  - keyValue: 13
+    floatValue: 0
+    intValue: 0
+    stringValue: 
+  - keyValue: 14
+    floatValue: 0
+    intValue: 0
+    stringValue: 
 --- !u!1 &863204248386603418
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,7 +703,7 @@ GameObject:
   - component: {fileID: 7543926969878379307}
   - component: {fileID: 5600861686079322399}
   m_Layer: 0
-  m_Name: Boots
+  m_Name: Bob
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -847,11 +855,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4001143818641673423}
   - {fileID: 3419644201903853078}
+  - {fileID: 580675590765345050}
+  - {fileID: 4001143818641673423}
   - {fileID: 5531764834373458401}
   - {fileID: 1430240021565184088}
-  - {fileID: 580675590765345050}
   - {fileID: 676558263546418219}
   - {fileID: 8266277873939722821}
   m_Father: {fileID: 2062787819716766458}
@@ -873,7 +881,7 @@ GameObject:
   - component: {fileID: 3100715252514646825}
   - component: {fileID: 8682569063001624243}
   m_Layer: 0
-  m_Name: Boots
+  m_Name: Bob
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1027,6 +1035,7 @@ RectTransform:
   m_Children:
   - {fileID: 9029939408419924688}
   - {fileID: 3529315830970643823}
+  - {fileID: 5890594437186165437}
   - {fileID: 9066419419019727344}
   - {fileID: 4272321637658634604}
   m_Father: {fileID: 5706247421298616011}
@@ -1230,7 +1239,7 @@ GameObject:
   - component: {fileID: 6882007112375543960}
   - component: {fileID: 8381464527461106997}
   m_Layer: 0
-  m_Name: Pickley
+  m_Name: Boots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1366,7 +1375,7 @@ GameObject:
   - component: {fileID: 4586549847084276742}
   - component: {fileID: 921681726792665223}
   m_Layer: 0
-  m_Name: Dipfish
+  m_Name: Fry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1811,7 +1820,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 0}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -2042,7 +2051,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4272321637658634604
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2064,6 +2073,138 @@ RectTransform:
   m_AnchoredPosition: {x: 27.499634, y: -15}
   m_SizeDelta: {x: -183.47998, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2461722534420082024
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5890594437186165437}
+  - component: {fileID: 4379467203672244586}
+  - component: {fileID: 5263029454219569289}
+  - component: {fileID: 7967031971089484084}
+  m_Layer: 0
+  m_Name: OpenScore
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5890594437186165437
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2461722534420082024}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3787290387263795468}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 318.99994, y: 79}
+  m_SizeDelta: {x: 147.0293, y: -842.1007}
+  m_Pivot: {x: 1, y: 0.5}
+--- !u!222 &4379467203672244586
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2461722534420082024}
+  m_CullTransparentMesh: 1
+--- !u!114 &5263029454219569289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2461722534420082024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7967031971089484084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2461722534420082024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 0
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 5263029454219569289}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4471928969331887870}
+        m_TargetAssemblyTypeName: FishCatalog, Assembly-CSharp
+        m_MethodName: OpenCatalogPage
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &2594587284158957077
 GameObject:
   m_ObjectHideFlags: 0
@@ -2646,14 +2787,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9066419419019727344}
-  - component: {fileID: 1081811432073728637}
   m_Layer: 0
   m_Name: ScoreSection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &9066419419019727344
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2677,39 +2817,6 @@ RectTransform:
   m_AnchoredPosition: {x: 27.499634, y: -15}
   m_SizeDelta: {x: -183.47998, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1081811432073728637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3856075282234231611}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb9bbf34e49aeac4ab729ee32457eefc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fishNames:
-  - {fileID: 921681726792665223}
-  - {fileID: 3683285112681776256}
-  - {fileID: 5558536814283466588}
-  - {fileID: 3547559992582282019}
-  - {fileID: 8682569063001624243}
-  - {fileID: 8518203320428778856}
-  - {fileID: 6416802578588063116}
-  fishScores:
-  - {fileID: 2014349026352181075}
-  - {fileID: 1048295512302580481}
-  - {fileID: 6261799308772898658}
-  - {fileID: 5600861686079322399}
-  - {fileID: 8381464527461106997}
-  - {fileID: 5621140126373769807}
-  - {fileID: 3322246575727699596}
-  scoreTxt: {fileID: 4354526356461456583}
-  lures_made: {fileID: 1131624922318375087}
-  lures_lost: {fileID: 7166725592967826359}
-  decorations: {fileID: 8734052090589359650}
-  cuts: {fileID: 861473296232647545}
 --- !u!1 &3938734233714161619
 GameObject:
   m_ObjectHideFlags: 0
@@ -2783,10 +2890,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4222873594360311268}
   - {fileID: 4977831585730098045}
-  - {fileID: 5631037916712518406}
   - {fileID: 971212945069567442}
+  - {fileID: 4222873594360311268}
+  - {fileID: 5631037916712518406}
   - {fileID: 4402954700079564254}
   - {fileID: 5841323905604159710}
   - {fileID: 3939167902047244614}
@@ -2961,13 +3068,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6820676602114648215}
   - {fileID: 6744022599388097371}
   - {fileID: 1304440188066228785}
   - {fileID: 7199210122129694478}
   - {fileID: 5872000111047274164}
   - {fileID: 6566759140010422900}
   - {fileID: 8853975530414171842}
-  - {fileID: 6820676602114648215}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &252244407560945401
@@ -3004,7 +3111,7 @@ GameObject:
   - component: {fileID: 2254133743665382699}
   - component: {fileID: 3547559992582282019}
   m_Layer: 0
-  m_Name: Pickley
+  m_Name: Boots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3138,7 +3245,7 @@ GameObject:
   - component: {fileID: 1207717615002956631}
   - component: {fileID: 5558536814283466588}
   m_Layer: 0
-  m_Name: Fry
+  m_Name: Pick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3407,7 +3514,7 @@ GameObject:
   - component: {fileID: 8800697219425483865}
   - component: {fileID: 6261799308772898658}
   m_Layer: 0
-  m_Name: Fry
+  m_Name: Pick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3758,6 +3865,7 @@ MonoBehaviour:
   imageField: {fileID: 2170333208490353401}
   fishingStats: {fileID: 7967126584332945728}
   flavourText: {fileID: 7319676617912259044}
+  defaultBigSprite: {fileID: 21300000, guid: dcfdbb6ee8f8e2e4d9351fc449668152, type: 3}
 --- !u!1 &6341220995457170483
 GameObject:
   m_ObjectHideFlags: 0
@@ -3902,6 +4010,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5872000111047274164}
   - component: {fileID: 4471928969331887870}
+  - component: {fileID: 1915389655964195407}
   m_Layer: 0
   m_Name: FishCatalog
   m_TagString: Untagged
@@ -3946,6 +4055,7 @@ MonoBehaviour:
   displaySpeed: 0.45
   ease1: 12
   ease2: 12
+  defaultMiniSprite: {fileID: 21300000, guid: dcfdbb6ee8f8e2e4d9351fc449668152, type: 3}
   entries:
   - {fileID: 1513896056598582232}
   - {fileID: 3961109939405545578}
@@ -3959,6 +4069,39 @@ MonoBehaviour:
   pageForward: {fileID: 3505089455627110053}
   pageBackward: {fileID: 1541209442444154378}
   displayer: {fileID: 7310045844460099796}
+--- !u!114 &1915389655964195407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6489612427164224342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb9bbf34e49aeac4ab729ee32457eefc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishNames:
+  - {fileID: 3683285112681776256}
+  - {fileID: 8682569063001624243}
+  - {fileID: 921681726792665223}
+  - {fileID: 5558536814283466588}
+  - {fileID: 3547559992582282019}
+  - {fileID: 8518203320428778856}
+  - {fileID: 6416802578588063116}
+  fishScores:
+  - {fileID: 1048295512302580481}
+  - {fileID: 5600861686079322399}
+  - {fileID: 2014349026352181075}
+  - {fileID: 6261799308772898658}
+  - {fileID: 8381464527461106997}
+  - {fileID: 5621140126373769807}
+  - {fileID: 3322246575727699596}
+  scoreTxt: {fileID: 4354526356461456583}
+  lures_made: {fileID: 1131624922318375087}
+  lures_lost: {fileID: 7166725592967826359}
+  decorations: {fileID: 8734052090589359650}
+  cuts: {fileID: 861473296232647545}
 --- !u!1 &6513214204972813361
 GameObject:
   m_ObjectHideFlags: 0
@@ -4285,7 +4428,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7199210122129694478
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4805,7 +4948,7 @@ GameObject:
   - component: {fileID: 6237704118907983517}
   - component: {fileID: 1048295512302580481}
   m_Layer: 0
-  m_Name: Bobbers
+  m_Name: Dip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5112,7 +5255,7 @@ GameObject:
   - component: {fileID: 1667007315339754974}
   - component: {fileID: 3683285112681776256}
   m_Layer: 0
-  m_Name: Bobbers
+  m_Name: Dip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5855,11 +5998,11 @@ MonoBehaviour:
   - scoreType: 0
     catchScore: 500
   - scoreType: 1
-    catchScore: 5000
+    catchScore: 3000
   - scoreType: 2
     catchScore: 2000
   - scoreType: 3
-    catchScore: 10000
+    catchScore: 3000
   - scoreType: 4
     catchScore: 1500
 --- !u!1 &8797660526973798924
@@ -6119,14 +6262,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
-      propertyPath: m_PreserveAspect
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6391520973114639958, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_Name
       value: FishCatalogEntry
@@ -6239,14 +6374,6 @@ PrefabInstance:
     - target: {fileID: 2929138087552528356, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
-      propertyPath: m_PreserveAspect
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6391520973114639958, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_Name
@@ -6361,14 +6488,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
-      propertyPath: m_PreserveAspect
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6391520973114639958, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_Name
       value: FishCatalogEntry
@@ -6481,14 +6600,6 @@ PrefabInstance:
     - target: {fileID: 2929138087552528356, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
-      propertyPath: m_PreserveAspect
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6391520973114639958, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_Name
@@ -6603,14 +6714,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
-      propertyPath: m_PreserveAspect
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6391520973114639958, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_Name
       value: FishCatalogEntry
@@ -6723,14 +6826,6 @@ PrefabInstance:
     - target: {fileID: 2929138087552528356, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
-      propertyPath: m_PreserveAspect
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6391520973114639958, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_Name
@@ -6845,14 +6940,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
-      propertyPath: m_PreserveAspect
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6391520973114639958, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_Name
       value: FishCatalogEntry
@@ -6965,14 +7052,6 @@ PrefabInstance:
     - target: {fileID: 2929138087552528356, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
-      propertyPath: m_PreserveAspect
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6391520973114639958, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_Name
@@ -7148,14 +7227,6 @@ PrefabInstance:
     - target: {fileID: 2929138087552528356, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4826715527491289250, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
-      propertyPath: m_PreserveAspect
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6391520973114639958, guid: ad31f7ee131a3814c88cb50e93e26026, type: 3}
       propertyPath: m_Name

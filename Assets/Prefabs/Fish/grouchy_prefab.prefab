@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: grouchy_prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 7456944162743981831, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -125,9 +129,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7636995776607610189, guid: f92a140f1f211314a97295dd6a56a835, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: -7567746571907754453, guid: f92a140f1f211314a97295dd6a56a835, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: -7220697693985898648, guid: f92a140f1f211314a97295dd6a56a835, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: -5440888687965963957, guid: f92a140f1f211314a97295dd6a56a835, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 11.527778
+      objectReference: {fileID: 0}
+    - target: {fileID: -5390025579320093517, guid: f92a140f1f211314a97295dd6a56a835, type: 3}
+      propertyPath: m_Layer
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: -5188497976212552156, guid: f92a140f1f211314a97295dd6a56a835, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -145,9 +165,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: -14.8148155
       objectReference: {fileID: 0}
+    - target: {fileID: -4059437392042226357, guid: f92a140f1f211314a97295dd6a56a835, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: -3676554080973319926, guid: f92a140f1f211314a97295dd6a56a835, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: -90.89814
+      objectReference: {fileID: 0}
+    - target: {fileID: -1547835039718882456, guid: f92a140f1f211314a97295dd6a56a835, type: 3}
+      propertyPath: m_Layer
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 189496007366352921, guid: f92a140f1f211314a97295dd6a56a835, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -161,9 +189,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: fish_grouchy
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f92a140f1f211314a97295dd6a56a835, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 3424482640522600333, guid: f92a140f1f211314a97295dd6a56a835, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 4935321621283896972, guid: f92a140f1f211314a97295dd6a56a835, type: 3}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
     - target: {fileID: 5524229934609075719, guid: f92a140f1f211314a97295dd6a56a835, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: -11.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6296050945372914481, guid: f92a140f1f211314a97295dd6a56a835, type: 3}
+      propertyPath: m_Layer
+      value: 31
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

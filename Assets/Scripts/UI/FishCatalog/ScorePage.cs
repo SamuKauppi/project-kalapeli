@@ -45,6 +45,12 @@ public class ScorePage : MonoBehaviour
                 fishScores[i].gameObject.SetActive(false);
             }
         }
+
+        scoreTxt.text = PlayerPrefManager.Instance.GetPrefValue(SaveValue.score, 0).ToString();
+        lures_made.text = PlayerPrefManager.Instance.GetPrefValue(SaveValue.lures_made, 0).ToString();
+        lures_lost.text = PlayerPrefManager.Instance.GetPrefValue(SaveValue.lures_lost, 0).ToString();
+        decorations.text = PlayerPrefManager.Instance.GetPrefValue(SaveValue.decorations, 0).ToString();
+        cuts.text = PlayerPrefManager.Instance.GetPrefValue(SaveValue.cuts, 0).ToString();
     }
 
     private string GetFishPluralName(FishSpecies fish)
@@ -54,7 +60,7 @@ public class ScorePage : MonoBehaviour
             FishSpecies.Dipfish => "Dipfishes",
             FishSpecies.Bobber => "Bobbers",
             FishSpecies.Fry => "Fries",
-            FishSpecies.Pickley => "Picleys",
+            FishSpecies.Pickley => "Pickles",
             FishSpecies.Boot => "Boots",
             FishSpecies.Muddle => "Muddles",
             FishSpecies.Peeper => "Peepers",

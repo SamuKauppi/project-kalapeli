@@ -164,12 +164,10 @@ public class FishManager : MonoBehaviour
                 {
                     species = FishSpecies.None,
                     minScore = totalScore,
-                    maxScore = totalScore
-                               + noFishScore
-                               * nextLure.lureRealismValue
-                               * (nextLure.SwimType == SwimmingType.None ? 2 : 1),
                     timeAttached = 0
                 };
+                totalScore += noFishScore * nextLure.lureRealismValue * (nextLure.SwimType == SwimmingType.None ? 2 : 1);
+                none.maxScore = totalScore;
                 fishCatchScores.Add(none);
             }
 

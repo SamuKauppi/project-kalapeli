@@ -97,23 +97,23 @@ public class FishCatalog : MonoBehaviour
 
         if (value)
             Tutorial.Instance.AcceptFish();
-
-        fishPage.SetActive(currentPageType == 0);
-        scorePage.SetActive(currentPageType == 1);
     }
 
     public void OpenCatalogPage(int pageType)
     {
         if (!isCatalogOpen)
         {
-            currentPageType = pageType;
             isCatalogOpen = true;
             SetCatalog(isCatalogOpen, displaySpeed);
         }
-        else
+        else if (pageType == currentPageType)
         {
             CloseCatalog();
         }
+
+        currentPageType = pageType;
+        fishPage.SetActive(currentPageType == 0);
+        scorePage.SetActive(currentPageType == 1);
     }
 
     public void CloseCatalog()

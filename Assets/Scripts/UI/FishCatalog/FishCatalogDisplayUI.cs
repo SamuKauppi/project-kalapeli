@@ -24,6 +24,5 @@ public class FishCatalogDisplayUI : MonoBehaviour
             flavourText.text = fish.FlavourText;
             imageField.sprite = fish.bigIcon;
         }
-
     }
 }

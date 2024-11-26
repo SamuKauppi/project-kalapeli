@@ -63,11 +63,6 @@ public class DrawCut : MonoBehaviour
             return; 
         }
 
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            return;
-        }
-
         // Find mouse pos
         mouse = Input.mousePosition;
         mouse.z = lineDist;
@@ -81,7 +76,7 @@ public class DrawCut : MonoBehaviour
         }
 
         // When left mouse is pressed set pointA to the position of mouse
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             pointA = cam.ScreenToWorldPoint(mouse);
             localPointA = transform.InverseTransformPoint(pointA);
@@ -98,7 +93,7 @@ public class DrawCut : MonoBehaviour
         }
 
         // When left mouse is held, set the positions of line renderer
-        if (Input.GetMouseButton(0) && !cancelCut)
+        if (Input.GetMouseButton(0) && !cancelCut && !EventSystem.current.IsPointerOverGameObject())
         {
             pointA = transform.TransformPoint(localPointA);
             animateCut = false;
