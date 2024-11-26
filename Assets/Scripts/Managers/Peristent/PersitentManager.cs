@@ -17,11 +17,15 @@ public class PersitentManager : MonoBehaviour
     [SerializeField] private Fish[] everyFishInGame;                    // Contains every fish that exists (set in inspector)
     [SerializeField] private List<FishSpecies> fishForThisLevel = new();// Fishes available for this level (Set before loading to a level)
     private readonly Dictionary<FishSpecies, Fish> fishDict = new();    // Dictionary that is set during runtime
-    private readonly HashSet<FishSpecies> fishesCaught = new();
+    private readonly Dictionary<FishSpecies, int> fishesCaught = new();
 
     // Score
     [SerializeField] private TMP_Text scoreText;
     private int score;
+    private int lures_lost;
+    private int lures_made;
+    private int attachedUsed;
+    private int cuts;
     private const string SCORE = "Score: ";
 
     private void Awake()
@@ -44,9 +48,20 @@ public class PersitentManager : MonoBehaviour
         {
             everyFishInGame[i].InitializeFish();
             fishDict.Add(everyFishInGame[i].Species, everyFishInGame[i]);
+            int count = PlayerPrefManager.Instance.GetFishValue(everyFishInGame[i].Species, 0);
+            if (count > 0)
+            {
+                fishesCaught[everyFishInGame[i].Species] = count;
+            }
         }
 
         scoreText.text = SCORE + score;
+
+        score = PlayerPrefManager.Instance.GetPrefValue(SaveValue.score, 0);
+        lures_lost = PlayerPrefManager.Instance.GetPrefValue(SaveValue.lures_lost, 0);
+        lures_made = PlayerPrefManager.Instance.GetPrefValue(SaveValue.lures_made, 0);
+        attachedUsed = PlayerPrefManager.Instance.GetPrefValue(SaveValue.decorations, 0);
+        cuts = PlayerPrefManager.Instance.GetPrefValue(SaveValue.cuts, 0);
     }
 
     private void SetLayerRecursively(GameObject obj, int layer)
@@ -133,22 +148,25 @@ public class PersitentManager : MonoBehaviour
 
     public void GainScoreFormFish(FishSpecies fish, Vector3 particlePos)
     {
-        int value = fishesCaught.Contains(fish) ? fishDict[fish].ScoreGained : fishDict[fish].ScoreGained / 2;
+        int value = fishesCaught.ContainsKey(fish) ? fishDict[fish].ScoreGained : fishDict[fish].ScoreGained / 2;
         score += value;
         scoreText.text = SCORE + score;
 
         ParticleEffectManager.Instance.PlayParticleEffect(ParticleType.DisplayFish, particlePos);
 
-        if (!fishesCaught.Contains(fish))
+        if (!fishesCaught.ContainsKey(fish))
         {
             ParticleEffectManager.Instance.PlayParticleEffect(ParticleType.DisplayNewFish, particlePos);
+            Tutorial.Instance.CatchNewFish();
         }
 
-        fishesCaught.Add(fish);
+        fishesCaught[fish]++;
+        ScorePage.Instance.UpdateNonFishValue(SaveValue.score, score);
+        ScorePage.Instance.UpdateFishValue(fish, 1);
     }
 
     public bool IsFishCaught(FishSpecies fish)
     {
-        return fishesCaught.Contains(fish);
+        return fishesCaught.ContainsKey(fish);
     }
 }

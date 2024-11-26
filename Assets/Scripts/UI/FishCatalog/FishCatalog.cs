@@ -10,6 +10,11 @@ public class FishCatalog : MonoBehaviour
 {
     public static FishCatalog Instance { get; private set; }
 
+    // Page selection
+    [SerializeField] private GameObject fishPage;
+    [SerializeField] private GameObject scorePage;
+    private int currentPageType;
+
     // Catalog
     [SerializeField] private GameObject catalogUI;          // Object moved when opening or closing catalog
     [SerializeField] private Transform cataOnPos;           // When active pos
@@ -31,6 +36,7 @@ public class FishCatalog : MonoBehaviour
     // Fish display
     [SerializeField] private FishCatalogDisplayUI displayer;
     private FishCatalogUIEntry previousEntry = null;
+
 
     private void Awake()
     {
@@ -87,11 +93,31 @@ public class FishCatalog : MonoBehaviour
 
         if (time > 0)
             SoundManager.Instance.PlaySound(value ? SoundClipTrigger.OnOpenBook : SoundClipTrigger.OnCloseBook);
+
+        if (value)
+            Tutorial.Instance.AcceptFish();
+
+        fishPage.SetActive(currentPageType == 0);
+        scorePage.SetActive(currentPageType == 1);
     }
 
-    public void ToggleCatalog()
+    public void OpenCatalogPage(int pageType)
     {
-        isCatalogOpen = !isCatalogOpen;
+        if (!isCatalogOpen)
+        {
+            currentPageType = pageType;
+            isCatalogOpen = true;
+            SetCatalog(isCatalogOpen, displaySpeed);
+        }
+        else
+        {
+            CloseCatalog();
+        }
+    }
+
+    public void CloseCatalog()
+    {
+        isCatalogOpen = false;
         SetCatalog(isCatalogOpen, displaySpeed);
     }
 
