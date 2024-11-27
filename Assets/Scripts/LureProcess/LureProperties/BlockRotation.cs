@@ -87,11 +87,11 @@ public class BlockRotation : MonoBehaviour
     /// <param name="upRotDir">Direction it rotates side axis</param>
     /// <param name="rotTime">How long it takes to rotate</param>
     /// <returns></returns>
-    private IEnumerator RotateTransform(int sideRotDir, int upRotDir, float rotTime)
+    private IEnumerator RotateTransform(int sideRotDir, int upRotDir, float rotTime, bool isResetting = false)
     {
         IsRotating = true;
         GetTargetRotation(sideRotDir, upRotDir, out Quaternion currentRot, out Quaternion targetRot);
-        if (rotTime > 0)
+        if (!isResetting)
         {
             SoundManager.Instance.PlaySound(SoundClipTrigger.OnLureTurn);
         }
@@ -144,7 +144,7 @@ public class BlockRotation : MonoBehaviour
     {
         sideRotIndex = 0;
         upRotIndex = 0;
-        StartCoroutine(RotateTransform(0, 0, timeToReset));
+        StartCoroutine(RotateTransform(0, 0, timeToReset, true));
     }
 
     public void RotateBlockSide(int dir)

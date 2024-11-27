@@ -29,6 +29,7 @@ public class DrawCut : MonoBehaviour
     // Line renderer
     private LineRenderer cutRender;
     private bool animateCut;
+    private bool performingCut;
     private bool cancelCut;
     private bool wasRotating;
 
@@ -60,6 +61,7 @@ public class DrawCut : MonoBehaviour
         if (!IsCutting) 
         {
             cancelCut = true;
+            performingCut = false;
             return; 
         }
 
@@ -73,6 +75,7 @@ public class DrawCut : MonoBehaviour
             ResetLineRender();
             UpdateLineDistance();
             wasRotating = false;
+            performingCut = false;
         }
 
         // When left mouse is pressed set pointA to the position of mouse
@@ -82,10 +85,11 @@ public class DrawCut : MonoBehaviour
             localPointA = transform.InverseTransformPoint(pointA);
             cancelCut = false;
             blockRotation.StopRotating = true;
+            performingCut = true;
         }
 
         // When right mouse is pressed, cancel cutting process
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && performingCut)
         {
             blockRotation.StopRotating = false;
             cancelCut = true;
@@ -93,7 +97,7 @@ public class DrawCut : MonoBehaviour
         }
 
         // When left mouse is held, set the positions of line renderer
-        if (Input.GetMouseButton(0) && !cancelCut && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButton(0) && performingCut)
         {
             pointA = transform.TransformPoint(localPointA);
             animateCut = false;
@@ -103,7 +107,7 @@ public class DrawCut : MonoBehaviour
 
         // When left mouse is released and not canceling:
         // Make the cut
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && performingCut)
         {
             PerformCut();
         }
@@ -118,7 +122,8 @@ public class DrawCut : MonoBehaviour
     private void PerformCut()
     {
         blockRotation.StopRotating = false;
-        if (cancelCut)
+        performingCut = false;
+        if (cancelCut || EventSystem.current.IsPointerOverGameObject())
         {
             cancelCut = false;
             ResetLineRender();
@@ -180,6 +185,7 @@ public class DrawCut : MonoBehaviour
 
         lureProperties.CalculateMeshStatsOnly();
         SoundManager.Instance.PlaySound(SoundClipTrigger.OnBlockCarve);
+        ScorePage.Instance.UpdateNonFishValue(SaveValue.cuts, 1);
     }
 
     private void UpdateLineDistance()

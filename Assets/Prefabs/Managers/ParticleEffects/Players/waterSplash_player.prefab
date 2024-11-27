@@ -13,6 +13,18 @@ PrefabInstance:
       value: waterSplash_player
       objectReference: {fileID: 0}
     - target: {fileID: 6397432114688911334, guid: d18d000c0388bcf4ba1b0d68462dc60e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6397432114688911334, guid: d18d000c0388bcf4ba1b0d68462dc60e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6397432114688911334, guid: d18d000c0388bcf4ba1b0d68462dc60e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6397432114688911334, guid: d18d000c0388bcf4ba1b0d68462dc60e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -91,15 +103,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1969449447978033012, guid: c1e408c31e5e4934d8f8d78492afbb45, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.83567756
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1969449447978033012, guid: c1e408c31e5e4934d8f8d78492afbb45, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.9774679
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1969449447978033012, guid: c1e408c31e5e4934d8f8d78492afbb45, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.7869346
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1969449447978033012, guid: c1e408c31e5e4934d8f8d78492afbb45, type: 3}
       propertyPath: m_LocalRotation.w
@@ -127,6 +139,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1969449447978033012, guid: c1e408c31e5e4934d8f8d78492afbb45, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4237587566907551699, guid: c1e408c31e5e4934d8f8d78492afbb45, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4237587566907551699, guid: c1e408c31e5e4934d8f8d78492afbb45, type: 3}
+      propertyPath: lengthInSec
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4237587566907551699, guid: c1e408c31e5e4934d8f8d78492afbb45, type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

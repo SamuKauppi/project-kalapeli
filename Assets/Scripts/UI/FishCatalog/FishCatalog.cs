@@ -92,15 +92,13 @@ public class FishCatalog : MonoBehaviour
         ShowCatalog(0);
         closeButton.SetActive(value);
 
-        if (time > 0)
-            SoundManager.Instance.PlaySound(value ? SoundClipTrigger.OnOpenBook : SoundClipTrigger.OnCloseBook);
-
         if (value)
             Tutorial.Instance.AcceptFish();
     }
 
     public void OpenCatalogPage(int pageType)
     {
+        SoundManager.Instance.PlaySound(SoundClipTrigger.OnOpenBook);
         if (!isCatalogOpen)
         {
             isCatalogOpen = true;
@@ -120,6 +118,7 @@ public class FishCatalog : MonoBehaviour
     {
         isCatalogOpen = false;
         SetCatalog(isCatalogOpen, displaySpeed);
+        SoundManager.Instance.PlaySound(SoundClipTrigger.OnCloseBook);
     }
 
     /// <summary>

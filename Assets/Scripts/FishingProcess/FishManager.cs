@@ -12,13 +12,13 @@ public class FishManager : MonoBehaviour
     public bool IsHoldingLure { get; private set; }
 
     // Rod
-    [SerializeField] private Rod rodPrefab;                 // Prefab
-    [SerializeField] private Transform lineEndPointNoFish;  // Point where every line ends when no fish
-    [SerializeField] private Transform lineEndPointFish;    // Point where every line ends when fish
-    [SerializeField] private Transform[] rodAttachPoints;   // Points where rods are attached
-    [SerializeField] private LayerMask rodLayer;            // Layer Mask for rods
-    [SerializeField] private float raycastDistance;         // How far does the ray check
-    [SerializeField] private float lurePositionFromCam;     // Position away from camera
+    [SerializeField] private Rod rodPrefab;                     // Prefab
+    [SerializeField] private Transform[] lineEndPointsNoFish;   // Point where every line ends when no fish
+    [SerializeField] private Transform lineEndPointFish;        // Point where every line ends when fish
+    [SerializeField] private Transform[] rodAttachPoints;       // Points where rods are attached
+    [SerializeField] private LayerMask rodLayer;                // Layer Mask for rods
+    [SerializeField] private float raycastDistance;             // How far does the ray check
+    [SerializeField] private float lurePositionFromCam;         // Position away from camera
 
     // Fish display
     [SerializeField] private Transform displayParent;       // Parent for displaying fish   
@@ -57,7 +57,7 @@ public class FishManager : MonoBehaviour
         for (int i = 0; i < rodAttachPoints.Length; i++)
         {
             rods[i] = Instantiate(rodPrefab, rodAttachPoints[i].position, rodAttachPoints[i].rotation, rodAttachPoints[i]);
-            rods[i].SetLineEndPoint(lineEndPointNoFish, lineEndPointFish);
+            rods[i].SetLineEndPoint(lineEndPointsNoFish[i], lineEndPointFish);
         }
 
         cam = GameManager.Instance.MainCamera;
@@ -101,6 +101,7 @@ public class FishManager : MonoBehaviour
 
         IsHoldingLure = false;
         attachedLure = null;
+        CursorManager.Instance.SwapCursor(CursorType.Normal);
     }
 
     public void PickUpLure(GameObject lureObj)
@@ -110,6 +111,7 @@ public class FishManager : MonoBehaviour
         attachedLure.SetActive(true);
         PersitentManager.Instance.TakeLure(lureObj.GetComponent<LureStats>());
         IsHoldingLure = true;
+        CursorManager.Instance.SwapCursor(CursorType.Hand);
     }
 
     public void DeleteLure()
@@ -119,6 +121,7 @@ public class FishManager : MonoBehaviour
         IsHoldingLure = false;
         attachedLure = null;
         FishingLureBox.Instance.SetLureBoxActive(PersitentManager.Instance.LureCount());
+        CursorManager.Instance.SwapCursor(CursorType.Normal);
     }
 
     /// <summary>
@@ -190,7 +193,7 @@ public class FishManager : MonoBehaviour
     /// Catch and display given fish species
     /// </summary>
     /// <param name="caughtFish"></param>
-    public void CatchFish(FishSpecies caughtFish, LureStats lureUsed)
+    public void CatchFish(FishSpecies caughtFish)
     {
         // TODO: display fish properly after catching
         foreach (Fish fish in availableFish)
@@ -200,9 +203,7 @@ public class FishManager : MonoBehaviour
                 displayFish = Instantiate(fish.gameObject, displayParent.transform.position, displayParent.transform.rotation, displayParent);
                 displayUI.SetActive(true);
                 backButton.SetActive(false);
-                PersitentManager.Instance.GainScoreFormFish(fish.Species, displayParent.position);
-                PersitentManager.Instance.AddLure(lureUsed);
-                FishingLureBox.Instance.SetLureBoxActive(PersitentManager.Instance.LureCount());
+                PersitentManager.Instance.GainScoreFormFish(fish.Species, displayParent);
                 scoreText.text = CATCH_TXT + caughtFish;
                 CanFish = false;
                 break;

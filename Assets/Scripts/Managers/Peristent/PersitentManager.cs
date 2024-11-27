@@ -11,7 +11,7 @@ public class PersitentManager : MonoBehaviour
     public Fish[] EveryFish { get { return everyFishInGame; } }
 
     // Lure
-    private readonly List<LureStats> luresCreated = new();
+    public List<LureStats> luresCreated = new();
 
     // Fish
     [SerializeField] private Fish[] everyFishInGame;                    // Contains every fish that exists (set in inspector)
@@ -146,17 +146,17 @@ public class PersitentManager : MonoBehaviour
     }
 
 
-    public void GainScoreFormFish(FishSpecies fish, Vector3 particlePos)
+    public void GainScoreFormFish(FishSpecies fish, Transform particleParent)
     {
         int value = !fishesCaught.ContainsKey(fish) ? fishDict[fish].ScoreGained : fishDict[fish].ScoreGained / 2;
         score += value;
         scoreText.text = SCORE + score;
 
-        ParticleEffectManager.Instance.PlayParticleEffect(ParticleType.DisplayFish, particlePos);
+        ParticleEffectManager.Instance.PlayParticleEffect(ParticleType.DisplayFish, particleParent.position, particleParent);
 
         if (!fishesCaught.ContainsKey(fish))
         {
-            ParticleEffectManager.Instance.PlayParticleEffect(ParticleType.DisplayNewFish, particlePos);
+            ParticleEffectManager.Instance.PlayParticleEffect(ParticleType.DisplayNewFish, particleParent.position, particleParent);
             Tutorial.Instance.CatchNewFish();
             fishesCaught.Add(fish, 0);
         }

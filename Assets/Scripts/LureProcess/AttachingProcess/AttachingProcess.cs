@@ -187,6 +187,7 @@ public class AttachingProcess : MonoBehaviour
                 mirrorAttach.EnableOutline(false);
             }
             SoundManager.Instance.PlaySound(SoundClipTrigger.OnBlockHit);
+            ScorePage.Instance.UpdateNonFishValue(SaveValue.decorations, 1);
         }
 
         attachedObject = null;
@@ -382,6 +383,7 @@ public class AttachingProcess : MonoBehaviour
         }
 
         blockRotation.ResetRotation(0.15f);
+        isValidPos = false;
     }
 
     /// <summary>
@@ -394,7 +396,7 @@ public class AttachingProcess : MonoBehaviour
     public void MoveAttached(GameObject obj, AttachPosition pos, bool matchRot, GameObject mirror)
     {
         // Check that attaching not disabled and we don't have an attached obj
-        if (!IsAttaching || attachedObject) { return; }
+        if (!IsAttaching || attachedObject != null) { return; }
 
         attachedObject = obj;
         PlayAttachSound(attachedObject.GetComponent<AttachProperties>().AttachingType);
@@ -417,5 +419,6 @@ public class AttachingProcess : MonoBehaviour
         }
 
         blockRotation.ResetRotation(0.15f);
+        isValidPos = false;
     }
 }

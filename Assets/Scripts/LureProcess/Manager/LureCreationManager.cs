@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Handles switching between different parts of the lure creation process
@@ -50,6 +51,7 @@ public class LureCreationManager : MonoBehaviour
     private MeshFilter blockFilter;
     private LureFunctions lureProperties;
     private int currentCameraAngle;
+    private bool isOverUI;
 
     #region private
     private void Awake()
@@ -163,6 +165,44 @@ public class LureCreationManager : MonoBehaviour
 
         // Set requirement effect
         requirementEff.SetImageActive(_process == LureCreationProcess.Attaching);
+
+        if (_process == LureCreationProcess.Saving)
+            ScorePage.Instance.UpdateNonFishValue(SaveValue.lures_made, 1);
+
+        SetCursor();
+    }
+
+    private void SetCursor()
+    {
+        switch (_process)
+        {
+            case LureCreationProcess.Cutting:
+                CursorManager.Instance.SwapCursor(CursorType.Knife);
+                break;
+            case LureCreationProcess.Painting:
+                CursorManager.Instance.SwapCursor(CursorType.Brush);
+                break;
+            case LureCreationProcess.Attaching:
+                CursorManager.Instance.SwapCursor(CursorType.Hand);
+                break;
+            default:
+                CursorManager.Instance.SwapCursor(CursorType.Normal);
+                break;
+        }
+    }
+
+    private void Update()
+    {
+        if (EventSystem.current.IsPointerOverGameObject() && !isOverUI)
+        {
+            CursorManager.Instance.SwapCursor(CursorType.Normal);
+            isOverUI = true;
+        }
+        else if (!EventSystem.current.IsPointerOverGameObject() && isOverUI)
+        {
+            SetCursor();
+            isOverUI = false;
+        }
     }
 
     #endregion
@@ -317,6 +357,18 @@ public class LureCreationManager : MonoBehaviour
         else if (_process == LureCreationProcess.Attaching)
         {
             attachProcess.GetComponent<AttachingProcess>().IsAttaching = value;
+        }
+
+        if (value)
+        {
+            if (!EventSystem.current.IsPointerOverGameObject())
+                SetCursor();
+            else
+                CursorManager.Instance.SwapCursor(CursorType.Normal);
+        }
+        else
+        {
+            CursorManager.Instance.SwapCursor(CursorType.Normal);
         }
     }
     #endregion

@@ -20,6 +20,7 @@ public class Rod : MonoBehaviour
     [SerializeField] private Transform lineStartPoint;
     private Transform noFishLinePoint;
     private Transform fishLinePoint;
+    private Vector3 intersectingPoint;
     [SerializeField] private float lineStartWidth;
     [SerializeField] private float lineEndWidth;
 
@@ -36,6 +37,7 @@ public class Rod : MonoBehaviour
     private void Start()
     {
         lineRenderer.startWidth = lineStartWidth;
+        lineRenderer.endWidth = 0f;
         lineRenderer.endWidth = lineEndWidth;
         lineRenderer.enabled = false;
         lineRenderer.material.renderQueue = 3001;
@@ -44,7 +46,7 @@ public class Rod : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if ((!IsAttached || HasFish) && FishManager.Instance.CanFish)
+        if (FishManager.Instance.CanFish && (IsAttached || HasFish || FishManager.Instance.IsHoldingLure))
         {
             outline.enabled = true;
         }
@@ -52,20 +54,29 @@ public class Rod : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (!IsAttached || HasFish)
+        if (!HasFish)
             outline.enabled = false;
     }
 
     private void OnMouseDown()
     {
-        if (HasFish && FishManager.Instance.CanFish && !FishManager.Instance.IsHoldingLure) // Check first if there is a fish
+        if (FishManager.Instance.CanFish && !FishManager.Instance.IsHoldingLure)
         {
-            FishManager.Instance.CatchFish(CaughtFish, LureAttached);
-            CaughtFish = FishSpecies.None;
-            HasFish = false;
-            DetachLure();
-            StopAllCoroutines();
-            lineRenderer.enabled = false;
+            if (HasFish) // Handle the case when there is a fish
+            {
+                FishManager.Instance.CatchFish(CaughtFish);
+                PersitentManager.Instance.AddLure(LureAttached);
+                CaughtFish = FishSpecies.None;
+                HasFish = false;
+                DetachLure();
+                StopAllCoroutines();
+            }
+            else if (IsAttached) // Handle the case when there is no fish but the lure is attached
+            {
+                PersitentManager.Instance.AddLure(LureAttached);
+                DetachLure();
+                StopAllCoroutines();
+            }
         }
     }
 
@@ -94,11 +105,13 @@ public class Rod : MonoBehaviour
     /// <returns></returns>
     private IEnumerator WaitingForFish()
     {
-        
+
         // Wait for a random time
         if (fishCatchChances.Length > 0 && fishCatchChances[0].species != FishSpecies.Boot)
         {
+#if UNITY_EDITOR
             PrintCatchChances(fishCatchChances, totalCatchScore);
+#endif
             float waitTime = maxTimeForFish;
             yield return new WaitForSeconds(Random.Range(minTimeForFish, waitTime));
         }
@@ -132,6 +145,7 @@ public class Rod : MonoBehaviour
         }
 
         yield return new WaitForSeconds(timeAttached);
+        ScorePage.Instance.UpdateNonFishValue(SaveValue.fishes_missed, 1);
 
         HasFish = false;
         CaughtFish = FishSpecies.None;
@@ -165,13 +179,16 @@ public class Rod : MonoBehaviour
     {
         LureAttached = lure;
         IsAttached = true;
-        outline.enabled = false;
         totalCatchScore = catchTotal;
         fishCatchChances = catchScores;
         StartCoroutine(WaitingForFish());
         anim.SetBool("Water", true);
         lineRenderer.enabled = true;
         SoundManager.Instance.PlaySound(SoundClipTrigger.OnCastThrow);
+        CursorManager.Instance.SwapCursor(CursorType.Normal);
+
+        intersectingPoint = WaterSurfacePoint.Instance.GetIntersectingPoint(lineStartPoint.position, noFishLinePoint.position);
+        ParticleEffectManager.Instance.PlayParticleEffect(ParticleType.Splash, intersectingPoint);
     }
 
     /// <summary>
@@ -179,18 +196,21 @@ public class Rod : MonoBehaviour
     /// </summary>
     public void DetachLure()
     {
+        lineRenderer.enabled = false;
         LureAttached = null;
         IsAttached = false;
         outline.enabled = false;
         StopAllCoroutines();
         anim.SetBool("Water", false);
         anim.SetBool("Fish", false);
+        FishingLureBox.Instance.SetLureBoxActive(PersitentManager.Instance.LureCount());
     }
 
     public void DestroyLure()
     {
         Destroy(LureAttached.gameObject);
         DetachLure();
+        ScorePage.Instance.UpdateNonFishValue(SaveValue.lures_lost, 1);
     }
 
     public void SetLineEndPoint(Transform noFishEndPoint, Transform fishEndPoint)
