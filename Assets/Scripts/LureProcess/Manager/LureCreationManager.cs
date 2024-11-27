@@ -163,6 +163,9 @@ public class LureCreationManager : MonoBehaviour
 
         // Set requirement effect
         requirementEff.SetImageActive(_process == LureCreationProcess.Attaching);
+
+        if (_process == LureCreationProcess.Saving)
+            ScorePage.Instance.UpdateNonFishValue(SaveValue.lures_made, 1);
     }
 
     #endregion

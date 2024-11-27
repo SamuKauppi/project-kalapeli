@@ -191,6 +191,7 @@ public class Rod : MonoBehaviour
     {
         Destroy(LureAttached.gameObject);
         DetachLure();
+        ScorePage.Instance.UpdateNonFishValue(SaveValue.lures_lost, 1);
     }
 
     public void SetLineEndPoint(Transform noFishEndPoint, Transform fishEndPoint)
