@@ -5973,7 +5973,7 @@ MonoBehaviour:
   - cursor: {fileID: 2800000, guid: 07fe7aebbaab3d846b0610e765e32946, type: 3}
     hotSpot: {x: 0, y: 0}
   - cursor: {fileID: 2800000, guid: 6b22049b996241448b6478ee1b2c7bcd, type: 3}
-    hotSpot: {x: 8, y: 8}
+    hotSpot: {x: 4, y: 4}
   - cursor: {fileID: 2800000, guid: 08d9b899e9fae9e46ab9fdc2e643fc89, type: 3}
     hotSpot: {x: 0, y: 0}
   - cursor: {fileID: 2800000, guid: aa23bfa56254af445bfcc23af497aca6, type: 3}

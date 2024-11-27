@@ -17,6 +17,7 @@ public class ParticleEffectPlayer : MonoBehaviour
 
     public void PlayEffect()
     {
+        player.Stop();
         player.Play();
         if (duration > 0f)
         {

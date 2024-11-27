@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: star_particle
       objectReference: {fileID: 0}
+    - target: {fileID: 3741781119446861751, guid: c88d2b77215f413498421b44275c9d11, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7671215191108845792, guid: c88d2b77215f413498421b44275c9d11, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.8175864

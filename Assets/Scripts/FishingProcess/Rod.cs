@@ -20,6 +20,7 @@ public class Rod : MonoBehaviour
     [SerializeField] private Transform lineStartPoint;
     private Transform noFishLinePoint;
     private Transform fishLinePoint;
+    private Vector3 intersectingPoint;
     [SerializeField] private float lineStartWidth;
     [SerializeField] private float lineEndWidth;
 
@@ -36,6 +37,7 @@ public class Rod : MonoBehaviour
     private void Start()
     {
         lineRenderer.startWidth = lineStartWidth;
+        lineRenderer.endWidth = 0f;
         lineRenderer.endWidth = lineEndWidth;
         lineRenderer.enabled = false;
         lineRenderer.material.renderQueue = 3001;
@@ -177,7 +179,6 @@ public class Rod : MonoBehaviour
     {
         LureAttached = lure;
         IsAttached = true;
-        outline.enabled = false;
         totalCatchScore = catchTotal;
         fishCatchChances = catchScores;
         StartCoroutine(WaitingForFish());
@@ -185,6 +186,9 @@ public class Rod : MonoBehaviour
         lineRenderer.enabled = true;
         SoundManager.Instance.PlaySound(SoundClipTrigger.OnCastThrow);
         CursorManager.Instance.SwapCursor(CursorType.Normal);
+
+        intersectingPoint = WaterSurfacePoint.Instance.GetIntersectingPoint(lineStartPoint.position, noFishLinePoint.position);
+        ParticleEffectManager.Instance.PlayParticleEffect(ParticleType.Splash, intersectingPoint);
     }
 
     /// <summary>
@@ -199,6 +203,7 @@ public class Rod : MonoBehaviour
         StopAllCoroutines();
         anim.SetBool("Water", false);
         anim.SetBool("Fish", false);
+        FishingLureBox.Instance.SetLureBoxActive(PersitentManager.Instance.LureCount());
     }
 
     public void DestroyLure()
