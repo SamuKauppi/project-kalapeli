@@ -11,7 +11,7 @@ public class PersitentManager : MonoBehaviour
     public Fish[] EveryFish { get { return everyFishInGame; } }
 
     // Lure
-    private readonly List<LureStats> luresCreated = new();
+    public List<LureStats> luresCreated = new();
 
     // Fish
     [SerializeField] private Fish[] everyFishInGame;                    // Contains every fish that exists (set in inspector)

@@ -3349,6 +3349,7 @@ Transform:
   - {fileID: 5872000111047274164}
   - {fileID: 6566759140010422900}
   - {fileID: 8853975530414171842}
+  - {fileID: 2932241237017964059}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &252244407560945401
@@ -3363,6 +3364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f53031924a562824889e0cc1a44f6939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  luresCreated: []
   everyFishInGame:
   - {fileID: 8507455307037071222, guid: 8dd1722f2a2f1f94dbf5f00ceb8018a9, type: 3}
   - {fileID: 7979631785163044948, guid: 826fefdbe73f5a94092f92587d1dd7fe, type: 3}
@@ -3371,7 +3373,8 @@ MonoBehaviour:
   - {fileID: 5417196089878431837, guid: 20e421a94c5053f4887acc5a60a8d45a, type: 3}
   - {fileID: 3192251614119670051, guid: c91a781088f15954897a6e4129ca35ed, type: 3}
   - {fileID: 1381577987427999018, guid: 2751a65df3a790a4188cdd28882c37b2, type: 3}
-  fishForThisLevel: 01000000020000000300000004000000050000000600000007000000
+  - {fileID: 496551206767370475, guid: 03ff667b343e2394da29c1dd11c7f76f, type: 3}
+  fishForThisLevel: 0100000002000000030000000400000005000000060000000700000008000000
   scoreText: {fileID: 8609350844474260790}
 --- !u!1 &4282079734482255333
 GameObject:
@@ -4631,6 +4634,7 @@ MonoBehaviour:
   - {fileID: 3547559992582282019}
   - {fileID: 8518203320428778856}
   - {fileID: 6416802578588063116}
+  - {fileID: 7963332670943704819}
   fishScores:
   - {fileID: 1048295512302580481}
   - {fileID: 5600861686079322399}
@@ -4639,11 +4643,13 @@ MonoBehaviour:
   - {fileID: 8381464527461106997}
   - {fileID: 5621140126373769807}
   - {fileID: 3322246575727699596}
+  - {fileID: 1116764415189458578}
   scoreTxt: {fileID: 4354526356461456583}
   lures_made: {fileID: 1131624922318375087}
   lures_lost: {fileID: 7166725592967826359}
   decorations: {fileID: 8734052090589359650}
   cuts: {fileID: 861473296232647545}
+  fishes_missed: {fileID: 6450641630431734924}
 --- !u!1 &6513214204972813361
 GameObject:
   m_ObjectHideFlags: 0
@@ -5919,6 +5925,59 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &7974245439124423804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2932241237017964059}
+  - component: {fileID: 429185233421764537}
+  m_Layer: 0
+  m_Name: CursorManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2932241237017964059
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7974245439124423804}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3337926235139486327}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &429185233421764537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7974245439124423804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41ca489383472334bb55e7e47b6853c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursors:
+  - cursor: {fileID: 2800000, guid: 07fe7aebbaab3d846b0610e765e32946, type: 3}
+    hotSpot: {x: 0, y: 0}
+  - cursor: {fileID: 2800000, guid: 6b22049b996241448b6478ee1b2c7bcd, type: 3}
+    hotSpot: {x: 8, y: 8}
+  - cursor: {fileID: 2800000, guid: 08d9b899e9fae9e46ab9fdc2e643fc89, type: 3}
+    hotSpot: {x: 0, y: 0}
+  - cursor: {fileID: 2800000, guid: aa23bfa56254af445bfcc23af497aca6, type: 3}
+    hotSpot: {x: 0, y: 0}
 --- !u!1 &8045924623890360132
 GameObject:
   m_ObjectHideFlags: 0

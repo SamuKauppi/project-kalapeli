@@ -101,6 +101,7 @@ public class FishManager : MonoBehaviour
 
         IsHoldingLure = false;
         attachedLure = null;
+        CursorManager.Instance.SwapCursor(CursorType.Normal);
     }
 
     public void PickUpLure(GameObject lureObj)
@@ -110,6 +111,7 @@ public class FishManager : MonoBehaviour
         attachedLure.SetActive(true);
         PersitentManager.Instance.TakeLure(lureObj.GetComponent<LureStats>());
         IsHoldingLure = true;
+        CursorManager.Instance.SwapCursor(CursorType.Hand);
     }
 
     public void DeleteLure()
@@ -119,6 +121,7 @@ public class FishManager : MonoBehaviour
         IsHoldingLure = false;
         attachedLure = null;
         FishingLureBox.Instance.SetLureBoxActive(PersitentManager.Instance.LureCount());
+        CursorManager.Instance.SwapCursor(CursorType.Normal);
     }
 
     /// <summary>
@@ -190,7 +193,7 @@ public class FishManager : MonoBehaviour
     /// Catch and display given fish species
     /// </summary>
     /// <param name="caughtFish"></param>
-    public void CatchFish(FishSpecies caughtFish, LureStats lureUsed)
+    public void CatchFish(FishSpecies caughtFish)
     {
         // TODO: display fish properly after catching
         foreach (Fish fish in availableFish)
@@ -201,7 +204,6 @@ public class FishManager : MonoBehaviour
                 displayUI.SetActive(true);
                 backButton.SetActive(false);
                 PersitentManager.Instance.GainScoreFormFish(fish.Species, displayParent.position);
-                PersitentManager.Instance.AddLure(lureUsed);
                 FishingLureBox.Instance.SetLureBoxActive(PersitentManager.Instance.LureCount());
                 scoreText.text = CATCH_TXT + caughtFish;
                 CanFish = false;

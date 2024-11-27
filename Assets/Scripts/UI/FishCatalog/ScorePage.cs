@@ -15,6 +15,7 @@ public class ScorePage : MonoBehaviour
     [SerializeField] private TMP_Text lures_lost;
     [SerializeField] private TMP_Text decorations;
     [SerializeField] private TMP_Text cuts;
+    [SerializeField] private TMP_Text fishes_missed;
 
 
     private void Awake()
@@ -129,6 +130,7 @@ public class ScorePage : MonoBehaviour
             SaveValue.lures_lost => lures_lost,
             SaveValue.decorations => decorations,
             SaveValue.cuts => cuts,
+            SaveValue.fishes_missed => fishes_missed,
             _ => null
         };
 

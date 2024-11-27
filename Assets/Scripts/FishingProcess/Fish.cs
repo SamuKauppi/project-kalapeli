@@ -164,11 +164,6 @@ public class Fish : MonoBehaviour
     /// <returns></returns>
     public virtual int GetCatchChance(LureStats lure)
     {
-        if (lure.SwimType == SwimmingType.Bad)
-        {
-            return 0;
-        }
-
         // if lures depth does not match the fish swimming depth, return 0 chance
         if (lure.SwimmingDepth < MinSwimDepth || lure.SwimmingDepth > MaxSwimDepth)
         {
@@ -184,6 +179,11 @@ public class Fish : MonoBehaviour
                                       CatchScoreType.Attachment);                                       // Attachment score
         catchScore += GetScoreFromValue(lure.SwimType, PreferredSwimStyle, CatchScoreType.SwimStyle);   // Swim score
         catchScore += GetScoreFromValue(lure.PatternID, PreferredPatternIndex, CatchScoreType.Pattern); // Patthern score
+
+        if (lure.SwimType == SwimmingType.Bad)
+        {
+            return catchScore / 4;
+        }
 
         // return score
         return catchScore;

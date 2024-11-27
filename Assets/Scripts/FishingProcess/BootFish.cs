@@ -7,6 +7,6 @@
     /// <returns></returns>
     public override int GetCatchChance(LureStats lure)
     {
-        return lure.SwimType == SwimmingType.Bad || lure.SwimmingDepth > 10f ? 100000000 : 0;
+        return lure.SwimmingDepth > 10f ? 100000000 : 0;
     }
 }

@@ -44,7 +44,7 @@ public class Rod : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if ((!IsAttached || HasFish) && FishManager.Instance.CanFish)
+        if (FishManager.Instance.CanFish && (IsAttached || HasFish || FishManager.Instance.IsHoldingLure))
         {
             outline.enabled = true;
         }
@@ -52,20 +52,29 @@ public class Rod : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (!IsAttached || HasFish)
+        if (!HasFish)
             outline.enabled = false;
     }
 
     private void OnMouseDown()
     {
-        if (HasFish && FishManager.Instance.CanFish && !FishManager.Instance.IsHoldingLure) // Check first if there is a fish
+        if (FishManager.Instance.CanFish && !FishManager.Instance.IsHoldingLure)
         {
-            FishManager.Instance.CatchFish(CaughtFish, LureAttached);
-            CaughtFish = FishSpecies.None;
-            HasFish = false;
-            DetachLure();
-            StopAllCoroutines();
-            lineRenderer.enabled = false;
+            if (HasFish) // Handle the case when there is a fish
+            {
+                FishManager.Instance.CatchFish(CaughtFish);
+                PersitentManager.Instance.AddLure(LureAttached);
+                CaughtFish = FishSpecies.None;
+                HasFish = false;
+                DetachLure();
+                StopAllCoroutines();
+            }
+            else if (IsAttached) // Handle the case when there is no fish but the lure is attached
+            {
+                PersitentManager.Instance.AddLure(LureAttached);
+                DetachLure();
+                StopAllCoroutines();
+            }
         }
     }
 
@@ -94,11 +103,13 @@ public class Rod : MonoBehaviour
     /// <returns></returns>
     private IEnumerator WaitingForFish()
     {
-        
+
         // Wait for a random time
         if (fishCatchChances.Length > 0 && fishCatchChances[0].species != FishSpecies.Boot)
         {
+#if UNITY_EDITOR
             PrintCatchChances(fishCatchChances, totalCatchScore);
+#endif
             float waitTime = maxTimeForFish;
             yield return new WaitForSeconds(Random.Range(minTimeForFish, waitTime));
         }
@@ -132,6 +143,7 @@ public class Rod : MonoBehaviour
         }
 
         yield return new WaitForSeconds(timeAttached);
+        ScorePage.Instance.UpdateNonFishValue(SaveValue.fishes_missed, 1);
 
         HasFish = false;
         CaughtFish = FishSpecies.None;
@@ -172,6 +184,7 @@ public class Rod : MonoBehaviour
         anim.SetBool("Water", true);
         lineRenderer.enabled = true;
         SoundManager.Instance.PlaySound(SoundClipTrigger.OnCastThrow);
+        CursorManager.Instance.SwapCursor(CursorType.Normal);
     }
 
     /// <summary>
@@ -179,6 +192,7 @@ public class Rod : MonoBehaviour
     /// </summary>
     public void DetachLure()
     {
+        lineRenderer.enabled = false;
         LureAttached = null;
         IsAttached = false;
         outline.enabled = false;

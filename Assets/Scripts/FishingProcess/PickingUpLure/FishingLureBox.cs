@@ -89,7 +89,7 @@ public class FishingLureBox : MonoBehaviour
         lureSelector.SetActive(true);
         LureStats[] lures = PersitentManager.Instance.GetLureArray();
         selectorParent.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,
-            (lures.Length - 1) * (lureSelectorEntryPrefab.entryBtn.image.rectTransform.rect.width + (padding * 2f)));
+            lures.Length * (lureSelectorEntryPrefab.entryBtn.image.rectTransform.rect.height + padding));
 
         for (int i = 0; i < lureSelectorEntries.Length; i++)
         {

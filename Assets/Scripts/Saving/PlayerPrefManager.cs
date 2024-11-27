@@ -78,6 +78,7 @@ public class PlayerPrefManager : MonoBehaviour
             FishSpecies.Boot => SaveValue.boots,
             FishSpecies.Muddle => SaveValue.muddlers,
             FishSpecies.Peeper => SaveValue.peepers,
+            FishSpecies.Grouchy => SaveValue.gourchies,
             _ => SaveValue.boots,
         };
     }
