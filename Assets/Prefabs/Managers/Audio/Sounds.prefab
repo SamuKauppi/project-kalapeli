@@ -89,9 +89,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 99cc606bdf54ceb43a7921e9a13f8d79, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 127220dcb1478fb4f83b1ae4acad45ae, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -403,7 +403,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4121174901584107316, guid: e5aee8f5727b31a49a0af4a6fa2cbb57, type: 3}
       propertyPath: volume
-      value: 0.5
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4121174901584107316, guid: e5aee8f5727b31a49a0af4a6fa2cbb57, type: 3}
       propertyPath: trigger
@@ -747,7 +747,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4121174901584107316, guid: e5aee8f5727b31a49a0af4a6fa2cbb57, type: 3}
       propertyPath: volume
-      value: 0.7
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4121174901584107316, guid: e5aee8f5727b31a49a0af4a6fa2cbb57, type: 3}
       propertyPath: trigger
@@ -833,7 +833,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4121174901584107316, guid: e5aee8f5727b31a49a0af4a6fa2cbb57, type: 3}
       propertyPath: volume
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4121174901584107316, guid: e5aee8f5727b31a49a0af4a6fa2cbb57, type: 3}
       propertyPath: trigger
@@ -1009,7 +1009,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4121174901584107316, guid: e5aee8f5727b31a49a0af4a6fa2cbb57, type: 3}
       propertyPath: volume
-      value: 0.4
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4121174901584107316, guid: e5aee8f5727b31a49a0af4a6fa2cbb57, type: 3}
       propertyPath: trigger
@@ -1353,7 +1353,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4121174901584107316, guid: e5aee8f5727b31a49a0af4a6fa2cbb57, type: 3}
       propertyPath: volume
-      value: 0.8
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 4121174901584107316, guid: e5aee8f5727b31a49a0af4a6fa2cbb57, type: 3}
       propertyPath: trigger
