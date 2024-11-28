@@ -574,17 +574,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shadow_Cube
       objectReference: {fileID: 0}
-    - target: {fileID: 3416951481670158180, guid: c85754e7870f9834eab44ace37ebdabf, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6723189935226710775, guid: c85754e7870f9834eab44ace37ebdabf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6723189935226710775, guid: c85754e7870f9834eab44ace37ebdabf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.335
+      value: 1.078
       objectReference: {fileID: 0}
     - target: {fileID: 6723189935226710775, guid: c85754e7870f9834eab44ace37ebdabf, type: 3}
       propertyPath: m_LocalPosition.z
