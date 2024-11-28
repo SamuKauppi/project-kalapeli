@@ -15,14 +15,14 @@ public class Rod : MonoBehaviour
     [SerializeField] private Outline outline;
     [SerializeField] private Animator anim;
 
-    // Line Renderer
-    [SerializeField] private LineRenderer lineRenderer;
+    // Line
+    [SerializeField] private GameObject lineObject;
+    [SerializeField] private Transform lineBone1;
+    [SerializeField] private Transform lineBone2;
     [SerializeField] private Transform lineStartPoint;
     private Transform noFishLinePoint;
     private Transform fishLinePoint;
     private Vector3 intersectingPoint;
-    [SerializeField] private float lineStartWidth;
-    [SerializeField] private float lineEndWidth;
 
     // Min & Max time to wait for fish to be caught
     [SerializeField] private float minTimeForFish;
@@ -36,12 +36,8 @@ public class Rod : MonoBehaviour
 
     private void Start()
     {
-        lineRenderer.startWidth = lineStartWidth;
-        lineRenderer.endWidth = 0f;
-        lineRenderer.endWidth = lineEndWidth;
-        lineRenderer.enabled = false;
-        lineRenderer.material.renderQueue = 3001;
         outline.enabled = false;
+        lineObject.SetActive(false);
     }
 
     private void OnMouseEnter()
@@ -87,15 +83,15 @@ public class Rod : MonoBehaviour
             return;
         }
 
-        lineRenderer.SetPosition(0, lineStartPoint.position);
+        lineBone1.position = lineStartPoint.position;
 
         if (HasFish)
         {
-            lineRenderer.SetPosition(1, fishLinePoint.position);
+            lineBone2.position = fishLinePoint.position;
         }
         else
         {
-            lineRenderer.SetPosition(1, noFishLinePoint.position);
+            lineBone2.position = noFishLinePoint.position;
         }
     }
 
@@ -183,7 +179,7 @@ public class Rod : MonoBehaviour
         fishCatchChances = catchScores;
         StartCoroutine(WaitingForFish());
         anim.SetBool("Water", true);
-        lineRenderer.enabled = true;
+        lineObject.SetActive(true);
         SoundManager.Instance.PlaySound(SoundClipTrigger.OnCastThrow);
         CursorManager.Instance.SwapCursor(CursorType.Normal);
 
@@ -196,7 +192,7 @@ public class Rod : MonoBehaviour
     /// </summary>
     public void DetachLure()
     {
-        lineRenderer.enabled = false;
+        lineObject.SetActive(false);
         LureAttached = null;
         IsAttached = false;
         outline.enabled = false;
@@ -217,6 +213,5 @@ public class Rod : MonoBehaviour
     {
         noFishLinePoint = noFishEndPoint;
         fishLinePoint = fishEndPoint;
-        lineRenderer.SetPosition(1, noFishEndPoint.position);
     }
 }

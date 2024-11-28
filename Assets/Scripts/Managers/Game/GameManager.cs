@@ -96,8 +96,8 @@ public class GameManager : MonoBehaviour
 
         if (changeTime > 0 && mainCam.transform.position != angle.posAndRot.position && mainCam.transform.eulerAngles != angle.posAndRot.eulerAngles)
         {
-            LeanTween.move(mainCam.gameObject, angle.posAndRot.position, changeTime);
-            LeanTween.rotate(mainCam.gameObject, angle.posAndRot.eulerAngles, changeTime);
+            LeanTween.moveLocal(mainCam.gameObject, angle.posAndRot.localPosition, changeTime);
+            LeanTween.rotateLocal(mainCam.gameObject, angle.posAndRot.localEulerAngles, changeTime);
         }
         else
         {

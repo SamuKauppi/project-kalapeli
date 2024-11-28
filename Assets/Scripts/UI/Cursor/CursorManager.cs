@@ -26,7 +26,7 @@ public class CursorManager : MonoBehaviour
 
     private void Update()
     {
-        if (currentCursor != CursorType.Normal && EventSystem.current.IsPointerOverGameObject())
+        if (!isCursorOverUI && EventSystem.current.IsPointerOverGameObject())
         {
             prevCursor = currentCursor;
             SwapCursor(CursorType.Normal);
@@ -34,10 +34,11 @@ public class CursorManager : MonoBehaviour
         }
         else if (isCursorOverUI && !EventSystem.current.IsPointerOverGameObject())
         {
-            SwapCursor(prevCursor);
             isCursorOverUI = false;
+            SwapCursor(prevCursor);
         }
     }
+
     private int GetCursorIndex(CursorType type)
     {
         return type switch
@@ -53,26 +54,19 @@ public class CursorManager : MonoBehaviour
     public void SwapCursor(CursorType cursorType)
     {
         int index = GetCursorIndex(cursorType);
-        if (currentCursor == cursorType || index == -1) return;
+        if ((currentCursor == cursorType && !isCursorOverUI) || 
+            (prevCursor == cursorType && isCursorOverUI) ||
+            index == -1) return;
 
-        currentCursor = cursorType;
-        Cursor.SetCursor(cursors[index].cursor, cursors[index].hotSpot, CursorMode.Auto);
+        if (isCursorOverUI)
+        {
+            prevCursor = cursorType;
+        }
+        else
+        {
+            currentCursor = cursorType;
+            Cursor.SetCursor(cursors[index].cursor, cursors[index].hotSpot, CursorMode.Auto);
+        }
     }
 
-}
-
-[System.Serializable]
-public class CursorTexture
-{
-    public Texture2D cursor;
-    public Vector2 hotSpot = Vector3.zero;
-}
-
-public enum CursorType
-{
-    None,
-    Normal,
-    Hand,
-    Knife,
-    Brush
 }

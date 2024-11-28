@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1880618853201548054}
   - component: {fileID: 728101237014625628}
+  - component: {fileID: 5622979565354889862}
   m_Layer: 0
   m_Name: fish_prefab
   m_TagString: Untagged
@@ -44,6 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5245b6c210cbfd741ab6d1846ec21c10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  species: 0
+  hintText: 
+  flavourText: 
   minSwimDepth: 0
   maxSwimDepth: 0
   colors: []
@@ -51,4 +55,22 @@ MonoBehaviour:
   swimStyles: 
   patternIndices: 
   catchChance: 0
+  timeAttached: 0
   score: 0
+  miniIcon: {fileID: 0}
+  bigIcon: {fileID: 0}
+--- !u!114 &5622979565354889862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7456944162743981831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b74058256bd0ca64389a45bb8629bd23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxMove: 0
+  speed: 0
+  rotSpeed: 35
