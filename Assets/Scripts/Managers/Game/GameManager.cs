@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
     private int lureAngleID = 0;
     private int fishAngleID = 0;
 
-
     private void Awake()
     {
         if (Instance == null)

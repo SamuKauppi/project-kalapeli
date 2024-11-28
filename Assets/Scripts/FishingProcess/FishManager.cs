@@ -234,5 +234,6 @@ public class FishManager : MonoBehaviour
     public void ActivateFishing()
     {
         FishingLureBox.Instance.SetLureBoxActive(PersitentManager.Instance.LureCount());
+        CursorManager.Instance.SwapCursor(CursorType.Normal);
     }
 }

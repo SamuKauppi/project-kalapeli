@@ -51,7 +51,6 @@ public class LureCreationManager : MonoBehaviour
     private MeshFilter blockFilter;
     private LureFunctions lureProperties;
     private int currentCameraAngle;
-    private bool isOverUI;
 
     #region private
     private void Awake()
@@ -188,20 +187,6 @@ public class LureCreationManager : MonoBehaviour
             default:
                 CursorManager.Instance.SwapCursor(CursorType.Normal);
                 break;
-        }
-    }
-
-    private void Update()
-    {
-        if (EventSystem.current.IsPointerOverGameObject() && !isOverUI)
-        {
-            CursorManager.Instance.SwapCursor(CursorType.Normal);
-            isOverUI = true;
-        }
-        else if (!EventSystem.current.IsPointerOverGameObject() && isOverUI)
-        {
-            SetCursor();
-            isOverUI = false;
         }
     }
 
@@ -361,14 +346,7 @@ public class LureCreationManager : MonoBehaviour
 
         if (value)
         {
-            if (!EventSystem.current.IsPointerOverGameObject())
-                SetCursor();
-            else
-                CursorManager.Instance.SwapCursor(CursorType.Normal);
-        }
-        else
-        {
-            CursorManager.Instance.SwapCursor(CursorType.Normal);
+            SetCursor();
         }
     }
     #endregion

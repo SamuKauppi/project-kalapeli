@@ -11,7 +11,7 @@ public class PersitentManager : MonoBehaviour
     public Fish[] EveryFish { get { return everyFishInGame; } }
 
     // Lure
-    public List<LureStats> luresCreated = new();
+    private readonly List<LureStats> luresCreated = new();
 
     // Fish
     [SerializeField] private Fish[] everyFishInGame;                    // Contains every fish that exists (set in inspector)
@@ -22,10 +22,6 @@ public class PersitentManager : MonoBehaviour
     // Score
     [SerializeField] private TMP_Text scoreText;
     private int score;
-    private int lures_lost;
-    private int lures_made;
-    private int attachedUsed;
-    private int cuts;
     private const string SCORE = "Score: ";
 
     private void Awake()
@@ -58,10 +54,6 @@ public class PersitentManager : MonoBehaviour
         scoreText.text = SCORE + score;
 
         score = PlayerPrefManager.Instance.GetPrefValue(SaveValue.score, 0);
-        lures_lost = PlayerPrefManager.Instance.GetPrefValue(SaveValue.lures_lost, 0);
-        lures_made = PlayerPrefManager.Instance.GetPrefValue(SaveValue.lures_made, 0);
-        attachedUsed = PlayerPrefManager.Instance.GetPrefValue(SaveValue.decorations, 0);
-        cuts = PlayerPrefManager.Instance.GetPrefValue(SaveValue.cuts, 0);
     }
 
     private void SetLayerRecursively(GameObject obj, int layer)

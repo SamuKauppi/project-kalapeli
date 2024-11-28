@@ -15,4 +15,6 @@
     cuts,
     tutorial,
     fishes_missed,
+    music_volume,
+    sfx_volume
 }

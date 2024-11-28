@@ -46,9 +46,6 @@ public class AttachingProcess : MonoBehaviour
 
     // Positioning
     private Vector3 mousePos;           // Mouse vector
-    private float mouseHeld;            // Mouse held input detection for fixed update
-    private bool mouseUp;               // Mouse up input detection for fixed update
-    private float mouseScroll;          // Mouse scroll input detection
     private bool isValidPos = false;    // Is the attached object at a valid position
     private bool wasRotating = false;   // Checks if the block was rotating and fixes attachable rotaion when needed
 
@@ -78,42 +75,9 @@ public class AttachingProcess : MonoBehaviour
     }
 
     /// <summary>
-    /// Update is used for input detection
+    /// Handles input detection and reacting to inputs in a single update loop.
     /// </summary>
     private void Update()
-    {
-        if (!IsAttaching)
-        {
-            return;
-        }
-
-        mouseScroll += Input.GetAxisRaw("Mouse ScrollWheel");
-        // Get mouse pos
-        mousePos = Input.mousePosition;
-        mousePos.z = distanceToLure;
-
-        if (attachedObject == null)
-            return;
-
-
-        if (Input.GetMouseButton(0))
-        {
-            blockRotation.StopRotating = true;
-            mouseHeld += Time.deltaTime;
-        }
-        else
-            mouseHeld = 0f;
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            mouseUp = true;
-        }
-    }
-
-    /// <summary>
-    /// Fixed update is used for reacting to inputs
-    /// </summary>
-    private void FixedUpdate()
     {
         if (!IsAttaching)
         {
@@ -124,79 +88,61 @@ public class AttachingProcess : MonoBehaviour
             return;
         }
 
-        if (blockRotation.IsRotating) { wasRotating = true; return; }
-
+        // Detect and process mouse scroll
+        float mouseScroll = Input.GetAxisRaw("Mouse ScrollWheel");
         if (mouseScroll != 0f)
         {
-            Vector3 direction = cam.ScreenToWorldPoint(mousePos) - cam.transform.position;
-
-            if (Physics.Raycast(cam.transform.position, direction, out RaycastHit hit, scaleAttachRayDist, attachedLayer))
-            {
-                if (hit.collider.TryGetComponent(out MoveAttach ma))
-                {
-                    ma.ScaleAttached(mouseScroll);
-
-                    if (ma.MirroredObj != null)
-                    {
-                        ma.MirroredObj.GetComponent<MoveAttach>().ScaleAttached(mouseScroll);
-                    }
-                    OnAttach?.Invoke();
-                }
-            }
-            mouseScroll = 0f;
+            HandleMouseScrollScaling(mouseScroll);
         }
 
-        if (!attachedObject) { return; }
+        // Update mouse position
+        mousePos = Input.mousePosition;
+        mousePos.z = distanceToLure;
 
-        // Check if the block was rotating and fix the rotation and position if needed
-        if (wasRotating)
-        {
-            MoveObjectToAttachPosition();
+        if (attachedObject == null) return;
 
-            wasRotating = false;
-            mouseHeld = 0f;
-        }
-        // While mouse is being held, set the attached object position to mouse
-        else if (mouseHeld > 0.1f)
+        // Handle mouse button states
+        if (Input.GetMouseButton(0))
         {
+            blockRotation.StopRotating = true;
             MoveObjectToAttachPosition();
         }
-        // When mouse is released either place it or destroy it
-        else if (mouseUp)
+        else if (Input.GetMouseButtonUp(0))
         {
             ReleaseObject();
         }
+
+        if (blockRotation.IsRotating)
+        {
+            wasRotating = true;
+            return;
+        }
+
+        if (wasRotating)
+        {
+            MoveObjectToAttachPosition();
+            wasRotating = false;
+        }
     }
 
-    private void ReleaseObject()
+    private void HandleMouseScrollScaling(float mouseScroll)
     {
-        if (!isValidPos)
-        {
-            PlayDetachSound(attachedObject.GetComponent<AttachProperties>().AttachingType);
-            Destroy(attachedObject);
-            if (attachBothSides)
-                Destroy(mirrorObj);
-        }
-        else
-        {
-            attachedObject.transform.parent = lureObj.transform;
-            moveAttach.EnableOutline(false);
-            if (attachBothSides)
-            {
-                mirrorObj.transform.parent = lureObj.transform;
-                mirrorAttach.EnableOutline(false);
-            }
-            SoundManager.Instance.PlaySound(SoundClipTrigger.OnBlockHit);
-            ScorePage.Instance.UpdateNonFishValue(SaveValue.decorations, 1);
-        }
+        Vector3 direction = cam.ScreenToWorldPoint(mousePos) - cam.transform.position;
 
-        attachedObject = null;
-        moveAttach = null;
-        mirrorObj = null;
-        mirrorAttach = null;
-        blockRotation.StopRotating = false;
-        OnAttach?.Invoke();
-        mouseUp = false;
+        if (Physics.Raycast(cam.transform.position, direction, out RaycastHit hit, scaleAttachRayDist, attachedLayer))
+        {
+            if (hit.collider.TryGetComponent(out MoveAttach ma))
+            {
+                ma.ScaleAttached(mouseScroll);
+
+                if (ma.MirroredObj != null)
+                {
+                    ma.MirroredObj.GetComponent<MoveAttach>().ScaleAttached(mouseScroll);
+                }
+                OnAttach?.Invoke();
+            }
+        }
+        mouseScroll = 0f;
     }
 
     /// <summary>
@@ -292,7 +238,35 @@ public class AttachingProcess : MonoBehaviour
         // Project this vector onto the camera's forward direction
         distanceToLure = Vector3.Dot(lureDirection, cam.transform.forward);
     }
+    private void ReleaseObject()
+    {
+        if (!isValidPos)
+        {
+            PlayDetachSound(attachedObject.GetComponent<AttachProperties>().AttachingType);
+            Destroy(attachedObject);
+            if (attachBothSides)
+                Destroy(mirrorObj);
+        }
+        else
+        {
+            attachedObject.transform.parent = lureObj.transform;
+            moveAttach.EnableOutline(false);
+            if (attachBothSides)
+            {
+                mirrorObj.transform.parent = lureObj.transform;
+                mirrorAttach.EnableOutline(false);
+            }
+            SoundManager.Instance.PlaySound(SoundClipTrigger.OnBlockHit);
+            ScorePage.Instance.UpdateNonFishValue(SaveValue.decorations, 1);
+        }
 
+        attachedObject = null;
+        moveAttach = null;
+        mirrorObj = null;
+        mirrorAttach = null;
+        blockRotation.StopRotating = false;
+        OnAttach?.Invoke();
+    }
 
     private void PlayAttachSound(AttachingType type)
     {

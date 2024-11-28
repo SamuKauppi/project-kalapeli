@@ -1,16 +1,9 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerPrefManager : MonoBehaviour
 {
     public static PlayerPrefManager Instance { get; private set; }
-
-    [SerializeField] private PlayerPrefEntry[] playerPrefs;
-
-    private readonly Dictionary<string, float> storedFloats = new();
-    private readonly Dictionary<string, int> storedInts = new();
-    private readonly Dictionary<string, string> storedStrings = new();
 
     private void Awake()
     {
@@ -20,53 +13,6 @@ public class PlayerPrefManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void Start()
-    {
-        foreach (PlayerPrefEntry entry in playerPrefs)
-        {
-            if (!PlayerPrefs.HasKey(entry.keyValue.ToString()))
-            {
-                if (entry.floatValue != 0f)
-                {
-                    PlayerPrefs.SetFloat(entry.keyValue.ToString(), entry.floatValue);
-                }
-                if (entry.intValue != 0)
-                {
-                    PlayerPrefs.SetInt(entry.keyValue.ToString(), entry.intValue);
-                }
-                if (entry.stringValue != "")
-                {
-                    PlayerPrefs.SetString(entry.keyValue.ToString(), entry.stringValue);
-                }
-            }
-
-            if (PlayerPrefs.HasKey(entry.keyValue.ToString()))
-            {
-                if (IsFloat(entry.keyValue.ToString()))
-                {
-                    storedFloats.Add(entry.keyValue.ToString(), PlayerPrefs.GetFloat(entry.keyValue.ToString()));
-                }
-                else if (IsInt(entry.keyValue.ToString()))
-                {
-                    storedInts.Add(entry.keyValue.ToString(), PlayerPrefs.GetInt(entry.keyValue.ToString()));
-                }
-                else
-                {
-                    storedStrings.Add(entry.keyValue.ToString(), PlayerPrefs.GetString(entry.keyValue.ToString()));
-                }
-            }
-        }
-    }
-
-    private bool IsFloat(string key)
-    {
-        return float.TryParse(PlayerPrefs.GetString(key, ""), out _);
-    }
-
-    private bool IsInt(string key)
-    {
-        return int.TryParse(PlayerPrefs.GetString(key, ""), out _);
-    }
     private SaveValue SaveValueFromFish(FishSpecies species)
     {
         return species switch
@@ -87,17 +33,14 @@ public class PlayerPrefManager : MonoBehaviour
     {
         if (value is float floatValue)
         {
-            storedFloats[keyValue.ToString()] = floatValue;
             PlayerPrefs.SetFloat(keyValue.ToString(), floatValue);
         }
         else if (value is int intValue)
         {
-            storedInts[keyValue.ToString()] = intValue;
             PlayerPrefs.SetInt(keyValue.ToString(), intValue);
         }
         else if (value is string stringValue)
         {
-            storedStrings[keyValue.ToString()] = stringValue;
             PlayerPrefs.SetString(keyValue.ToString(), stringValue);
         }
 
@@ -108,7 +51,6 @@ public class PlayerPrefManager : MonoBehaviour
     {
         if (!PlayerPrefs.HasKey(keyValue.ToString()))
             return defaultValue;
-
 
         if (typeof(T) == typeof(float))
         {

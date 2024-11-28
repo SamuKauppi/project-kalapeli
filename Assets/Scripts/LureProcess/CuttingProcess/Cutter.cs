@@ -55,7 +55,7 @@ public class Cutter : MonoBehaviour
         objectToCut.GetComponent<MeshCollider>().sharedMesh = closerMesh;
 
         // Cut piece
-        GameObject cutPiece = Instantiate(cutPiecePrefab, objectToCut.transform.position, objectToCut.transform.rotation);
+        GameObject cutPiece = Instantiate(cutPiecePrefab, objectToCut.transform.position, objectToCut.transform.rotation, transform.parent);
         cutPiece.GetComponent<MeshFilter>().mesh = furtherMesh;
         cutPiece.GetComponent<MeshRenderer>().material = blockMaterial;
         cutPiece.GetComponent<MeshCollider>().sharedMesh = furtherMesh;

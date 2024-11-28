@@ -17,7 +17,6 @@ public class ScorePage : MonoBehaviour
     [SerializeField] private TMP_Text cuts;
     [SerializeField] private TMP_Text fishes_missed;
 
-
     private void Awake()
     {
         if (Instance == null)
@@ -52,6 +51,7 @@ public class ScorePage : MonoBehaviour
         lures_lost.text = PlayerPrefManager.Instance.GetPrefValue(SaveValue.lures_lost, 0).ToString();
         decorations.text = PlayerPrefManager.Instance.GetPrefValue(SaveValue.decorations, 0).ToString();
         cuts.text = PlayerPrefManager.Instance.GetPrefValue(SaveValue.cuts, 0).ToString();
+        fishes_missed.text = PlayerPrefManager.Instance.GetPrefValue(SaveValue.fishes_missed, 0).ToString();
     }
 
     private string GetFishPluralName(FishSpecies fish)
@@ -97,7 +97,6 @@ public class ScorePage : MonoBehaviour
         // Save the new value
         PlayerPrefManager.Instance.SaveFishValue(species, newValue);
 
-
         // Update UI elements based on new value
         if (newValue > 0)
         {
@@ -105,11 +104,6 @@ public class ScorePage : MonoBehaviour
             fishNames[index].gameObject.SetActive(true);
             fishScores[index].text = newValue.ToString();
             fishScores[index].gameObject.SetActive(true);
-        }
-        else
-        {
-            fishNames[index].text = "???";
-            fishScores[index].gameObject.SetActive(false);
         }
     }
 

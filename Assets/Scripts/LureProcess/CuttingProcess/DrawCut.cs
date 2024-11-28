@@ -2,13 +2,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 /// <summary>
-/// Handles the cutting process of the block
+/// Handles the creating the cut plane for the cutter
 /// </summary>
 public class DrawCut : MonoBehaviour
 {
     public bool IsCutting { get; set; } = false;
 
     // References
+    [SerializeField] private Cutter cutter;
     [SerializeField] private LayerMask blockLayer;
     private BlockRotation blockRotation;   // Script that rotates the block that will be cut
     private LureFunctions lureProperties;
@@ -35,7 +36,7 @@ public class DrawCut : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         cam = GameManager.Instance.MainCamera;
         blockRotation = BlockRotation.Instance;
@@ -49,7 +50,7 @@ public class DrawCut : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // Stop the ability to cut when the block is rotatig
         if (blockRotation.IsRotating)
@@ -130,7 +131,7 @@ public class DrawCut : MonoBehaviour
             return;
         }
 
-        Tutorial.Instance.EndCuttingTutorial();
+        pointA = transform.TransformPoint(localPointA);
         pointB = cam.ScreenToWorldPoint(mouse);
         if (Vector3.Distance(pointA, pointB) > minCutDist)
         {
@@ -140,6 +141,7 @@ public class DrawCut : MonoBehaviour
         cutRender.SetPosition(0, pointA);
         cutRender.SetPosition(1, pointB);
         animateCut = true;
+        Tutorial.Instance.EndCuttingTutorial();
     }
 
     /// <summary>

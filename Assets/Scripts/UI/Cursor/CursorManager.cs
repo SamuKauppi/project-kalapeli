@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CursorManager : MonoBehaviour
 {
@@ -6,7 +7,9 @@ public class CursorManager : MonoBehaviour
 
     [SerializeField] private CursorTexture[] cursors;
 
-    CursorType currentCursor = CursorType.None;
+    private CursorType currentCursor = CursorType.None;
+    private CursorType prevCursor = CursorType.None;
+    private bool isCursorOverUI = false;
 
     private void Awake()
     {
@@ -19,6 +22,21 @@ public class CursorManager : MonoBehaviour
     private void Start()
     {
         SwapCursor(CursorType.Normal);
+    }
+
+    private void Update()
+    {
+        if (currentCursor != CursorType.Normal && EventSystem.current.IsPointerOverGameObject())
+        {
+            prevCursor = currentCursor;
+            SwapCursor(CursorType.Normal);
+            isCursorOverUI = true;
+        }
+        else if (isCursorOverUI && !EventSystem.current.IsPointerOverGameObject())
+        {
+            SwapCursor(prevCursor);
+            isCursorOverUI = false;
+        }
     }
     private int GetCursorIndex(CursorType type)
     {
