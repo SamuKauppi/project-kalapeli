@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class SoundPlayer : MonoBehaviour
 {
@@ -8,22 +9,30 @@ public class SoundPlayer : MonoBehaviour
     [SerializeField] private SoundClipTrigger trigger;
     [SerializeField] private SoundClipPlayOrder playOrder;
 
-    private AudioSource source;
+    private readonly Queue<AudioSource> audioSources = new();
+    private readonly int maxAudioSources = 3;
     private AudioClip[] clips;
     private int playIndex;
+
+    private float baseVolume;
 
     public SoundClipType[] SoundTypes { get { return soundTypes; } }
     public SoundClipTrigger Trigger { get { return trigger; } }
 
     private void Start()
     {
-        source = GetComponent<AudioSource>();
+        for (int i = 0; i < maxAudioSources; i++)
+        {
+            var newSource = gameObject.AddComponent<AudioSource>();
+            audioSources.Enqueue(newSource);
+        }
+
         clips = new AudioClip[soundTypes.Length];
         for (int i = 0; i < clips.Length; i++)
         {
             clips[i] = SoundManager.Instance.GetClip(soundTypes[i]);
         }
-        source.volume = volume;
+        baseVolume = volume;
     }
 
     private void OnEnable()
@@ -36,11 +45,17 @@ public class SoundPlayer : MonoBehaviour
         SoundManager.OnPlaySound -= PlaySound;
     }
 
-    public void PlaySound(SoundClipTrigger trigger)
+    public void PlaySound(SoundClipTrigger trigger, float volumeMultiplier)
     {
         if (trigger == Trigger)
         {
-            source.Stop();
+            AudioSource source = audioSources.Dequeue();
+            audioSources.Enqueue(source);
+
+            if (source.isPlaying)
+                source.Stop();
+
+            source.volume = baseVolume * volumeMultiplier;
             int index = playOrder == SoundClipPlayOrder.Random ? Random.Range(0, clips.Length) : playIndex % clips.Length;
             source.clip = clips[index];
             source.Play();

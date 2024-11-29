@@ -216,7 +216,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f53031924a562824889e0cc1a44f6939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  luresCreated: []
   everyFishInGame:
   - {fileID: 8507455307037071222, guid: 8dd1722f2a2f1f94dbf5f00ceb8018a9, type: 3}
   - {fileID: 7979631785163044948, guid: 826fefdbe73f5a94092f92587d1dd7fe, type: 3}
@@ -383,6 +382,8 @@ MonoBehaviour:
     hotSpot: {x: 0, y: 0}
   - cursor: {fileID: 2800000, guid: aa23bfa56254af445bfcc23af497aca6, type: 3}
     hotSpot: {x: 0, y: 0}
+  - cursor: {fileID: 2800000, guid: bcb72888e33c8244a82b7e6cd53e7f7d, type: 3}
+    hotSpot: {x: 8, y: 8}
 --- !u!1 &8045924623890360132
 GameObject:
   m_ObjectHideFlags: 0

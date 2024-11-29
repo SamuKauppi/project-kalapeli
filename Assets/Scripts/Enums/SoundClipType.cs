@@ -28,5 +28,6 @@
     WoodHit3,
     CastThrow,
     CloseBook,
-    OpenBook
+    OpenBook,
+    Music
 }

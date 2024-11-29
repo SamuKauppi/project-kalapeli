@@ -10,8 +10,10 @@ public class SoundManager : MonoBehaviour
 
     private readonly Dictionary<SoundClipType, AudioClip> soundDict = new();
 
-    public delegate void PlaySoundEvent(SoundClipTrigger type);
+    public delegate void PlaySoundEvent(SoundClipTrigger type, float volume);
     public static event PlaySoundEvent OnPlaySound;
+
+    private float volumeMultiplier;
 
     private void Awake()
     {
@@ -27,6 +29,7 @@ public class SoundManager : MonoBehaviour
         {
             soundDict.Add(types[i], clips[i]);
         }
+        volumeMultiplier = PlayerPrefManager.Instance.GetPrefValue(SaveValue.sfx_volume, 1f);
     }
 
     public AudioClip GetClip(SoundClipType type)
@@ -36,6 +39,11 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(SoundClipTrigger triggerType)
     {
-        OnPlaySound?.Invoke(triggerType);
+        OnPlaySound?.Invoke(triggerType, volumeMultiplier);
+    }
+
+    public void ChangeVolume(float volume)
+    {
+        volumeMultiplier = volume;
     }
 }

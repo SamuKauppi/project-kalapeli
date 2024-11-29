@@ -1077,9 +1077,57 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 912141006192187126, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828656483407060460, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828656483407060460, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910844910935056132, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910844910935056132, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910844910935056132, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3241368563721486837, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3241368563721486837, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3241368563721486837, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5471135598138630497, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
       propertyPath: m_Name
       value: FishCatalog
+      objectReference: {fileID: 0}
+    - target: {fileID: 6557141864339552750, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6557141864339552750, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792149084991748540, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1852,6 +1900,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8581638485963373906}
     m_Modifications:
+    - target: {fileID: 1693417266444915938, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
+      propertyPath: m_fontSize
+      value: 69.65
+      objectReference: {fileID: 0}
     - target: {fileID: 2075705680089211039, guid: e00f0d3dc41cc5e49a758bd417905338, type: 3}
       propertyPath: m_Name
       value: FishCanvas

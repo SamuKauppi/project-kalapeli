@@ -13,6 +13,7 @@ public class FishCatalog : MonoBehaviour
     // Page selection
     [SerializeField] private GameObject fishPage;
     [SerializeField] private GameObject scorePage;
+    [SerializeField] private GameObject settingsPage;
     private int currentPageType;
 
     // Catalog
@@ -112,6 +113,7 @@ public class FishCatalog : MonoBehaviour
         currentPageType = pageType;
         fishPage.SetActive(currentPageType == 0);
         scorePage.SetActive(currentPageType == 1);
+        settingsPage.SetActive(currentPageType == 2);
     }
 
     public void CloseCatalog()

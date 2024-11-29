@@ -47,6 +47,7 @@ public class CursorManager : MonoBehaviour
             CursorType.Hand => 1,
             CursorType.Knife => 2,
             CursorType.Brush => 3,
+            CursorType.Grip => 4,
             _ => -1,
         };
     }

@@ -266,6 +266,7 @@ public class AttachingProcess : MonoBehaviour
         mirrorAttach = null;
         blockRotation.StopRotating = false;
         OnAttach?.Invoke();
+        CursorManager.Instance.SwapCursor(CursorType.Hand);
     }
 
     private void PlayAttachSound(AttachingType type)
@@ -357,6 +358,7 @@ public class AttachingProcess : MonoBehaviour
         }
 
         blockRotation.ResetRotation(0.15f);
+        CursorManager.Instance.SwapCursor(CursorType.Grip);
         isValidPos = false;
     }
 
@@ -393,6 +395,7 @@ public class AttachingProcess : MonoBehaviour
         }
 
         blockRotation.ResetRotation(0.15f);
+        CursorManager.Instance.SwapCursor(CursorType.Grip);
         isValidPos = false;
     }
 }

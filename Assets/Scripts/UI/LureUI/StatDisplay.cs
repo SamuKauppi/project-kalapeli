@@ -60,6 +60,9 @@ public class StatDisplay : MonoBehaviour
         }
         Vector3 endPos = isDiplaying ? onPos.position : offPos.position;
 
+        if (time > 0f)
+            SoundManager.Instance.PlaySound(isDiplaying ? SoundClipTrigger.OnOpenBook : SoundClipTrigger.OnCloseBook);
+
         LeanTween.move(displayWindow, endPos, time).setEase(LeanTweenType.easeOutQuint);
         Vector3 scale = displayArrow.localScale;
         scale.x *= -1f;

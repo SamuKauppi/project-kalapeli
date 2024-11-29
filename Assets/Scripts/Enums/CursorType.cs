@@ -4,5 +4,6 @@
     Normal,
     Hand,
     Knife,
-    Brush
+    Brush,
+    Grip,
 }

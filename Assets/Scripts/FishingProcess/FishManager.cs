@@ -111,7 +111,7 @@ public class FishManager : MonoBehaviour
         attachedLure.SetActive(true);
         PersitentManager.Instance.TakeLure(lureObj.GetComponent<LureStats>());
         IsHoldingLure = true;
-        CursorManager.Instance.SwapCursor(CursorType.Hand);
+        CursorManager.Instance.SwapCursor(CursorType.Grip);
     }
 
     public void DeleteLure()
