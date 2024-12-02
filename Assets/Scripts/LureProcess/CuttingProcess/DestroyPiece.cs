@@ -8,7 +8,12 @@ public class DestroyPiece : MonoBehaviour
         StartCoroutine(KillMe());
     }
 
-    IEnumerator KillMe()
+    private void OnDisable()
+    {
+        Destroy(gameObject);
+    }
+
+    private IEnumerator KillMe()
     {
         yield return new WaitForSeconds(3f);
         Destroy(gameObject);

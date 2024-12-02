@@ -53,8 +53,17 @@ MonoBehaviour:
   lineBone1: {fileID: 2166090429384011183}
   lineBone2: {fileID: 688540826731850366}
   lineStartPoint: {fileID: 5806497437869956693}
-  minTimeForFish: 2
-  maxTimeForFish: 120
+  rodBones:
+  - {fileID: 2675700700598114031}
+  - {fileID: 2788833924616445390}
+  - {fileID: 2726905621849128902}
+  - {fileID: 6812355035295034614}
+  - {fileID: 5806497437869956693}
+  minRotationPercentage: 0.018
+  maxRotationPercentage: 0.03
+  rodAnimationSpeed: 0.007
+  minTimeForFish: 60
+  maxTimeForFish: 180
 --- !u!65 &7472994422790656681
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -188,9 +197,29 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!4 &2675700700598114031 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -5624165402290429816, guid: 6b74d2404fa1d7042bbcdc27c4ea1a08, type: 3}
+  m_PrefabInstance: {fileID: 1500557124013782631}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2726905621849128902 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3532201952409602465, guid: 6b74d2404fa1d7042bbcdc27c4ea1a08, type: 3}
+  m_PrefabInstance: {fileID: 1500557124013782631}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2788833924616445390 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -5593222880262902871, guid: 6b74d2404fa1d7042bbcdc27c4ea1a08, type: 3}
+  m_PrefabInstance: {fileID: 1500557124013782631}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5806497437869956693 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4303226385713747918, guid: 6b74d2404fa1d7042bbcdc27c4ea1a08, type: 3}
+  m_PrefabInstance: {fileID: 1500557124013782631}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6812355035295034614 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -3865966383118460271, guid: 6b74d2404fa1d7042bbcdc27c4ea1a08, type: 3}
   m_PrefabInstance: {fileID: 1500557124013782631}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4643715800616902878

@@ -19,11 +19,6 @@ public class PersitentManager : MonoBehaviour
     private readonly Dictionary<FishSpecies, Fish> fishDict = new();    // Dictionary that is set during runtime
     private readonly Dictionary<FishSpecies, int> fishesCaught = new();
 
-    // Score
-    [SerializeField] private TMP_Text scoreText;
-    private int score;
-    private const string SCORE = "Score: ";
-
     private void Awake()
     {
         if (Instance == null)
@@ -50,10 +45,6 @@ public class PersitentManager : MonoBehaviour
                 fishesCaught[everyFishInGame[i].Species] = count;
             }
         }
-
-        scoreText.text = SCORE + score;
-
-        score = PlayerPrefManager.Instance.GetPrefValue(SaveValue.score, 0);
     }
 
     private void SetLayerRecursively(GameObject obj, int layer)
@@ -141,8 +132,6 @@ public class PersitentManager : MonoBehaviour
     public void GainScoreFormFish(FishSpecies fish, Transform particleParent)
     {
         int value = !fishesCaught.ContainsKey(fish) ? fishDict[fish].ScoreGained : fishDict[fish].ScoreGained / 2;
-        score += value;
-        scoreText.text = SCORE + score;
 
         ParticleEffectManager.Instance.PlayParticleEffect(ParticleType.DisplayFish, particleParent.position, particleParent);
 

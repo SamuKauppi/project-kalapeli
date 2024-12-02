@@ -52,8 +52,6 @@ public class FishCatalogDisplayUI : MonoBehaviour
             flavourText.text = fish.FlavourText;
             imageField.sprite = fish.bigIcon;
         }
-
-        SoundManager.Instance.PlaySound(SoundClipTrigger.OnOpenBook);
     }
 
     public void ChangePage(int change)
@@ -61,5 +59,4 @@ public class FishCatalogDisplayUI : MonoBehaviour
         pageIndex = (pageIndex + change + pages.Length) % pages.Length;
         SetPageVisibility();
     }
-
 }

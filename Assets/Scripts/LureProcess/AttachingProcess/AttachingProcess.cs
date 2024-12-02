@@ -48,6 +48,7 @@ public class AttachingProcess : MonoBehaviour
     private Vector3 mousePos;           // Mouse vector
     private bool isValidPos = false;    // Is the attached object at a valid position
     private bool wasRotating = false;   // Checks if the block was rotating and fixes attachable rotaion when needed
+    private float mouseScroll;
 
     /// <summary>
     /// Singleton is set in Awake
@@ -89,7 +90,7 @@ public class AttachingProcess : MonoBehaviour
         }
 
         // Detect and process mouse scroll
-        float mouseScroll = Input.GetAxisRaw("Mouse ScrollWheel");
+        mouseScroll = Input.GetAxisRaw("Mouse ScrollWheel");
         if (mouseScroll != 0f)
         {
             HandleMouseScrollScaling(mouseScroll);
@@ -142,7 +143,6 @@ public class AttachingProcess : MonoBehaviour
                 OnAttach?.Invoke();
             }
         }
-        mouseScroll = 0f;
     }
 
     /// <summary>

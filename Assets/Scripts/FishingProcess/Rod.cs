@@ -20,6 +20,12 @@ public class Rod : MonoBehaviour
     [SerializeField] private Transform lineBone1;
     [SerializeField] private Transform lineBone2;
     [SerializeField] private Transform lineStartPoint;
+    [SerializeField] private Transform[] rodBones;
+    [SerializeField] private float minRotationPercentage;
+    [SerializeField] private float maxRotationPercentage;
+    [SerializeField] private float rodAnimationSpeed;
+    private float rotationPercentage;
+    private float rotationDir = 1f;
     private Transform noFishLinePoint;
     private Transform fishLinePoint;
     private Vector3 intersectingPoint;
@@ -38,6 +44,7 @@ public class Rod : MonoBehaviour
     {
         outline.enabled = false;
         lineObject.SetActive(false);
+        rotationPercentage = minRotationPercentage;
     }
 
     private void OnMouseEnter()
@@ -78,6 +85,15 @@ public class Rod : MonoBehaviour
 
     private void Update()
     {
+        rotationPercentage += rodAnimationSpeed * rotationDir * Time.deltaTime;
+
+        if (rotationPercentage > maxRotationPercentage || rotationPercentage < minRotationPercentage)
+        {
+            rotationDir *= -1f;
+            rotationPercentage = Mathf.Clamp(rotationPercentage, minRotationPercentage, maxRotationPercentage);
+        }
+
+
         if (!IsAttached)
         {
             return;
@@ -92,6 +108,25 @@ public class Rod : MonoBehaviour
         else
         {
             lineBone2.position = noFishLinePoint.position;
+
+            foreach (Transform bone in rodBones)
+            {
+                // Calculate the direction to the target point
+                Vector3 directionToPoint = (bone.position - noFishLinePoint.position).normalized;
+
+                // Correctly get the axis of rotation using the bone's local up direction (-y is up)
+                Vector3 axis = Vector3.Cross(directionToPoint, -bone.forward);
+
+                // Calculate the angle between the bone's forward direction (-up) and the target direction
+                float angle = Vector3.Angle(-bone.up, directionToPoint);
+
+                // Apply rotation only around the calculated axis using a quaternion
+                Quaternion rotation = Quaternion.AngleAxis(angle * rotationPercentage, axis);
+
+                // Combine the current local rotation with the new rotation
+                bone.localRotation = rotation * Quaternion.identity;
+            }
+
         }
     }
 
@@ -135,12 +170,14 @@ public class Rod : MonoBehaviour
             HasFish = true;
             CaughtFish = fishCatchChances[i].species;
             timeAttached = fishCatchChances[i].timeAttached;
+            anim.enabled = true;
             anim.SetBool("Fish", true);
             outline.enabled = true;
             break;
         }
 
         yield return new WaitForSeconds(timeAttached);
+        SoundManager.Instance.PlaySound(SoundClipTrigger.OnFishAlert);
         ScorePage.Instance.UpdateNonFishValue(SaveValue.fishes_missed, 1);
 
         HasFish = false;
@@ -148,10 +185,11 @@ public class Rod : MonoBehaviour
         anim.SetBool("Fish", false);
         outline.enabled = false;
 
-        if (Random.Range(0, 4) == 0)
-            DestroyLure();
-        else
+        if (Random.Range(0, 6) == 0)
             StartCoroutine(WaitingForFish());
+        else
+            DestroyLure();
+
     }
 
     // Function to calculate and print catch chances
@@ -162,6 +200,14 @@ public class Rod : MonoBehaviour
             int fishScore = fish.maxScore - fish.minScore;
             float catchPercentage = (fishScore / (float)totalScore) * 100f;
             Debug.Log($"Fish: {fish.species}, Catch Chance: {catchPercentage:F2}%");
+        }
+    }
+
+    private void ResetFishingRodRotation()
+    {
+        foreach (Transform rod in rodBones)
+        {
+            rod.localRotation = Quaternion.identity;
         }
     }
 
@@ -178,13 +224,15 @@ public class Rod : MonoBehaviour
         totalCatchScore = catchTotal;
         fishCatchChances = catchScores;
         StartCoroutine(WaitingForFish());
-        anim.SetBool("Water", true);
+        anim.enabled = false;
         lineObject.SetActive(true);
         SoundManager.Instance.PlaySound(SoundClipTrigger.OnCastThrow);
         CursorManager.Instance.SwapCursor(CursorType.Normal);
 
         intersectingPoint = WaterSurfacePoint.Instance.GetIntersectingPoint(lineStartPoint.position, noFishLinePoint.position);
         ParticleEffectManager.Instance.PlayParticleEffect(ParticleType.Splash, intersectingPoint);
+
+        ResetFishingRodRotation();
     }
 
     /// <summary>
@@ -197,6 +245,7 @@ public class Rod : MonoBehaviour
         IsAttached = false;
         outline.enabled = false;
         StopAllCoroutines();
+        anim.enabled = true;
         anim.SetBool("Water", false);
         anim.SetBool("Fish", false);
         FishingLureBox.Instance.SetLureBoxActive(PersitentManager.Instance.LureCount());

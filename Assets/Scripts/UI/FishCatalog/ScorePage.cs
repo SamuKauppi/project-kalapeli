@@ -81,6 +81,7 @@ public class ScorePage : MonoBehaviour
             FishSpecies.Boot => 4,
             FishSpecies.Muddle => 5,
             FishSpecies.Peeper => 6,
+            FishSpecies.Grouchy => 7,
             _ => -1,
         };
     }
@@ -88,7 +89,11 @@ public class ScorePage : MonoBehaviour
     public void UpdateFishValue(FishSpecies species, int increaseAmount)
     {
         int index = GetFishIndex(species);
-        if (index == -1) return;
+        if (index == -1)
+        {
+            Debug.Log("Fish not found");
+            return;
+        }
 
         // Get the current value and increase it
         int currentValue = PlayerPrefManager.Instance.GetFishValue(species, 0);

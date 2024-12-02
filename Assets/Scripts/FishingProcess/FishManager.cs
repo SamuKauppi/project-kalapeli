@@ -206,6 +206,7 @@ public class FishManager : MonoBehaviour
                 PersitentManager.Instance.GainScoreFormFish(fish.Species, displayParent);
                 scoreText.text = CATCH_TXT + caughtFish;
                 CanFish = false;
+                SoundManager.Instance.PlaySound(SoundClipTrigger.OnFishCaught);
                 break;
             }
         }

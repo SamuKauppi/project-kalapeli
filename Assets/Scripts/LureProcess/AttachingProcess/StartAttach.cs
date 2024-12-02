@@ -19,12 +19,17 @@ public class StartAttach : MonoBehaviour
     private void OnMouseEnter()
     {
         if (outline != null && AttachingProcess.Instance.IsAttaching)
-            outline.enabled = true;
+            ShowOutline(true);
     }
     private void OnMouseExit()
     {
         if (outline != null && AttachingProcess.Instance.IsAttaching)
-            outline.enabled = false;
+            ShowOutline(false);
+    }
+
+    private void ShowOutline(bool value)
+    {
+        outline.enabled = value;
     }
 
     virtual protected void OnMouseDown()

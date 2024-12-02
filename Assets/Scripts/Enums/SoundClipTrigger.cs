@@ -14,4 +14,10 @@ public enum SoundClipTrigger
     OnDiscardEye,
     OnDiscardHook,
     OnDiscardPlastic,
+    OnBookPageChange,
+    OnFishAlert,
+    OnFishCaught,
+    OnLureTrash,
+    OnUiClick,
+    OnUiError
 }
