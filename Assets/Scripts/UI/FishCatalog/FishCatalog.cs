@@ -94,7 +94,7 @@ public class FishCatalog : MonoBehaviour
         closeButton.SetActive(value);
 
         if (value)
-            Tutorial.Instance.AcceptFish();
+            Tutorial.Instance.CheckNewFish();
     }
 
     public void OpenCatalogPage(int pageType)

@@ -51,6 +51,8 @@ public class Fish : MonoBehaviour
 
     public Sprite miniIcon;
     public Sprite bigIcon;
+    public Sprite depthIcon;
+    public Sprite foodIcon;
 
 
     /// <summary>

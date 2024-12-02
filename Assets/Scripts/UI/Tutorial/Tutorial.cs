@@ -27,11 +27,6 @@ public class Tutorial : MonoBehaviour
         tutorialStep = PlayerPrefManager.Instance.GetPrefValue(SaveValue.tutorial, 0);
         noticeMe.SetImageActive(false);
 
-//        // Set tutorialStep to 0 only in the editor
-//#if UNITY_EDITOR
-//        tutorialStep = 0;
-//#endif
-
         if (tutorialStep == 0)
         {
             noticeMe.SetImageActive(true);
@@ -107,8 +102,9 @@ public class Tutorial : MonoBehaviour
         noticeMeTransform.position = noticeMePositions[2].position;
     }
 
-    public void AcceptFish()
+    public void CheckNewFish()
     {
-        noticeMe.SetImageActive(false);
+        if (tutorialStep > 2)
+            noticeMe.SetImageActive(false);
     }
 }

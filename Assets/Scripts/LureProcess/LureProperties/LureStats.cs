@@ -21,6 +21,7 @@ public class LureStats : MonoBehaviour
     public AttachingType[] AttachedTypes =  // Is set by the player
         new AttachingType[0];
     public int lureRealismValue;            // This is supposed to reward making the lure more realistic
+    public const int MAX_LURE_REALISM = 3;  // How many checks does the lure need to be passed as good (catch chance for None is added when not good)      
 
     /// <summary>
     /// Resets all lure stats to their default values.

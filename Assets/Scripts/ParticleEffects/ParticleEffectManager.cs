@@ -29,7 +29,7 @@ public class ParticleEffectManager : MonoBehaviour
     {
         if (playersDict.TryGetValue(type, out ParticleEffectPlayer player))
         {
-            ParticleEffectPlayer effect = Instantiate(player, position, Quaternion.identity, parent);
+            ParticleEffectPlayer effect = Instantiate(player, position, parent == null ? Quaternion.identity : parent.rotation, parent);
             effect.PlayEffect();
             activePlayers.Add(effect);
         }

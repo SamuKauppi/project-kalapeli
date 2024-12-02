@@ -382,6 +382,10 @@ public class LureFunctions : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Set realism values for this lure
+    /// If lure has 3 out of 4 from these it's realistic enough for not to catch None
+    /// </summary>
     private void SetRealismValue()
     {
         Stats.lureRealismValue = 0;

@@ -161,7 +161,7 @@ public class FishManager : MonoBehaviour
 
             // Add miss chance
             // If lureRealism is not good enough add a miss chance
-            if (nextLure.lureRealismValue < 4)
+            if (nextLure.lureRealismValue < LureStats.MAX_LURE_REALISM)
             {
                 FishCatchScore none = new()
                 {
