@@ -25,6 +25,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 611bd7e53320b3447a52766f6a26c65d, type: 3}
     - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
+      propertyPath: hintText
+      value: Prefers consistent and erratic movements.
+      objectReference: {fileID: 0}
+    - target: {fileID: 728101237014625628, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
       propertyPath: miniIcon
       value: 
       objectReference: {fileID: 21300000, guid: 5851774c453905e49ae00a9cc1f574bc, type: 3}

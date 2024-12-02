@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   species: 5
-  hintText: 
+  hintText: Found in the deepest of depths.
   flavourText: Found in the murky depths, this old rubber boot has been soaking in
     the pond for so long that it might just be evolving into a new species!
   minSwimDepth: 0

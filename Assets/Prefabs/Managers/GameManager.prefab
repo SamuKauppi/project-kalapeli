@@ -1081,6 +1081,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FishCatalog
       objectReference: {fileID: 0}
+    - target: {fileID: 7899434587550826298, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
