@@ -100,6 +100,8 @@ MonoBehaviour:
   score: 0
   miniIcon: {fileID: 21300000, guid: aa11ca5d5a7315343948848f0728611f, type: 3}
   bigIcon: {fileID: 21300000, guid: cb1ff961814dddf45a725d55cbebdde0, type: 3}
+  depthIcon: {fileID: 21300000, guid: 76e69c6649139c74a90f5af35ffe1865, type: 3}
+  foodIcon: {fileID: 21300000, guid: 7f2c476e6ceedff4e920cd5a69265c0d, type: 3}
 --- !u!4 &6320715508870836012 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1880618853201548054, guid: 8599e93363ca9e643942749dd2612db6, type: 3}
