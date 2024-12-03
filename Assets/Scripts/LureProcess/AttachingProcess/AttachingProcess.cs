@@ -49,6 +49,10 @@ public class AttachingProcess : MonoBehaviour
     private bool isValidPos = false;    // Is the attached object at a valid position
     private bool wasRotating = false;   // Checks if the block was rotating and fixes attachable rotaion when needed
     private float mouseScroll;
+    
+    // Storing position (fixes missplacement bug)
+    Vector3 deltaPos;
+    Vector3 speed;
 
     /// <summary>
     /// Singleton is set in Awake
@@ -73,12 +77,13 @@ public class AttachingProcess : MonoBehaviour
         }
         cam = GameManager.Instance.MainCamera;
         lureObj = blockRotation.gameObject;
+        deltaPos = transform.position;
     }
 
     /// <summary>
     /// Handles input detection and reacting to inputs in a single update loop.
     /// </summary>
-    private void Update()
+    private void LateUpdate()
     {
         if (!IsAttaching)
         {
@@ -88,6 +93,9 @@ public class AttachingProcess : MonoBehaviour
             }
             return;
         }
+
+        speed = transform.position - deltaPos;
+        deltaPos = transform.position;
 
         // Detect and process mouse scroll
         mouseScroll = Input.GetAxisRaw("Mouse ScrollWheel");
@@ -108,7 +116,8 @@ public class AttachingProcess : MonoBehaviour
             blockRotation.StopRotating = true;
             MoveObjectToAttachPosition();
         }
-        else if (Input.GetMouseButtonUp(0))
+
+        if (Input.GetMouseButtonUp(0))
         {
             ReleaseObject();
         }
@@ -182,13 +191,13 @@ public class AttachingProcess : MonoBehaviour
     {
         // Get mouse position away from lure
         Vector3 posAwayFromLure = cam.ScreenToWorldPoint(mousePos);
-        posAwayFromLure += 0.5f * attachDistance * directionAway;
+        posAwayFromLure += attachDistance * directionAway;
 
         // Raycast
-        if (Physics.Raycast(posAwayFromLure, -directionAway, out RaycastHit hit, attachDistance, blockLayer))
+        if (Physics.Raycast(posAwayFromLure, -directionAway, out RaycastHit hit, attachDistance * 1.1f, blockLayer))
         {
             // Move the object to hit position when hits
-            attachObject.transform.SetPositionAndRotation(hit.point, lureObj.transform.rotation);
+            attachObject.transform.SetPositionAndRotation(hit.point + speed, lureObj.transform.rotation);
 
             // Rotate object to match hit plane normal if it's active
             if (matchRotation)

@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volume: 1
+  spacialBlending: 0
   soundTypes: 
   trigger: 0
   playOrder: 0

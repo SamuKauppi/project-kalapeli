@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private SoundClipType[] types;
     [SerializeField] private AudioClip[] clips;
+    [SerializeField] private string clickTag;
 
     private readonly Dictionary<SoundClipType, AudioClip> soundDict = new();
 
@@ -37,7 +38,12 @@ public class SoundManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject())
         {
-            PlaySound(SoundClipTrigger.OnUiClick);
+            GameObject uiElement = EventSystem.current.currentSelectedGameObject;
+
+            if (uiElement != null && uiElement.CompareTag(clickTag))
+            {
+                PlaySound(SoundClipTrigger.OnUiClick);
+            }
         }
     }
 

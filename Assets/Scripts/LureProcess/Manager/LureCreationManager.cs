@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 /// <summary>
 /// Handles switching between different parts of the lure creation process
@@ -263,7 +262,6 @@ public class LureCreationManager : MonoBehaviour
             () => SetMode(LureCreationProcess.Painting)
         };
         StartCoroutine(ActivateAfterCameraAngle(0, 0.5f, callBacks));
-
     }
 
     public void StartAttaching()
@@ -283,8 +281,11 @@ public class LureCreationManager : MonoBehaviour
         if (!lureProperties.CanCatch)
         {
             requirementEff.SetImageActive(true);
+            SoundManager.Instance.PlaySound(SoundClipTrigger.OnUiError);
             return;
         }
+
+        SoundManager.Instance.PlaySound(SoundClipTrigger.OnUiClick);
 
         // Set camera angle and update mode
         SetMode(LureCreationProcess.None);
@@ -302,8 +303,11 @@ public class LureCreationManager : MonoBehaviour
         if (lureProperties.Stats.lureName.Equals(""))
         {
             nameWarningEff.SetImageActive(true);
+            SoundManager.Instance.PlaySound(SoundClipTrigger.OnUiError);
             return;
         }
+
+        SoundManager.Instance.PlaySound(SoundClipTrigger.OnUiClick);
 
         SetMode(LureCreationProcess.None);
         BlockRotation.Instance.ResetRotation(0f);
@@ -316,8 +320,11 @@ public class LureCreationManager : MonoBehaviour
         if (lureProperties.Stats.lureName.Equals(""))
         {
             nameWarningEff.SetImageActive(true);
+            SoundManager.Instance.PlaySound(SoundClipTrigger.OnUiError);
             return;
         }
+
+        SoundManager.Instance.PlaySound(SoundClipTrigger.OnUiClick);
 
         SaveLure();
         EndLureCreation();

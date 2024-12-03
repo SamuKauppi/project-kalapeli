@@ -81,3 +81,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d210946f23b97f740a4e2f24ecbf2524, type: 3}
   - {fileID: 8300000, guid: cdf542644e4c52a468ad738e6d614df1, type: 3}
   - {fileID: 8300000, guid: cdabf663d63cf5b4fbb86850de431b47, type: 3}
+  clickTag: Click

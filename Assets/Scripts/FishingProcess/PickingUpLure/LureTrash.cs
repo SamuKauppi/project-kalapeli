@@ -14,6 +14,7 @@ public class LureTrash : MonoBehaviour
         if (FishManager.Instance.CanFish && FishManager.Instance.IsHoldingLure)
         {
             FishManager.Instance.DeleteLure();
+            SoundManager.Instance.PlaySound(SoundClipTrigger.OnLureTrash);
             outline.enabled = false;
         }
     }
