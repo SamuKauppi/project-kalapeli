@@ -5,6 +5,8 @@ public class SoundPlayer : MonoBehaviour
 {
     [Range(0f, 1f)]
     [SerializeField] private float volume;
+    [Range(0f, 1f)]
+    [SerializeField] private float spacialBlending = 1f;
     [SerializeField] private SoundClipType[] soundTypes;
     [SerializeField] private SoundClipTrigger trigger;
     [SerializeField] private SoundClipPlayOrder playOrder;
@@ -56,6 +58,7 @@ public class SoundPlayer : MonoBehaviour
                 source.Stop();
 
             source.volume = baseVolume * volumeMultiplier;
+            source.spatialBlend = spacialBlending;
             int index = playOrder == SoundClipPlayOrder.Random ? Random.Range(0, clips.Length) : playIndex % clips.Length;
             source.clip = clips[index];
             source.Play();

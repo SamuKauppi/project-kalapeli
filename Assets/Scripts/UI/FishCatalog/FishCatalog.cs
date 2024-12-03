@@ -183,7 +183,7 @@ public class FishCatalog : MonoBehaviour
                 previousEntry = entries[i];
 
                 if (fishBeingDisplayed != fish)
-                    SoundManager.Instance.PlaySound(SoundClipTrigger.OnBookPageChange);
+                    SoundManager.Instance.PlaySound(SoundClipTrigger.OnOpenBook);
                 fishBeingDisplayed = fish;
                 break;
             }

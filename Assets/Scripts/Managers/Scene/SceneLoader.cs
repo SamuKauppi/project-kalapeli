@@ -36,6 +36,10 @@ public class SceneLoader : MonoBehaviour
         isLoading = true;
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneIndex);
 
+        MusicType type = sceneIndex == 0 ? MusicType.Menu : MusicType.Game1;
+        LoopingSounds.Instance.SwitchMusic(type);
+        LoopingSounds.Instance.SetGameMusicCoroutine(type == MusicType.Game1);
+
         // TODO: add loading screen
         while (!asyncLoad.isDone)
         {

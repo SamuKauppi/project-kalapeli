@@ -125,6 +125,8 @@ public class Rod : MonoBehaviour
 
                 // Combine the current local rotation with the new rotation
                 bone.localRotation = rotation * Quaternion.identity;
+
+                bone.Rotate(bone.forward, angle * rotationPercentage);
             }
 
         }

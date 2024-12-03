@@ -29,5 +29,11 @@
     CastThrow,
     CloseBook,
     OpenBook,
-    Music
+    Music,
+    UiClick,
+    UiClickError,
+    FishAlert,
+    FishCaught,
+    Trash1,
+    Trash2,
 }

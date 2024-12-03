@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b35943f620adcaa4caa829c5427bfc61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cutter: {fileID: 0}
   blockLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -65,7 +66,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cutPiecePrefab: {fileID: 5913621298368924771, guid: 6a10608ea0ed7e9488c470c378049c88, type: 3}
   blockMaterial: {fileID: 2100000, guid: 4ee39a05e07c95240a88eca791255342, type: 2}
-  physicsStrength: 100
+  physicsStrength: 50
 --- !u!120 &1671180869580617301
 LineRenderer:
   serializedVersion: 2

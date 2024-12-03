@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class SoundManager : MonoBehaviour
 {
@@ -30,6 +31,14 @@ public class SoundManager : MonoBehaviour
             soundDict.Add(types[i], clips[i]);
         }
         volumeMultiplier = PlayerPrefManager.Instance.GetPrefValue(SaveValue.sfx_volume, 1f);
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject())
+        {
+            PlaySound(SoundClipTrigger.OnUiClick);
+        }
     }
 
     public AudioClip GetClip(SoundClipType type)

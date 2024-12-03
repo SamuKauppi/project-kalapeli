@@ -59,9 +59,9 @@ MonoBehaviour:
   - {fileID: 2726905621849128902}
   - {fileID: 6812355035295034614}
   - {fileID: 5806497437869956693}
-  minRotationPercentage: 0.018
+  minRotationPercentage: 0.025
   maxRotationPercentage: 0.03
-  rodAnimationSpeed: 0.007
+  rodAnimationSpeed: 0.0035
   minTimeForFish: 60
   maxTimeForFish: 180
 --- !u!65 &7472994422790656681
