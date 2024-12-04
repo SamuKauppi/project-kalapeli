@@ -38,8 +38,6 @@ public class FishCatalog : MonoBehaviour
     // Fish display
     [SerializeField] private FishCatalogDisplayUI displayer;
     private FishCatalogUIEntry previousEntry = null;
-    private FishSpecies fishBeingDisplayed = FishSpecies.None;
-
 
     private void Awake()
     {
@@ -95,14 +93,15 @@ public class FishCatalog : MonoBehaviour
 
         ShowCatalog(0);
         closeButton.SetActive(value);
-
-        if (value && Tutorial.Instance)
-            Tutorial.Instance.CheckNewFish();
     }
 
     public void OpenCatalogPage(int pageType)
     {
         SoundManager.Instance.PlaySound(SoundClipTrigger.OnOpenBook);
+
+        if (Tutorial.Instance)
+            Tutorial.Instance.TutorialOpenCatalog();
+
         if (!isCatalogOpen)
         {
             isCatalogOpen = true;
@@ -124,6 +123,9 @@ public class FishCatalog : MonoBehaviour
         isCatalogOpen = false;
         SetCatalog(isCatalogOpen, displaySpeed);
         SoundManager.Instance.PlaySound(SoundClipTrigger.OnCloseBook);
+
+        if(Tutorial.Instance)
+            Tutorial.Instance.TutorialCloseCatalog();
     }
 
     /// <summary>
@@ -181,7 +183,6 @@ public class FishCatalog : MonoBehaviour
                 }
                 entries[i].SetSelected(true);
                 previousEntry = entries[i];
-                fishBeingDisplayed = fish;
                 break;
             }
         }

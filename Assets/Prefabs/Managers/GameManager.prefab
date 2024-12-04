@@ -286,7 +286,7 @@ Transform:
   m_GameObject: {fileID: 3192982724442150423}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.6863506, z: 0, w: 0.72727084}
-  m_LocalPosition: {x: 24.352077, y: 0, z: 7.8513713}
+  m_LocalPosition: {x: 48.704155, y: 0, z: 15.702743}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1039,6 +1039,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5036498399560838851}
     m_Modifications:
+    - target: {fileID: 32790199700195732, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 38982806217675757, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1079,9 +1083,70 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 912141006192187126, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1044394769302093627, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828656483407060460, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828656483407060460, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910844910935056132, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910844910935056132, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910844910935056132, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3241368563721486837, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3241368563721486837, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3241368563721486837, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4451547632198766607, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_text
+      value: "programming\r\n\tSamu Kauppi\r\n\r\nart\r\n\tAida Cederqvist\r\n\tSenja
+        Grahn\r\n\tElla Koponen\r\n\tElla R\xE4ntil\xE4\r\n\r\nmusic and sound design\n\tJoni
+        Nousiainen\r\n\r\nfont license\r\n\tCopyright 2018 The Sour Gummy Project
+        \n\t(github.com/eifetx/Sour-Gummy-Fonts)\n\n\tThis Font Software is licensed
+        under the \n\tSIL Open Font License, Version 1.1. \r\n\n\tThis license is
+        available with a FAQ at:\n\topenfontlicense.org\r\n"
+      objectReference: {fileID: 0}
     - target: {fileID: 5471135598138630497, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
       propertyPath: m_Name
       value: FishCatalog
+      objectReference: {fileID: 0}
+    - target: {fileID: 6557141864339552750, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6557141864339552750, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792149084991748540, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

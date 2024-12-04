@@ -141,7 +141,6 @@ public class DrawCut : MonoBehaviour
         cutRender.SetPosition(0, pointA);
         cutRender.SetPosition(1, pointB);
         animateCut = true;
-        Tutorial.Instance.EndCuttingTutorial();
     }
 
     /// <summary>
@@ -182,6 +181,7 @@ public class DrawCut : MonoBehaviour
             if (hit && hit.gameObject.TryGetComponent(out MeshFilter _))
             {
                 Cutter.Instance.PerformCut(blockRotation.gameObject, pointInPlane, cutPlaneNormal);
+                Tutorial.Instance.EndCuttingTutorial();
             }
         }
 

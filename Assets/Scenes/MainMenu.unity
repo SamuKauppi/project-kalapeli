@@ -571,6 +571,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 890755654930828046, guid: 4af9a6135bae9dc4b95801c50e8a61a3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 890755654930828046, guid: 4af9a6135bae9dc4b95801c50e8a61a3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3337926235139486327, guid: 4af9a6135bae9dc4b95801c50e8a61a3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2359,7 +2367,7 @@ GameObject:
   - component: {fileID: 1390740679}
   m_Layer: 5
   m_Name: Credits
-  m_TagString: Click
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2397,7 +2405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 4
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}

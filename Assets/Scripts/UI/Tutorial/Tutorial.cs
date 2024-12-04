@@ -62,6 +62,9 @@ public class Tutorial : MonoBehaviour
                 noticeMe.SetImageActive(false);
                 AddToTutorial();
                 break;
+            case 4:
+                noticeMe.SetImageActive(false);
+                break;
             default:
                 break;
         }
@@ -71,7 +74,7 @@ public class Tutorial : MonoBehaviour
     {
         if (side == 0 && up == 0) return;
 
-        if (noticeMeTransform.anchoredPosition == noticeMePositions[1].anchoredPosition && tutorialStep > 1)
+        if (noticeMeTransform.anchoredPosition == noticeMePositions[1].anchoredPosition && tutorialStep == 3)
         {
             noticeMe.SetImageActive(false);
             AddToTutorial();
@@ -110,9 +113,16 @@ public class Tutorial : MonoBehaviour
         noticeMeTransform.position = noticeMePositions[2].position;
     }
 
-    public void CheckNewFish()
+    public void TutorialOpenCatalog()
     {
-        if (tutorialStep > 2)
-            noticeMe.SetImageActive(false);
+        noticeMe.SetImageActive(false);
+    }
+
+    public void TutorialCloseCatalog()
+    {
+        if (tutorialStep <= 2)
+        {
+            noticeMe.SetImageActive(true);
+        }
     }
 }

@@ -65,7 +65,7 @@ public class ScorePage : MonoBehaviour
             FishSpecies.Boot => "Boots",
             FishSpecies.Muddle => "Muddles",
             FishSpecies.Peeper => "Peepers",
-            FishSpecies.Grouchy => "Gourchies",
+            FishSpecies.Grouchy => "Grouchies",
             _ => "",
         };
     }
