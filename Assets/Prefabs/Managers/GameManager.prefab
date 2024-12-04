@@ -218,8 +218,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetImage: {fileID: 7629415423623661535}
   targetText: {fileID: 0}
-  baseImageColor: {r: 0.14901961, g: 0.4509804, b: 0, a: 1}
-  warningColor: {r: 0.24427927, g: 1, b: 0, a: 1}
+  baseImageColor: {r: 0.41960788, g: 0.47058827, b: 0.25882354, a: 1}
+  warningColor: {r: 0.68979555, g: 0.9150943, b: 0.19424175, a: 1}
   baseTextColor: {r: 0, g: 0, b: 0, a: 0}
   textWarningColor: {r: 0, g: 0, b: 0, a: 1}
   transitionTime: 1.5
