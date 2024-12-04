@@ -175,11 +175,12 @@ public class Rod : MonoBehaviour
             anim.enabled = true;
             anim.SetBool("Fish", true);
             outline.enabled = true;
+            Tutorial.Instance.FishAlert();
+            SoundManager.Instance.PlaySound(SoundClipTrigger.OnFishAlert);
             break;
         }
 
         yield return new WaitForSeconds(timeAttached);
-        SoundManager.Instance.PlaySound(SoundClipTrigger.OnFishAlert);
         ScorePage.Instance.UpdateNonFishValue(SaveValue.fishes_missed, 1);
 
         HasFish = false;

@@ -27,11 +27,12 @@ public class Tutorial : MonoBehaviour
         tutorialStep = PlayerPrefManager.Instance.GetPrefValue(SaveValue.tutorial, 0);
         noticeMe.SetImageActive(false);
 
-        if (tutorialStep == 0)
+        if (tutorialStep == 0 || tutorialStep == 1)
         {
             noticeMe.SetImageActive(true);
             noticeMeTransform.anchoredPosition = noticeMePositions[0].anchoredPosition;
-            AddToTutorial();
+            if (tutorialStep == 0)
+                AddToTutorial();
         }
     }
 
@@ -56,8 +57,6 @@ public class Tutorial : MonoBehaviour
                 AddToTutorial();
                 cuttingAnim.ScaleTowards();
                 noticeMe.SetImageActive(false);
-                break;
-            case 2:
                 break;
             case 3:
                 noticeMe.SetImageActive(false);
@@ -93,6 +92,15 @@ public class Tutorial : MonoBehaviour
             cuttingAnim.EndAnimation();
             noticeMe.SetImageActive(true);
             noticeMeTransform.anchoredPosition = noticeMePositions[1].anchoredPosition;
+        }
+    }
+
+    public void FishAlert()
+    {
+        if (!GameManager.Instance.IsFishingMode)
+        {
+            noticeMe.SetImageActive(true);
+            noticeMeTransform.anchoredPosition = noticeMePositions[0].anchoredPosition;
         }
     }
 

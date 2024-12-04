@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public delegate void ChangeMode(bool isFishing);
     public static event ChangeMode OnModeChange;
 
+    public bool IsFishingMode { get { return isFishingMode; } }
     [SerializeField] private bool isFishingMode;
 
     // References
