@@ -88,7 +88,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4323136547219563787}
@@ -218,7 +218,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetImage: {fileID: 7629415423623661535}
   targetText: {fileID: 0}
+  baseImageColor: {r: 0.14901961, g: 0.4509804, b: 0, a: 1}
   warningColor: {r: 0.24427927, g: 1, b: 0, a: 1}
+  baseTextColor: {r: 0, g: 0, b: 0, a: 0}
   textWarningColor: {r: 0, g: 0, b: 0, a: 1}
   transitionTime: 1.5
   looping: 1
@@ -283,8 +285,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3192982724442150423}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.6707883, z: 0, w: 0.741649}
-  m_LocalPosition: {x: 16.151237, y: 0, z: -19.608448}
+  m_LocalRotation: {x: 0, y: -0.6863506, z: 0, w: 0.72727084}
+  m_LocalPosition: {x: 24.352077, y: 0, z: 7.8513713}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -336,7 +338,7 @@ MonoBehaviour:
   m_PlayOnAwake: 1
   m_LoopMode: 1
   m_Method: 1
-  m_Duration: 964.19257
+  m_Duration: 1016.41736
   m_MaxSpeed: 0.1
   m_EasingMode: 0
   m_AlignmentMode: 1
@@ -536,8 +538,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4492919216473680399}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.41779503, z: 0, w: 0.9085414}
-  m_LocalPosition: {x: 7.3450317, y: 0, z: -16.06515}
+  m_LocalRotation: {x: 0, y: -0.5179187, z: 0, w: 0.8554299}
+  m_LocalPosition: {x: 7.5186157, y: 0, z: -17.836666}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -561,7 +563,7 @@ MonoBehaviour:
   m_PlayOnAwake: 1
   m_LoopMode: 1
   m_Method: 1
-  m_Duration: 964.19257
+  m_Duration: 1016.41736
   m_MaxSpeed: 0.1
   m_EasingMode: 0
   m_AlignmentMode: 1

@@ -7,20 +7,21 @@ public class UIColorAnimation : MonoBehaviour
 {
     [SerializeField] private Image targetImage;
     [SerializeField] private TMP_Text targetText;
+    [SerializeField] private Color baseImageColor;
     [SerializeField] private Color warningColor = Color.red;
+
+    [SerializeField] private Color baseTextColor;
     [SerializeField] private Color textWarningColor = Color.black;
     [SerializeField] private float transitionTime = 0.5f;
     [SerializeField] private bool looping = false;
 
-    private Color baseImageColor;
-    private Color baseTextColor;
-
     private void Start()
     {
         if (targetImage != null)
-            baseImageColor = targetImage.color;
+            targetImage.color = baseImageColor;
+
         if (targetText != null)
-            baseTextColor = targetText.color;
+            targetText.color = baseTextColor;
     }
 
     public void SetImageActive(bool active)

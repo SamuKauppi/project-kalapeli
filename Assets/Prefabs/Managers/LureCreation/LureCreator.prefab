@@ -119,7 +119,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetImage: {fileID: 0}
   targetText: {fileID: 0}
+  baseImageColor: {r: 1, g: 1, b: 1, a: 0}
   warningColor: {r: 1, g: 1, b: 1, a: 1}
+  baseTextColor: {r: 0.31764707, g: 0.24705882, b: 0.19215687, a: 0}
   textWarningColor: {r: 0.31764707, g: 0.24705882, b: 0.19215687, a: 1}
   transitionTime: 1.5
   looping: 0
@@ -169,7 +171,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetImage: {fileID: 0}
   targetText: {fileID: 0}
+  baseImageColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
   warningColor: {r: 1, g: 0, b: 0, a: 1}
+  baseTextColor: {r: 0, g: 0, b: 0, a: 0}
   textWarningColor: {r: 0, g: 0, b: 0, a: 1}
   transitionTime: 0.5
   looping: 0
