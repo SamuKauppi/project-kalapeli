@@ -71,8 +71,7 @@ public class FishManager : MonoBehaviour
         mousePos = Input.mousePosition;
         mousePos.z = lurePositionFromCam;
 
-        attachedLure.transform.position = cam.ScreenToWorldPoint(mousePos);
-
+        attachedLure.transform.SetPositionAndRotation(cam.ScreenToWorldPoint(mousePos), cam.transform.rotation);
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = new(cam.transform.position, (cam.ScreenToWorldPoint(mousePos) - cam.transform.position).normalized);
