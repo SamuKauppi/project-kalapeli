@@ -311,7 +311,7 @@ public class LureFunctions : MonoBehaviour
             return;
         }
 
-        if (chubCount > 1)
+        if (chubCount > 0)
         {
             // Too many chubs
             attachSwim = SwimmingType.Bad;
