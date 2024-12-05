@@ -1,25 +1,32 @@
 using UnityEngine;
 
+/// <summary>
+/// Handles picking up lures and the box
+/// </summary>
 public class FishingLureBox : MonoBehaviour
 {
     public static FishingLureBox Instance { get; private set; }
 
+    // Outline
     [SerializeField] private Outline outline;
     [SerializeField] private float onWidth;
     [SerializeField] private float offWidth;
+
+    // Purely visual objects in box
     [SerializeField] private GameObject[] luresInBox;
 
-    // Lure Selector
-    [SerializeField] private int selectorEntryCount;
-    [SerializeField] private float padding;
-    [SerializeField] private GameObject lureSelector;
-    [SerializeField] private RectTransform selectorParent;
-    [SerializeField] private LureSelectorEntry lureSelectorEntryPrefab;
+    // Lure Selector (world space UI)
+    [SerializeField] private GameObject lureSelector;                   // Refernece to UI object
+    [SerializeField] private RectTransform selectorParent;              // Where contetn is created
+    [SerializeField] private LureSelectorEntry lureSelectorEntryPrefab; // Refernece to prefab
+    [SerializeField] private int selectorEntryCount;                    // How many lures can be displayed
+    [SerializeField] private float padding;                             // Padding for each UI element
+    private LureSelectorEntry[] lureSelectorEntries;       // Empty entries created during runtime
+    private bool isSelectorOpen;                           // Is selector open
 
-    private Camera cam;
-    private Vector3 mousePos;
-    private LureSelectorEntry[] lureSelectorEntries;
-    private bool isSelectorOpen;
+    // Private
+    private Camera cam;         // Camera
+    private Vector3 mousePos;   // Mouse Position
 
     private void Awake()
     {
@@ -31,6 +38,22 @@ public class FishingLureBox : MonoBehaviour
 
     private void Start()
     {
+        // Create entries
+        GenerateLureSelecotrEntries();
+
+        // Set outline
+        outline = GetComponent<Outline>();
+        outline.enabled = false;
+
+        // Get camera
+        cam = GameManager.Instance.MainCamera;
+    }
+
+    /// <summary>
+    /// Generates entries for lureselector
+    /// </summary>
+    private void GenerateLureSelecotrEntries()
+    {
         lureSelectorEntries = new LureSelectorEntry[selectorEntryCount];
 
         for (int i = 0; i < lureSelectorEntries.Length; i++)
@@ -39,31 +62,32 @@ public class FishingLureBox : MonoBehaviour
             lureSelectorEntries[i].gameObject.SetActive(false);
         }
         lureSelector.SetActive(false);
-
-        if (outline == null)
-            outline = GetComponent<Outline>();
-
-        outline.enabled = false;
-        cam = GameManager.Instance.MainCamera;
     }
 
     private void Update()
     {
+        // Try to close lure selecor when clicked somewhere outside of some objects
         if (isSelectorOpen && FishManager.Instance.CanFish && Input.GetMouseButtonUp(0))
         {
-            mousePos = Input.mousePosition;
-            mousePos.z = cam.nearClipPlane;
-            Vector3 direction = cam.ScreenToWorldPoint(mousePos) - cam.transform.position;
-
-            if (Physics.Raycast(cam.transform.position, direction, out RaycastHit hit, 50f))
-            {
-                if (hit.collider.gameObject == gameObject || hit.collider.gameObject.layer == 31)
-                {
-                    return;
-                }
-            }
-            CloseLureSelector();
+            CheckIfSelectorCanClose();
         }
+    }
+
+    private void CheckIfSelectorCanClose()
+    {
+        mousePos = Input.mousePosition;
+        mousePos.z = cam.nearClipPlane;
+        Vector3 direction = cam.ScreenToWorldPoint(mousePos) - cam.transform.position;
+
+        if (Physics.Raycast(cam.transform.position, direction, out RaycastHit hit, 50f))
+        {
+            // If the hit is this object or it's on DrawFront layer (LureTrash is on this layer)
+            if (hit.collider.gameObject == gameObject || hit.collider.gameObject.layer == 31)
+            {
+                return;
+            }
+        }
+        CloseLureSelector();
     }
 
     private void OnMouseDown()

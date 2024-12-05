@@ -29,7 +29,6 @@ public class StatDisplay : MonoBehaviour
 
     // Weight
     [SerializeField] private Slider weightSlider;
-    [SerializeField] private TMP_Text weightText;
 
     // Color and texture
     [SerializeField] private Image baseColorImage;
@@ -74,7 +73,7 @@ public class StatDisplay : MonoBehaviour
         // Set depth bounds
         depthSilder.minValue = minDepth;
         depthSilder.maxValue = maxDepth;
-        // Set streamline bounds 
+        // Set streamline bounds
         streamlineSlider.minValue = -maxStreamlineRatio;
         streamlineSlider.maxValue = 0f;
         // Set Weight bounds
@@ -104,7 +103,6 @@ public class StatDisplay : MonoBehaviour
         streamlineSlider.value = -streamlineRatio;
         depthText.text = MathF.Round(depth, 2).ToString() + "m";
         depthSilder.value = depth;
-        weightText.text = MathF.Round(weight, 2).ToString() + "g";
         weightSlider.value = weight;
         baseColorImage.color = baseC;
         texColorImage.color = texC;

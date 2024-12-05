@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class Fish : MonoBehaviour
 {
+    // General properties
     [SerializeField] private FishSpecies species;
     [TextArea(3, 15)]
     [SerializeField] private string hintText;
@@ -31,9 +32,9 @@ public class Fish : MonoBehaviour
     [SerializeField] private int score;
 
     // Private
-    private readonly HashSet<AttachingType> attachTable = new();
-    private const float DEPTH_TOLERANCE = 10f;
-    private readonly float maxColorDiff = Mathf.Sqrt(3) * 0.5f;
+    private readonly HashSet<AttachingType> attachTable = new();    // Used for faster checking for attach compability
+    private const float DEPTH_TOLERANCE = 10f;                      // Tolerance for depth checking
+    private readonly float maxColorDiff = Mathf.Sqrt(3) * 0.5f;     // Tolerance for color checking
 
     // Public getters
     public FishSpecies Species { get { return species; } }
@@ -49,6 +50,7 @@ public class Fish : MonoBehaviour
     public float TimeAttached { get { return timeAttached; } }
     public int ScoreGained { get { return score; } }
 
+    // References for sprites used to display the fish
     public Sprite miniIcon;
     public Sprite bigIcon;
     public Sprite depthIcon;
@@ -56,7 +58,7 @@ public class Fish : MonoBehaviour
 
 
     /// <summary>
-    /// Returns score isCatalogOpen based on how close the colors are to fish desired colors
+    /// Returns score based on how close the colors are to fish desired colors
     /// </summary>
     /// <param name="baseC"></param>
     /// <param name="texC"></param>
@@ -83,7 +85,7 @@ public class Fish : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns score isCatalogOpen based on how close is the depth to average depth
+    /// Returns score based on how close is the depth to average depth
     /// </summary>
     /// <param name="depth"></param>
     /// <returns></returns>
@@ -150,6 +152,10 @@ public class Fish : MonoBehaviour
         return score;
     }
 
+    /// <summary>
+    /// Initializes the hashset for attachables
+    /// This can't be done in start since the fish exists as prefab almost the entire game
+    /// </summary>
     public void InitializeFish()
     {
         attachTable.Clear();
@@ -160,7 +166,7 @@ public class Fish : MonoBehaviour
     }
 
     /// <summary>
-    /// Compares the stats of the lure to this fish and returns a score on how likely this fhis can be caught
+    /// Compares the stats of the lure to this fish and returns a score on how likely this fish can be caught
     /// </summary>
     /// <param name="lure"></param>
     /// <returns></returns>
@@ -182,6 +188,8 @@ public class Fish : MonoBehaviour
         catchScore += GetScoreFromValue(lure.SwimType, PreferredSwimStyle, CatchScoreType.SwimStyle);   // Swim score
         catchScore += GetScoreFromValue(lure.PatternID, PreferredPatternIndex, CatchScoreType.Pattern); // Patthern score
 
+        // Reduce catchrate if swimming is bad
+        // Punishes bad lures
         if (lure.SwimType == SwimmingType.Bad)
         {
             return catchScore / 4;

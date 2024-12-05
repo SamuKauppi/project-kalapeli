@@ -8,8 +8,8 @@ using TMPro;
 public class FishManager : MonoBehaviour
 {
     public static FishManager Instance { get; private set; }
-    public bool CanFish { get; set; }
-    public bool IsHoldingLure { get; private set; }
+    public bool CanFish { get; set; }                           // Is fishing enables
+    public bool IsHoldingLure { get; private set; }             // Is the player currently holding a lure
 
     // Rod
     [SerializeField] private Rod rodPrefab;                     // Prefab
@@ -21,20 +21,20 @@ public class FishManager : MonoBehaviour
     [SerializeField] private float lurePositionFromCam;         // Position away from camera
 
     // Fish display
-    [SerializeField] private Transform displayParent;       // Parent for displaying fish   
+    [SerializeField] private Transform displayParent;       // Parent for displaying fish
     [SerializeField] private GameObject displayUI;          // For displaying UI when fish is caught
     [SerializeField] private TMP_Text scoreText;            // Ui to display score
     [SerializeField] private GameObject backButton;         // Back button for ui
-    [SerializeField] private int noFishScore = 500;
+    [SerializeField] private int noFishScore = 500;         // Used to give the no fish chance
     private GameObject displayFish;                         // Fish being displayed
     private const string CATCH_TXT = "You caught ";
 
-    private Fish[] availableFish;   // Fishes for this level
-    private Rod[] rods;             // Rods made during runtime
+    private Fish[] availableFish;       // Fishes for this level
+    private Rod[] rods;                 // Rods made during runtime
 
-    private GameObject attachedLure;
-    private Camera cam;
-    private Vector3 mousePos;
+    private GameObject attachedLure;    // Refernece to attached lure
+    private Camera cam;                 // Reference to camera
+    private Vector3 mousePos;           // Mouse position
 
     private void Awake()
     {
@@ -47,6 +47,7 @@ public class FishManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     private void Start()
     {
         // Get fishes for this level
@@ -60,17 +61,23 @@ public class FishManager : MonoBehaviour
             rods[i].SetLineEndPoint(lineEndPointsNoFish[i], lineEndPointFish);
         }
 
+        // Reference to camera
         cam = GameManager.Instance.MainCamera;
+        // Set UI elements
         displayUI.SetActive(false);
         backButton.SetActive(true);
     }
 
+    /// <summary>
+    /// Contains the logic for holding lure
+    /// </summary>
     private void Update()
     {
         if (!IsHoldingLure || !CanFish) { return; }
         mousePos = Input.mousePosition;
         mousePos.z = lurePositionFromCam;
 
+        // Set the poistion lure
         attachedLure.transform.SetPositionAndRotation(cam.ScreenToWorldPoint(mousePos), cam.transform.rotation);
         if (Input.GetMouseButtonDown(0))
         {
@@ -79,6 +86,7 @@ public class FishManager : MonoBehaviour
             // Perform the raycast to check if lure can be attached to rod
             if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance, rodLayer))
             {
+                // If the hit is rod and no lure is attached, attach lure
                 if (hit.collider.TryGetComponent(out Rod rod) && !rod.IsAttached)
                 {
                     ActivateRod(rod, attachedLure);
@@ -86,15 +94,20 @@ public class FishManager : MonoBehaviour
                 }
             }
 
+            // Otherwise drop the lure
             DropLure();
         }
     }
 
+    /// <summary>
+    /// Drops the lure currently held back to the box
+    /// </summary>
     private void DropLure()
     {
         if (attachedLure != null)
         {
             attachedLure.SetActive(false);
+            // Add the lure back to PersitentManager
             PersitentManager.Instance.AddLure(attachedLure.GetComponent<LureStats>());
         }
 
@@ -103,16 +116,26 @@ public class FishManager : MonoBehaviour
         CursorManager.Instance.SwapCursor(CursorType.Normal);
     }
 
+    /// <summary>
+    /// Pick up lure from box
+    /// </summary>
+    /// <param name="lureObj"></param>
     public void PickUpLure(GameObject lureObj)
     {
         if (lureObj == null) { return; }
         attachedLure = lureObj;
         attachedLure.SetActive(true);
+
+        // Remove the lure from PersitentManager
         PersitentManager.Instance.TakeLure(lureObj.GetComponent<LureStats>());
+
         IsHoldingLure = true;
         CursorManager.Instance.SwapCursor(CursorType.Grip);
     }
 
+    /// <summary>
+    /// Delete currently selected lure
+    /// </summary>
     public void DeleteLure()
     {
         if (attachedLure == null) { return; }
@@ -189,29 +212,37 @@ public class FishManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Catch and display given fish species
+    /// Display given fish species and disable the game
     /// </summary>
     /// <param name="caughtFish"></param>
     public void CatchFish(FishSpecies caughtFish)
     {
-        // TODO: display fish properly after catching
         foreach (Fish fish in availableFish)
         {
             if (fish.Species.Equals(caughtFish))
             {
+                // Create model to display spot
                 displayFish = Instantiate(fish.gameObject, displayParent.transform.position, displayParent.transform.rotation, displayParent);
+                
+                // Set UI
                 displayUI.SetActive(true);
                 backButton.SetActive(false);
-                PersitentManager.Instance.GainScoreFormFish(fish.Species, displayParent);
                 scoreText.text = CATCH_TXT + caughtFish;
+
+                // Disable fishing
                 CanFish = false;
+
+                // Gain score and play sound
+                PersitentManager.Instance.GainScoreFormFish(fish.Species, displayParent);
                 SoundManager.Instance.PlaySound(SoundClipTrigger.OnFishCaught);
                 break;
             }
         }
     }
 
-
+    /// <summary>
+    /// Hide fish that is being displayed and enable the game
+    /// </summary>
     public void AcceptFish()
     {
         displayUI.SetActive(false);
@@ -231,6 +262,9 @@ public class FishManager : MonoBehaviour
         GameManager.Instance.SwapModes();
     }
 
+    /// <summary>
+    /// Called everytime fishing mode is being entered
+    /// </summary>
     public void ActivateFishing()
     {
         FishingLureBox.Instance.SetLureBoxActive(PersitentManager.Instance.LureCount());
