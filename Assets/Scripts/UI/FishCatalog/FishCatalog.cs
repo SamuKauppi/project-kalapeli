@@ -183,8 +183,15 @@ public class FishCatalog : MonoBehaviour
                 }
                 entries[i].SetSelected(true);
                 previousEntry = entries[i];
-                break;
+                return;
             }
+        }
+
+        displayer.gameObject.SetActive(false);
+        if (previousEntry != null)
+        {
+            previousEntry.SetSelected(false);
+            previousEntry = null;
         }
     }
 }

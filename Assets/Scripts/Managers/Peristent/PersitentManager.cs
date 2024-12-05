@@ -17,7 +17,7 @@ public class PersitentManager : MonoBehaviour
     [SerializeField] private Fish[] everyFishInGame;                    // Contains every fish that exists (set in inspector)
     [SerializeField] private List<FishSpecies> fishForThisLevel = new();// Fishes available for this level (Set before loading to a level)
     private readonly Dictionary<FishSpecies, Fish> fishDict = new();    // Dictionary that is set during runtime
-    private readonly Dictionary<FishSpecies, int> fishesCaught = new();
+    private Dictionary<FishSpecies, int> fishesCaught = new();
 
     private void Awake()
     {
@@ -145,10 +145,16 @@ public class PersitentManager : MonoBehaviour
         fishesCaught[fish]++;
         ScorePage.Instance.UpdateNonFishValue(SaveValue.score, value);
         ScorePage.Instance.UpdateFishValue(fish, 1);
+        SettingsPage.Instance.CheckForGameComplete();
     }
 
     public bool IsFishCaught(FishSpecies fish)
     {
         return fishesCaught.ContainsKey(fish);
+    }
+
+    public void ForgetFishesCaught()
+    {
+        fishesCaught = new();
     }
 }

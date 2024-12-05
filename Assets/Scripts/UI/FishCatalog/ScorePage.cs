@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -26,6 +27,11 @@ public class ScorePage : MonoBehaviour
     }
 
     private void Start()
+    {
+        ReloadCatalogTexts();
+    }
+
+    private void ReloadCatalogTexts()
     {
         Fish[] everyFish = PersitentManager.Instance.EveryFish;
         for (int i = 0; i < everyFish.Length; i++)
@@ -86,6 +92,21 @@ public class ScorePage : MonoBehaviour
         };
     }
 
+    private TMP_Text GetTextValue(SaveValue type)
+    {
+        // Update UI elements based on new value
+        return type switch
+        {
+            SaveValue.score => scoreTxt,
+            SaveValue.lures_made => lures_made,
+            SaveValue.lures_lost => lures_lost,
+            SaveValue.decorations => decorations,
+            SaveValue.cuts => cuts,
+            SaveValue.fishes_missed => fishes_missed,
+            _ => null
+        };
+    }
+
     public void UpdateFishValue(FishSpecies species, int increaseAmount)
     {
         int index = GetFishIndex(species);
@@ -121,17 +142,7 @@ public class ScorePage : MonoBehaviour
         // Save the new value
         PlayerPrefManager.Instance.SavePrefValue(type, newValue);
 
-        // Update UI elements based on new value
-        TMP_Text targetText = type switch
-        {
-            SaveValue.score => scoreTxt,
-            SaveValue.lures_made => lures_made,
-            SaveValue.lures_lost => lures_lost,
-            SaveValue.decorations => decorations,
-            SaveValue.cuts => cuts,
-            SaveValue.fishes_missed => fishes_missed,
-            _ => null
-        };
+        TMP_Text targetText = GetTextValue(type);
 
         if (targetText != null)
         {
@@ -143,4 +154,23 @@ public class ScorePage : MonoBehaviour
         }
     }
 
+    public void ResetSaveData()
+    {
+        PersitentManager.Instance.ForgetFishesCaught();
+        foreach (SaveValue save in Enum.GetValues(typeof(SaveValue)))
+        {
+            if (save != SaveValue.music_volume 
+                && save != SaveValue.ambient_volume 
+                && save != SaveValue.sfx_volume)
+            {
+                PlayerPrefManager.Instance.SavePrefValue(save, 0);
+            }
+        }
+        ReloadCatalogTexts();
+    }
+
+    public void ShowEndGame()
+    {
+        FishCatalog.Instance.CloseCatalog();
+    }
 }

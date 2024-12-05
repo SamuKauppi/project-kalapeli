@@ -17,5 +17,6 @@
     fishes_missed,
     music_volume,
     sfx_volume,
-    ambient_volume
+    ambient_volume,
+    game_Complete
 }

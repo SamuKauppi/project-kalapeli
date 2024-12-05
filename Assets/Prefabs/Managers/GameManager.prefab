@@ -1039,10 +1039,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5036498399560838851}
     m_Modifications:
-    - target: {fileID: 32790199700195732, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 38982806217675757, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1087,10 +1083,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1044394769302093627, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1828656483407060460, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1123,14 +1115,9 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4451547632198766607, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
-      propertyPath: m_text
-      value: "programming\r\n\tSamu Kauppi\r\n\r\nart\r\n\tAida Cederqvist\r\n\tSenja
-        Grahn\r\n\tElla Koponen\r\n\tElla R\xE4ntil\xE4\r\n\r\nmusic and sound design\n\tJoni
-        Nousiainen\r\n\r\nfont license\r\n\tCopyright 2018 The Sour Gummy Project
-        \n\t(github.com/eifetx/Sour-Gummy-Fonts)\n\n\tThis Font Software is licensed
-        under the \n\tSIL Open Font License, Version 1.1. \r\n\n\tThis license is
-        available with a FAQ at:\n\topenfontlicense.org\r\n"
+    - target: {fileID: 3403134979728852333, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
+      propertyPath: completeButton
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5471135598138630497, guid: 7c7eb76f180a6c44cb362436d7e15bd8, type: 3}
       propertyPath: m_Name
