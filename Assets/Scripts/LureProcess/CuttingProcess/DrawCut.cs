@@ -95,6 +95,7 @@ public class DrawCut : MonoBehaviour
             blockRotation.StopRotating = false;
             cancelCut = true;
             ResetLineRender();
+            performingCut = false;
         }
 
         // When left mouse is held, set the positions of line renderer

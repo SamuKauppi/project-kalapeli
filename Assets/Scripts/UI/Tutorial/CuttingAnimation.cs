@@ -24,26 +24,35 @@ public class CuttingAnimation : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
-        float distance = Vector3.Distance(targetTransform.position, targetPos);
+        // Convert world position to local space for correct scaling
+        Vector3 localTargetPos = targetTransform.parent.InverseTransformPoint(targetPos);
+        float distance = Vector3.Distance(targetTransform.localPosition, localTargetPos);
+
         float currentHeight;
         float time = 0f;
+
         while (time < animationTime)
         {
             time += Time.deltaTime;
+
+            // Interpolate height
             currentHeight = Mathf.Lerp(startHeight, distance, time / animationTime);
             targetTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, currentHeight);
+
             yield return null;
         }
 
         yield return new WaitForSeconds(fadeTime);
 
-        if (repeatCounter < repeats) 
-        { 
+        if (repeatCounter < repeats)
+        {
             repeatCounter++;
             targetTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, startHeight);
-            
+
             animationPositionCounter++;
             Vector3 newTarget = animationPositionCounter % 2 == 0 ? cutPosition1.position : cutPosition2.position;
+
+            // Adjust cutting transform orientation
             cuttingTransform.up = newTarget - cuttingTransform.position;
             StartCoroutine(ScaleTransform(targetTransform, newTarget));
         }
@@ -53,6 +62,7 @@ public class CuttingAnimation : MonoBehaviour
             Tutorial.Instance.EndCuttingTutorial();
         }
     }
+
 
     public void ScaleTowards()
     {
