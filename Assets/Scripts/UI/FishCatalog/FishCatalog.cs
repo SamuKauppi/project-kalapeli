@@ -78,7 +78,10 @@ public class FishCatalog : MonoBehaviour
     /// <param name="time"></param>
     private void SetCatalog(bool value, float time)
     {
-        Vector3 targetPos = value ? cataOnPos.position : cataOffPos.position;
+        Vector3 targetPos = value
+            ? cataOnPos.position
+            : cataOffPos.position;
+
 
         LeanTweenType ease = value ? ease1 : ease2;
 

@@ -447,6 +447,8 @@ public class LureFunctions : MonoBehaviour
         attachSwim = SwimmingType.None;
         attachWeight = 0f;
         chubDepth = 0f;
+        hookCount = 0;
+        eyeCount = 0;
 
         // Destroy children, but set arrow object active
         arrowObj.SetActive(true);

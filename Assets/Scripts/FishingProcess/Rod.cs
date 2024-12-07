@@ -128,22 +128,17 @@ public class Rod : MonoBehaviour
 
             foreach (Transform bone in rodBones)
             {
-                // Calculate the direction to the target point
                 Vector3 directionToPoint = (bone.position - noFishLinePoint.position).normalized;
 
-                // Correctly get the axis of rotation using the bone's local up direction (-y is up)
                 Vector3 axis = Vector3.Cross(directionToPoint, -bone.forward);
 
-                // Calculate the angle between the bone's forward direction (-up) and the target direction
-                float angle = Vector3.Angle(-bone.up, directionToPoint);
+                float angle = Vector3.Angle(-bone.up, directionToPoint) * rotationPercentage;
 
-                // Apply rotation only around the calculated axis using a quaternion
-                Quaternion rotation = Quaternion.AngleAxis(angle * rotationPercentage, axis);
+                Quaternion rotation = Quaternion.AngleAxis(angle, axis);
 
-                // Combine the current local rotation with the new rotation
                 bone.localRotation = rotation * Quaternion.identity;
 
-                bone.Rotate(bone.forward, angle * rotationPercentage);
+                bone.Rotate(Vector3.forward, angle, Space.Self);
             }
 
         }

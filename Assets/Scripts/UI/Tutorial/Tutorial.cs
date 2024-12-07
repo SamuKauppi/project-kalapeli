@@ -30,7 +30,7 @@ public class Tutorial : MonoBehaviour
         if (tutorialStep == 0 || tutorialStep == 1)
         {
             noticeMe.SetImageActive(true);
-            noticeMeTransform.anchoredPosition = noticeMePositions[0].anchoredPosition;
+            noticeMeTransform.position = noticeMePositions[0].position;
             if (tutorialStep == 0)
                 AddToTutorial();
         }
@@ -74,7 +74,7 @@ public class Tutorial : MonoBehaviour
     {
         if (side == 0 && up == 0) return;
 
-        if (noticeMeTransform.anchoredPosition == noticeMePositions[1].anchoredPosition && tutorialStep == 3)
+        if (noticeMeTransform.position == noticeMePositions[1].position && tutorialStep == 3)
         {
             noticeMe.SetImageActive(false);
             AddToTutorial();
@@ -94,7 +94,7 @@ public class Tutorial : MonoBehaviour
             AddToTutorial();
             cuttingAnim.EndAnimation();
             noticeMe.SetImageActive(true);
-            noticeMeTransform.anchoredPosition = noticeMePositions[1].anchoredPosition;
+            noticeMeTransform.position = noticeMePositions[1].position;
         }
     }
 
@@ -103,7 +103,7 @@ public class Tutorial : MonoBehaviour
         if (!GameManager.Instance.IsFishingMode)
         {
             noticeMe.SetImageActive(true);
-            noticeMeTransform.anchoredPosition = noticeMePositions[0].anchoredPosition;
+            noticeMeTransform.position = noticeMePositions[0].position;
         }
     }
 
