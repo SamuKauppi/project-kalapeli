@@ -189,7 +189,7 @@ public class Rod : MonoBehaviour
     private void MissFish()
     {
         // Update score
-        ScorePage.Instance.UpdateNonFishValue(SaveValue.fishes_missed, 1);
+        SavingManager.Instance.UpdateNonFishValue(SaveValue.fishes_missed, 1);
 
         // Set variables and animation
         HasFish = false;
@@ -313,7 +313,7 @@ public class Rod : MonoBehaviour
     {
         Destroy(LureAttached.gameObject);
         DetachLure();
-        ScorePage.Instance.UpdateNonFishValue(SaveValue.lures_lost, 1);
+        SavingManager.Instance.UpdateNonFishValue(SaveValue.lures_lost, 1);
     }
 
     /// <summary>

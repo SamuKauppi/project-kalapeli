@@ -266,7 +266,7 @@ public class AttachingProcess : MonoBehaviour
                 mirrorAttach.EnableOutline(false);
             }
             SoundManager.Instance.PlaySound(SoundClipTrigger.OnBlockHit);
-            ScorePage.Instance.UpdateNonFishValue(SaveValue.decorations, 1);
+            SavingManager.Instance.UpdateNonFishValue(SaveValue.decorations, 1);
         }
 
         attachedObject = null;

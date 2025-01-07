@@ -165,7 +165,7 @@ public class LureCreationManager : MonoBehaviour
         requirementEff.SetImageActive(_process == LureCreationProcess.Attaching);
 
         if (_process == LureCreationProcess.Saving)
-            ScorePage.Instance.UpdateNonFishValue(SaveValue.lures_made, 1);
+            SavingManager.Instance.UpdateNonFishValue(SaveValue.lures_made, 1);
 
         SetCursor();
     }

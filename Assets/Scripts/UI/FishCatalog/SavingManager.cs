@@ -2,9 +2,12 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class ScorePage : MonoBehaviour
+/// <summary>
+/// Handles saving player prefs and displaying them into catalog
+/// </summary>
+public class SavingManager : MonoBehaviour
 {
-    public static ScorePage Instance { get; private set; }
+    public static SavingManager Instance { get; private set; }
 
     // Fishes
     [SerializeField] private TMP_Text[] fishNames;
@@ -172,5 +175,17 @@ public class ScorePage : MonoBehaviour
     public void ShowEndGame()
     {
         FishCatalog.Instance.CloseCatalog();
+    }
+
+    public void CatchEveryFish()
+    {
+        foreach (FishSpecies fish in Enum.GetValues(typeof(FishSpecies)))
+        {
+            if (fish != FishSpecies.None)
+            {
+                UpdateFishValue(fish, 1);
+                PersitentManager.Instance.AddCaughtFish(fish);
+            }
+        }
     }
 }

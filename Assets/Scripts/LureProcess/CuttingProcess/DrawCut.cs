@@ -188,7 +188,7 @@ public class DrawCut : MonoBehaviour
 
         lureProperties.CalculateMeshStatsOnly();
         SoundManager.Instance.PlaySound(SoundClipTrigger.OnBlockCarve);
-        ScorePage.Instance.UpdateNonFishValue(SaveValue.cuts, 1);
+        SavingManager.Instance.UpdateNonFishValue(SaveValue.cuts, 1);
     }
 
     private void UpdateLineDistance()

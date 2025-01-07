@@ -143,9 +143,16 @@ public class PersitentManager : MonoBehaviour
         }
 
         fishesCaught[fish]++;
-        ScorePage.Instance.UpdateNonFishValue(SaveValue.score, value);
-        ScorePage.Instance.UpdateFishValue(fish, 1);
+        SavingManager.Instance.UpdateNonFishValue(SaveValue.score, value);
+        SavingManager.Instance.UpdateFishValue(fish, 1);
         SettingsPage.Instance.CheckForGameComplete();
+    }
+
+    public void AddCaughtFish(FishSpecies fish)
+    {
+        if (!fishesCaught.ContainsKey(fish))
+            fishesCaught.Add(fish, 0);
+        fishesCaught[fish]++;
     }
 
     public bool IsFishCaught(FishSpecies fish)
